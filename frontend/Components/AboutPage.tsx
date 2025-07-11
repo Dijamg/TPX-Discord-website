@@ -1,7 +1,7 @@
 import React from 'react'
 
 const AboutPage = () => (
-  <div className="about-page bg-gray-900 text-white py-12 px-4" id="about-page">
+  <div className="about-page bg-gray-900 text-white py-8 px-4" id="about-page">
     <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-stretch gap-8">
       {/* Left column: Image */}
       <div className="w-full md:w-1/2 flex flex-col justify-center">
@@ -32,6 +32,18 @@ const AboutPage = () => (
           <li>Try out new games</li>
           <li>Hang out in voice chat</li>
         </ul>
+        <div className="mt-6 font-serif text-gray-400 text-lg">
+          Interested? Join{' '}
+          <a
+            href="#"
+            className="text-white font-serif text-lg hover:text-purple-400 transition"
+            style={{ textDecoration: 'none' }}
+            onClick={e => e.preventDefault()}
+          >
+            here
+          </a>
+          !
+        </div>
       </div>
       {/* Right column: Image */}
       <div className="flex-shrink-0 flex flex-col items-center md:justify-start w-full md:w-1/2 h-full">
