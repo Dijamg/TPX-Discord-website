@@ -9,11 +9,11 @@ const AboutPage = () => (
       </div>
       {/* Right column: Text */}
       <div className="w-full md:w-1/2 flex flex-col justify-center">
-        <h1 className="text-3xl font-bold mb-4">About us</h1>
-        <p className="font-serif max-w-2xl mb-4 text-gray-300 text-lg">
+        <h1 className="font-serif text-3xl font-bold mb-4">About us</h1>
+        <p className="font-serif max-w-2xl mb-4 text-gray-400 text-lg">
           The Phantom Phoenix Organization, also known as TPX, is a Discord community which focuses on video games. This Discord was founded by a few members but it has grown rapidly over the last year and now there's close to 100 of us.
         </p>
-        <p className="font-serif max-w-2xl text-gray-300 text-lg">
+        <p className="font-serif max-w-2xl text-gray-400 text-lg">
           This community grows constantly because a lot of members like it and continue to invite their friends here. We play a variety of games, but mainly multiplayer ones. Our community has hardcore gamers as well as casual players who just play once in while and prefer to do it with good company.
         </p>
       </div>
@@ -22,8 +22,8 @@ const AboutPage = () => (
     <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-stretch gap-8 py-8">
       {/* Left column: Games list */}
       <div className="w-full md:w-1/2 flex flex-col ">
-        <h2 className="text-2xl font-bold mb-4">What do we do together?</h2>
-        <ul className="font-serif list-disc list-inside text-gray-300 text-lg space-y-2">
+        <h2 className="font-serif text-2xl font-bold mb-4">What do we do together?</h2>
+        <ul className="font-serif list-disc list-inside text-gray-400 text-lg space-y-2">
           <li>Play League of Legends (flex queue/clash weekends)</li>
           <li>Attend different events, such as tournaments held by Aalto Gamers</li>
           <li>Grind CS2 ranked with hardcore players</li>
@@ -45,7 +45,7 @@ const AboutPage = () => (
         </figcaption>
       </div>
     </div>
-    <div className="max-w-6xl mx-auto">
+    <div className="max-w-6xl mx-auto mt-32">
       <div className="w-full h-1 bg-gray-700" />
     </div>
   </div>

@@ -1,9 +1,11 @@
 export interface Member {
     id: number;
     name: string;
-    imgUrl: string | null;
-    riotId: string | null;
-    steamId: string | null;
-    lostArkId: string | null;
+    role: string;
+    imgurl: string | null;
+    riotgamename: string | null;
+    riottagline: string | null;
+    riotuuid: string | null;
+    lostarkname: string | null;
     description: string;
 }

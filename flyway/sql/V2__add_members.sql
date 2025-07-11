@@ -1,8 +1,10 @@
-INSERT INTO Members (name, imgUrl, riotId, steamId, lostArkId, description) VALUES (
+INSERT INTO Members (name, role, imgUrl, riotGameName, riotTagLine, riotUuid, lostArkName, description) VALUES (    
     'BZI',
+    'Moderator',
     NULL,
-    'Best Voli Iraq #EUW',
-    '76561199093366458',
+    'Best Voli Iraq',
+    'EUW',
+    NULL,
     'Dijamg',
     'placeholder'
 ); 

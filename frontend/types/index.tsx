@@ -7,3 +7,10 @@ export type Member = {
     lostArkId: string | null, 
     description: string,
 }
+
+export type Tournament = {
+    id: number,
+    name: string,
+    description: string,
+    imgUrl: string | null,
+}

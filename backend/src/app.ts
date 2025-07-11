@@ -1,5 +1,6 @@
 import express, { Express, Request, Response } from "express";
 import cors from 'cors';
+import { syncRiotUuid } from "./scripts/syncRiotPuuid";
 import { MemberService } from "./services/index";
 
 const app = express();
@@ -30,3 +31,5 @@ const PORT = process.env.NODE_DOCKER_PORT ?? 8080;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 }); 
+
+syncRiotUuid();

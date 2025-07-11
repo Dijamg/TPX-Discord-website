@@ -1,13 +1,11 @@
 import React from 'react'
 import { Link } from 'react-scroll'
-import Navbar from './Navbar'
 
 const Heropage = () => (
   <div
     className="hero h-screen bg-[url('/assets/tpx_homepage.png')] bg-cover bg-center relative"
     id="home-page"
   >
-    <Navbar/>
     <Link
       to="about-page"
       smooth={true}

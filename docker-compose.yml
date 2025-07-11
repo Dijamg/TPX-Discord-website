@@ -17,11 +17,18 @@ services:
     restart: no
     env_file:
       - project.env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U username -d database"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
 
   flyway:
     image: flyway/flyway:9.11.0-alpine
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     command: -connectRetries=60 -baselineOnMigrate=true migrate
     volumes:
       - ./flyway/sql:/flyway/sql
@@ -55,8 +62,14 @@ services:
       - /app/node_modules
     ports:
         - 8080
+    depends_on:
+      db:
+        condition: service_healthy
+      flyway:
+        condition: service_completed_successfully
     env_file:
       - project.env
+      - ./backend/.env
 
 
 volumes:
