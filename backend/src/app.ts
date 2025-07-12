@@ -36,6 +36,15 @@ app.get('/lol-basic-info', async (req, res) => {
   }
 });
 
+app.get('/lol-basic-info/:id', async (req, res) => {
+  try {
+    res.send(await LolBasicInfoService.getLolBasicInfoById(parseInt(req.params.id)));
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Error querying database");
+  }
+});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).send('OK');

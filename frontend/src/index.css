@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+body {
+  font-family: 'Oswald', sans-serif;
+}
+
 .arrow {
   position: absolute;
   width: 10vw;

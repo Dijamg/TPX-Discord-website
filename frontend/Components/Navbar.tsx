@@ -51,7 +51,7 @@ const Navbar = () => {
       }`}
       style={{ position: 'fixed' }}
     >
-      <div className="flex justify-between items-center px-0 h-18 text-lg text-white">
+      <div className="flex justify-between items-center px-0 h-18 text-xl text-white">
         {/* Left: Home (Image) - hidden on mobile, shown on md+ */}
         <div className="h-full flex items-center hidden md:flex">
           <Link

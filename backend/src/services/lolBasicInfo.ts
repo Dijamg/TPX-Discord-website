@@ -11,6 +11,10 @@ export const getLolBasicInfoByPuuid = async (puuid: string): Promise<LolBasicInf
   return await db.lolBasicInfo.findByPuuid(puuid);
 };
 
+export const getLolBasicInfoById = async (memberId: number): Promise<LolBasicInfo | null> => {
+  return await db.lolBasicInfo.findById(memberId);
+};
+
 // Add lol basic info by puuid
 export const addLolBasicInfoByPuuid = async (puuid: string, summonerLevel: number, summonerIconId: number, peakRank: string | null): Promise<LolBasicInfo> => {
   return await db.lolBasicInfo.add(puuid, summonerLevel, summonerIconId, peakRank);

@@ -24,6 +24,11 @@ import { LolBasicInfo } from "../models";
         return this.db.any("SELECT * FROM lol_basic_info");
     }
 
+    //get lol_basic_info by member_id
+    findById(id: number): Promise<LolBasicInfo | null> {
+        return this.db.oneOrNone("SELECT * FROM lol_basic_info WHERE id = $1", id);
+    }
+
     // Tries to find a lol_basic_info from riot_puuid;
     findByPuuid(puuid: string): Promise<LolBasicInfo | null> {
         return this.db.oneOrNone("SELECT * FROM lol_basic_info WHERE riot_puuid = $1", puuid);
