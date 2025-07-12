@@ -30,12 +30,12 @@ import { LolBasicInfo } from "../models";
     }
 
     // Add lol basic info by puuid
-    add(puuid: string, summonerLevel: number, summonerIconId: number, peakRank: string): Promise<LolBasicInfo> {
+    add(puuid: string, summonerLevel: number, summonerIconId: number, peakRank: string | null): Promise<LolBasicInfo> {
         return this.db.one("INSERT INTO lol_basic_info (riot_puuid, summoner_level, summoner_icon_id, peak_rank) VALUES ($1, $2, $3, $4) RETURNING *", [puuid, summonerLevel, summonerIconId, peakRank]);
     }
 
     // update lol basic info by puuid
-    update(puuid: string, summonerLevel: number, summonerIconId: number, peakRank: string): Promise<LolBasicInfo> {
+    update(puuid: string, summonerLevel: number, summonerIconId: number, peakRank: string | null): Promise<LolBasicInfo> {
         return this.db.one("UPDATE lol_basic_info SET summoner_level = $1, summoner_icon_id = $2, peak_rank = $3, revision_date = CURRENT_TIMESTAMP WHERE riot_puuid = $4 RETURNING *", [summonerLevel, summonerIconId, peakRank, puuid]);
     }
 }

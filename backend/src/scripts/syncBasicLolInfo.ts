@@ -1,4 +1,4 @@
-import { MemberService, RiotService, LolBasicInfoService } from "../services";
+import { MemberService, RiotService, LolBasicInfoService, PeakRankScraperService } from "../services";
 
 export const syncBasicLolInfo = async () => {
     try {
@@ -13,14 +13,15 @@ export const syncBasicLolInfo = async () => {
                 const currentBasicInfo = await LolBasicInfoService.getLolBasicInfoByPuuid(member.riot_puuid!);
                 //Basic info from riot api
                 const basicInfo = await RiotService.getBasicSummonerInfo(member.riot_puuid!);
+                const peakRank = await PeakRankScraperService.getPeakRank(`${member.riot_game_name}-${member.riot_tag_line}`);
 
                 if (currentBasicInfo) {
                     console.log(`Updating basic info for member ${member.id}`);
-                    await LolBasicInfoService.updateLolBasicInfoByPuuid(member.riot_puuid!, basicInfo.summonerLevel, basicInfo.profileIconId, "lowmasta");
+                    await LolBasicInfoService.updateLolBasicInfoByPuuid(member.riot_puuid!, basicInfo.summonerLevel, basicInfo.profileIconId, peakRank);
                     console.log(`Successfully updated member ${member.id} with puuid: ${member.riot_puuid}`);
                 } else {
                     console.log(`No basic info found for member ${member.id}`);
-                    await LolBasicInfoService.addLolBasicInfoByPuuid(member.riot_puuid!, basicInfo.summonerLevel, basicInfo.profileIconId, "master");
+                    await LolBasicInfoService.addLolBasicInfoByPuuid(member.riot_puuid!, basicInfo.summonerLevel, basicInfo.profileIconId, peakRank);
                     console.log(`Successfully added basic info for member ${member.id}`);
                 }
             } catch (error) {

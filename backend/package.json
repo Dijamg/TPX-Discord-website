@@ -9,7 +9,9 @@
   },
   "dependencies": {
     "@types/axios": "^0.9.36",
+    "@types/cheerio": "^0.22.35",
     "axios": "^1.10.0",
+    "cheerio": "^1.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.18.2",
@@ -19,6 +21,7 @@
   "devDependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^4.17.21",
+    "@types/cheerio": "^0.22.35",
     "@types/node": "^20.11.30",
     "@types/pg": "^8.6.11",
     "@types/pg-promise": "^0.0.28",
