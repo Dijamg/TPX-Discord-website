@@ -1,7 +1,8 @@
 import express, { Express, Request, Response } from "express";
 import cors from 'cors';
-import { syncRiotUuid } from "./scripts/syncRiotPuuid";
-import { MemberService } from "./services/index";
+import { syncRiotPuuid } from "./scripts/syncRiotPuuid";
+import { syncBasicLolInfo } from "./scripts/syncBasicLolInfo";
+import { LolBasicInfoService, MemberService } from "./services/index";
 
 const app = express();
 app.use(cors());
@@ -26,6 +27,15 @@ app.get('/members/:id', async (req, res) => {
 }
 });
 
+app.get('/lol-basic-info', async (req, res) => {
+  try {
+    res.send(await LolBasicInfoService.getAllLolBasicInfo());
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Error querying database");
+  }
+});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).send('OK');
@@ -38,4 +48,17 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 }); 
 
-syncRiotUuid();
+// Run syncs sequentially
+const runSyncs = async () => {
+  try {
+    console.log('Starting syncRiotPuuid...');
+    await syncRiotPuuid();
+    console.log('syncRiotPuuid completed, starting syncBasicLolInfo...');
+    await syncBasicLolInfo();
+    console.log('All syncs completed');
+  } catch (error) {
+    console.error('Error during syncs:', error);
+  }
+};
+
+runSyncs();

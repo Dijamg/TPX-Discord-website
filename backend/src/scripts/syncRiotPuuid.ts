@@ -3,7 +3,7 @@
 
 import { MemberService, RiotService } from "../services";
 
-export const syncRiotUuid = async () => {
+export const syncRiotPuuid = async () => {
     try {
         const members = await MemberService.getMembersWithNoRiotPuuid();
         console.log(`Found ${members.length} members to sync`);

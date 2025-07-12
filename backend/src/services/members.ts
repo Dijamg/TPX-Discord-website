@@ -6,7 +6,11 @@ export const getAllMembers = async (): Promise<Member[]> => {
 }; 
 
 export const getMembersWithNoRiotPuuid = async (): Promise<Member[]> => {
-  return await db.members.GetAllWithNoRiotUuid();
+  return await db.members.GetAllWithNoRiotPuuid();
+}
+
+export const getMembersWithRiotPuuid = async (): Promise<Member[]> => {
+  return await db.members.GetAllWithRiotPuuid();
 }
 
 export const getMemberById = async (id: number): Promise<Member | null> => {

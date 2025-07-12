@@ -1,6 +1,7 @@
 import pgPromise, { IInitOptions, IDatabase, IMain } from "pg-promise";
 import {
     IExtensions,
+    LolBasicInfoRepository,
     MembersRepository,
 } from "./repos/index";
 
@@ -15,7 +16,7 @@ const initOptions: IInitOptions<IExtensions> = {
         // Do not use 'require()' here, because this event occurs for every task and transaction being executed,
         // which should be as fast as possible.
         obj.members = new MembersRepository(obj, pgp);
-
+        obj.lolBasicInfo = new LolBasicInfoRepository(obj, pgp);
     },
 };
 

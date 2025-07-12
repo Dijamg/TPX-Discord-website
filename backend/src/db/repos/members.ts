@@ -29,12 +29,22 @@ export class MembersRepository {
     }
 
     // Returns all members with no riotUuid but have a riotGameName and riotTagLine
-    GetAllWithNoRiotUuid(): Promise<Member[]> {
-        return this.db.any("SELECT * FROM members WHERE riot_uuid IS NULL AND riot_game_name IS NOT NULL AND riot_tag_line IS NOT NULL");
+    GetAllWithNoRiotPuuid(): Promise<Member[]> {
+        return this.db.any("SELECT * FROM members WHERE riot_puuid IS NULL AND riot_game_name IS NOT NULL AND riot_tag_line IS NOT NULL");
+    }
+
+    // Returns all members with riot_uuid but no lol_basic_info
+    GetAllWithRiotPuuidButNoLolBasicInfo(): Promise<Member[]> {
+        return this.db.any("SELECT * FROM members WHERE riot_puuid IS NOT NULL AND NOT EXISTS (SELECT 1 FROM lol_basic_info WHERE lol_basic_info.riot_puuid = members.riot_puuid)");
+    }
+
+    // Returns all members with riot_uuid, riot_game_name and riot_tag_line.
+    GetAllWithRiotPuuid(): Promise<Member[]> {
+        return this.db.any("SELECT * FROM members WHERE riot_puuid IS NOT NULL");
     }
 
     // Updates a member's puuid
     updatePuuid(id: number, puuid: string): Promise<Member | null> {
-        return this.db.oneOrNone("UPDATE members SET riot_uuid = $1 WHERE id = $2 RETURNING *", [puuid, id]);
+        return this.db.oneOrNone("UPDATE members SET riot_puuid = $1 WHERE id = $2 RETURNING *", [puuid, id]);
     }
 }
