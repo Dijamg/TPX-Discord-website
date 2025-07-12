@@ -2,10 +2,10 @@ export interface Member {
     id: number;
     name: string;
     role: string;
-    imgurl: string | null;
-    riotgamename: string | null;
-    riottagline: string | null;
-    riotuuid: string | null;
+    img_url: string | null;
+    riot_game_name: string | null;
+    riot_tag_line: string | null;
+    riot_uuid: string | null;
     lostarkname: string | null;
     description: string;
 }

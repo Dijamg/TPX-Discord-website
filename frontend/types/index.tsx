@@ -2,10 +2,10 @@ export type Member = {
     id: number,
     name: string,
     role: string,
-    imgurl: string, 
-    riotgamename: string | null, 
-    riottagline: string | null, 
-    riotuuid: string | null, 
+    img_url: string, 
+    riot_game_name: string | null, 
+    riot_tag_line: string | null, 
+    riot_uuid: string | null, 
     lostarkname: string | null, 
     description: string,
 }
@@ -14,5 +14,5 @@ export type Tournament = {
     id: number,
     name: string,
     description: string,
-    imgurl: string | null,
+    img_url: string | null,
 }
