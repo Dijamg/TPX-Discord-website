@@ -24,5 +24,5 @@ const RANK_ORDER = [
         }
     }
 
-    return highestRank;
+    return highestRank.split(' ')[0];
   }

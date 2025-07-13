@@ -2,10 +2,13 @@ import axios from "axios";
 import * as cheerio from 'cheerio';
 import { getHighestRank } from "../utils/scraperUtils";
 
-export const getPeakRank = async (summonerName: string): Promise<string | null> => {
+export const getPeakRank = async (summonerName: string, riot_region: string): Promise<string | null> => {
+
+  const region = riot_region.toLowerCase().slice(0, -1);
+  const opggUrl = `https://op.gg/lol/summoners/${region}/${summonerName}`;
   try {
     const ranks: string[] = [];
-    const res = await axios.get(`https://op.gg/lol/summoners/euw/${summonerName}`);
+    const res = await axios.get(opggUrl);
     const $ = cheerio.load(res.data as string);
 
     // Find the specific table with the Ranked Solo/Duo caption
@@ -24,14 +27,10 @@ export const getPeakRank = async (summonerName: string): Promise<string | null> 
       });
 
     const highestRank = getHighestRank(ranks);
-    console.log("SCRAPED HIGHEST RANK: ");
-    console.log(highestRank);
-
 
     return highestRank
 
   } catch (err) {
-
     console.error(`Error scraping peak rank:`, err);
     return null;
   }

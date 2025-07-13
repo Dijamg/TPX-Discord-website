@@ -10,8 +10,8 @@ const Members = ({ members }: { members: Member[] }) => (
         </div>
         
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-            {members.length > 0 && Array.from({ length: 7 }, (_, index) => (
-                <MembersCard key={`member-${index}`} member={members[0]} />
+            {members.map((member) => (
+                <MembersCard key={`member-${member.id}`} member={member} />
             ))}
         </div>
         <div className="max-w-6xl mx-auto mt-32">

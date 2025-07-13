@@ -17,6 +17,7 @@ CREATE TABLE lol_basic_info (
     summoner_level INT NOT NULL,
     summoner_icon_id INT NOT NULL,
     peak_rank VARCHAR(255),
+    total_mastery_points INT NOT NULL,
     revision_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -41,6 +42,15 @@ CREATE TABLE lol_current_season_info (
     league_points INT NOT NULL,
     wins INT NOT NULL,
     losses INT NOT NULL,
+    revision_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE lol_mastery_info (
+    id SERIAL PRIMARY KEY,
+    riot_puuid VARCHAR(255) REFERENCES members(riot_puuid),
+    champion_name VARCHAR(255) NOT NULL,
+    champion_level INT NOT NULL,
+    champion_points INT NOT NULL,
     revision_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 

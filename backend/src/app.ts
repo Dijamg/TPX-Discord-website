@@ -2,8 +2,9 @@ import express, { Express, Request, Response } from "express";
 import cors from 'cors';
 import { syncRiotPuuid } from "./scripts/syncRiotPuuid";
 import { syncBasicLolInfo } from "./scripts/syncBasicLolInfo";
-import { LolBasicInfoService, LolCurrentSeasonInfoService, MemberService } from "./services/index";
+import { LolBasicInfoService, LolCurrentSeasonInfoService, LolMasteryInfoService, MemberService } from "./services/index";
 import { syncCurrentSeasonLolInfo } from "./scripts/syncCurrentSeasonLolInfo";
+import { syncMasteryInfo } from "./scripts/syncMasteryInfo";
 
 const app = express();
 app.use(cors());
@@ -64,6 +65,24 @@ app.get('/lol-current-season-info/:id', async (req, res) => {
   }
 });
 
+app.get('/lol-mastery-info', async (req, res) => {
+  try {
+    res.send(await LolMasteryInfoService.getAllLolMasteryInfo());
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Error querying database");
+  }
+});
+
+app.get('/lol-mastery-info/:id', async (req, res) => {
+  try {
+    res.send(await LolMasteryInfoService.getLolMasteryInfoById(parseInt(req.params.id)));
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Error querying database");
+  }
+});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).send('OK');
@@ -85,6 +104,8 @@ const runSyncs = async () => {
     await syncBasicLolInfo();
     console.log('syncBasicLolInfo completed, starting syncCurrentSeasonLolInfo...');
     await syncCurrentSeasonLolInfo();
+    console.log('syncCurrentSeasonLolInfo completed, starting syncMasteryInfo...');
+    await syncMasteryInfo();
     console.log('All syncs completed');
   } catch (error) {
     console.error('Error during syncs:', error);

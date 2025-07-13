@@ -8,6 +8,7 @@ export type Member = {
     riot_puuid: string | null, 
     lostarkname: string | null, 
     description: string,
+    riot_region: string,
 }
 
 export type Tournament = {
@@ -23,10 +24,32 @@ export type BasicLolInfo = {
     summoner_icon_id: number,
     summoner_level: number,
     peak_rank: string,
+    total_mastery_points: number,
     revision_date: string,
+}
+
+export type CurrentSeasonLolInfo = {
+    id: number,
+    riot_puuid: string,
+    queue_type: string,
+    tier: string,
+    rank: string,
+    league_points: number,
+    wins: number,
+    losses: number,
+}
+
+export type MasteryInfo = {
+    id: number,
+    riot_puuid: string,
+    champion_name: string,
+    champion_level: number,
+    champion_points: number,
 }
 
 export type AllProps = {
     members: Member[],
-    basicLolInfo: BasicLolInfo[]
+    basicLolInfo: BasicLolInfo[],
+    currentSeasonLolInfo: CurrentSeasonLolInfo[],
+    masteryInfo: MasteryInfo[]
 }

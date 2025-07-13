@@ -4,6 +4,7 @@ import {
     LolBasicInfoRepository,
     MembersRepository,
     LolCurrentSeasonInfoRepository,
+    LolMasteryInfoRepository,
 } from "./repos/index";
 
 type ExtendedProtocol = IDatabase<IExtensions> & IExtensions;
@@ -19,6 +20,7 @@ const initOptions: IInitOptions<IExtensions> = {
         obj.members = new MembersRepository(obj, pgp);
         obj.lolBasicInfo = new LolBasicInfoRepository(obj, pgp);
         obj.lolCurrentSeasonInfo = new LolCurrentSeasonInfoRepository(obj, pgp);
+        obj.lolMasteryInfo = new LolMasteryInfoRepository(obj, pgp);
     },
 };
 

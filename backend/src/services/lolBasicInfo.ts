@@ -16,11 +16,11 @@ export const getLolBasicInfoById = async (memberId: number): Promise<LolBasicInf
 };
 
 // Add lol basic info by puuid
-export const addLolBasicInfoByPuuid = async (puuid: string, summonerLevel: number, summonerIconId: number, peakRank: string | null): Promise<LolBasicInfo> => {
-  return await db.lolBasicInfo.add(puuid, summonerLevel, summonerIconId, peakRank);
+export const addLolBasicInfoByPuuid = async (puuid: string, summonerLevel: number, summonerIconId: number, peakRank: string | null, totalMasteryPoints: number): Promise<LolBasicInfo> => {
+  return await db.lolBasicInfo.add(puuid, summonerLevel, summonerIconId, peakRank, totalMasteryPoints);
 };
 
 // update lol basic info by puuid
-export const updateLolBasicInfoByPuuid = async (puuid: string, summonerLevel: number, summonerIconId: number, peakRank: string | null): Promise<LolBasicInfo> => {
-  return await db.lolBasicInfo.update(puuid, summonerLevel, summonerIconId, peakRank);
+export const updateLolBasicInfoByPuuid = async (puuid: string, summonerLevel: number, summonerIconId: number, peakRank: string | null, totalMasteryPoints: number): Promise<LolBasicInfo> => {
+  return await db.lolBasicInfo.update(puuid, summonerLevel, summonerIconId, peakRank, totalMasteryPoints);
 };

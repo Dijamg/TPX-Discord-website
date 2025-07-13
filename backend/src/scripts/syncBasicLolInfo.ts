@@ -4,28 +4,24 @@ export const syncBasicLolInfo = async () => {
     try {
         //Get all members with riot_puuid
         const members = await MemberService.getMembersWithRiotPuuid();
-        console.log(`Found ${members.length} members to sync basic lol info`);
-
         for (const member of members) {
             try {
                 //Check if current user has basic info in database
-                console.log(`Checking if member ${member.id} has basic info`);
                 const currentBasicInfo = await LolBasicInfoService.getLolBasicInfoByPuuid(member.riot_puuid!);
 
                 //Get basic info from riot api
-                const basicInfo = await RiotService.getBasicSummonerInfo(member.riot_puuid!);
+                const basicInfo = await RiotService.getBasicSummonerInfo(member.riot_puuid!, member.riot_region!);
 
                 //Get peak rank from op.gg
-                const peakRank = await PeakRankScraperService.getPeakRank(`${member.riot_game_name}-${member.riot_tag_line}`);
+                const peakRank = await PeakRankScraperService.getPeakRank(`${member.riot_game_name}-${member.riot_tag_line}`, member.riot_region!);
+
+                //Get total mastery points from riot api
+                const totalMasteryPoints = await RiotService.getTotalMasteryScore(member.riot_puuid!, member.riot_region!);
 
                 if (currentBasicInfo) {
-                    console.log(`Updating basic info for member ${member.id}`);
-                    await LolBasicInfoService.updateLolBasicInfoByPuuid(member.riot_puuid!, basicInfo.summonerLevel, basicInfo.profileIconId, peakRank);
-                    console.log(`Successfully updated member ${member.id} with puuid: ${member.riot_puuid}`);
+                    await LolBasicInfoService.updateLolBasicInfoByPuuid(member.riot_puuid!, basicInfo.summonerLevel, basicInfo.profileIconId, peakRank, totalMasteryPoints);
                 } else {
-                    console.log(`No basic info found for member ${member.id}`);
-                    await LolBasicInfoService.addLolBasicInfoByPuuid(member.riot_puuid!, basicInfo.summonerLevel, basicInfo.profileIconId, peakRank);
-                    console.log(`Successfully added basic info for member ${member.id}`);
+                    await LolBasicInfoService.addLolBasicInfoByPuuid(member.riot_puuid!, basicInfo.summonerLevel, basicInfo.profileIconId, peakRank, totalMasteryPoints);
                 }
             } catch (error) {
                 console.error(`Error syncing member ${member.id}:`, error);
