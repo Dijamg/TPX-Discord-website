@@ -3,15 +3,27 @@ import axios from 'axios';
 
 const ACCOUNT_V1_URL = "https://europe.api.riotgames.com/riot/account/v1/accounts/by-riot-id/"
 const SUMMONER_V4_URL = "https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/"
+const LEAGUE_V4_URL = "https://euw1.api.riotgames.com/lol/league/v4/entries/by-puuid/"
 
-interface BasicSummonerInfo {
+type BasicSummonerInfo = {
     puuid: string;
     profileIconId: number;
     revisionDate: number;
     summonerLevel: number;
 }
 
-interface RiotAccountResponse {
+type CurrentSeasonInfo = {
+    leagueId: string;
+    puuid: string;
+    queueType: string;
+    tier: string;
+    rank: string;
+    leaguePoints: number;
+    wins: number;
+    losses: number;
+}
+
+type RiotAccountResponse = {
     puuid: string;
     gameName: string;
     tagLine: string;
@@ -33,5 +45,17 @@ export const getBasicSummonerInfo = async (riotPuuid: string): Promise<BasicSumm
             'X-Riot-Token': process.env.RIOT_API_KEY!
         }
     });
+    return response.data;
+}
+
+export const getCurrentSeasonInfo = async (riotPuuid: string): Promise<CurrentSeasonInfo[]> => {
+    const response = await axios.get<CurrentSeasonInfo[]>(`${LEAGUE_V4_URL}${riotPuuid}`, {
+        headers: {
+            'X-Riot-Token': process.env.RIOT_API_KEY!
+        }
+    });
+
+    console.log("CURRENT SEASON INFO: ");
+    console.log(JSON.stringify(response.data));
     return response.data;
 }

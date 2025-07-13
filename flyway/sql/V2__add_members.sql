@@ -8,3 +8,14 @@ INSERT INTO Members (name, role, img_url, riot_game_name, riot_tag_line, riot_pu
     'Dijamg',
     'placeholder'
 ); 
+
+INSERT INTO Members (name, role, img_url, riot_game_name, riot_tag_line, riot_puuid, lost_ark_name, description) VALUES (    
+    'VT',
+    'Founder',
+    'https://opgg-static.akamaized.net/meta/images/profile_icons/profileIcon6482.jpg?image=q_auto:good,f_webp,w_200&v=1752223483',
+    'Tunnettu',
+    'Plugi',
+    NULL,
+    NULL,
+    'placeholder'
+); 

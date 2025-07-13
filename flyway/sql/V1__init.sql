@@ -6,6 +6,7 @@ CREATE TABLE members (
     riot_game_name VARCHAR(255),
     riot_tag_line VARCHAR(255),
     riot_puuid VARCHAR(255) UNIQUE,
+    riot_region VARCHAR(255) NOT NULL DEFAULT 'EUW1',
     lost_ark_name VARCHAR(255),
     description TEXT NOT NULL
 );
@@ -28,6 +29,18 @@ CREATE TABLE lol_current_rank_info (
     wins INT NOT NULL,
     losses INT NOT NULL,
     peak_rank VARCHAR(255) NOT NULL,
+    revision_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE lol_current_season_info (
+    id SERIAL PRIMARY KEY,
+    riot_puuid VARCHAR(255) REFERENCES members(riot_puuid),
+    queue_type VARCHAR(255) NOT NULL DEFAULT 'RANKED_SOLO_5x5',
+    tier VARCHAR(255) NOT NULL,
+    rank VARCHAR(255) NOT NULL,
+    league_points INT NOT NULL,
+    wins INT NOT NULL,
+    losses INT NOT NULL,
     revision_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 

@@ -8,11 +8,14 @@ export const syncBasicLolInfo = async () => {
 
         for (const member of members) {
             try {
-                //Check if current user has basic info
+                //Check if current user has basic info in database
                 console.log(`Checking if member ${member.id} has basic info`);
                 const currentBasicInfo = await LolBasicInfoService.getLolBasicInfoByPuuid(member.riot_puuid!);
-                //Basic info from riot api
+
+                //Get basic info from riot api
                 const basicInfo = await RiotService.getBasicSummonerInfo(member.riot_puuid!);
+
+                //Get peak rank from op.gg
                 const peakRank = await PeakRankScraperService.getPeakRank(`${member.riot_game_name}-${member.riot_tag_line}`);
 
                 if (currentBasicInfo) {

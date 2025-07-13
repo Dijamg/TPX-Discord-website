@@ -9,3 +9,4 @@ export type Member = {
   lostArkName: string | null;
   description: string;
 }; 
+

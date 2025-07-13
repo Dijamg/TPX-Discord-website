@@ -18,3 +18,14 @@ export interface LolBasicInfo {
     summoner_icon_id: number;
     peak_rank: string;
 }
+
+export interface LolCurrentSeasonInfo {
+    id: number;
+    riot_puuid: string;
+    queue_type: string;
+    tier: string;
+    rank: string;
+    league_points: number;
+    wins: number;
+    losses: number;
+}
