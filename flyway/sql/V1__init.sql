@@ -55,3 +55,17 @@ CREATE TABLE lol_mastery_info (
 );
 
 
+CREATE TABLE upcoming_clash_tournaments (
+    id SERIAL PRIMARY KEY,
+    theme_id VARCHAR(255) NOT NULL,
+    name_key VARCHAR(255) NOT NULL,
+    name_key_secondary VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE tournaments (
+    id SERIAL PRIMARY KEY,  
+    theme VARCHAR(255) NOT NULL,
+    active BOOLEAN NOT NULL DEFAULT FALSE
+);
+
+

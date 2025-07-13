@@ -39,3 +39,16 @@ export interface LolMasteryInfo {
     champion_level: number;
     champion_points: number;
 }
+
+export interface UpcomingClashTournament {
+    id: number;
+    theme_id: string;
+    name_key: string;
+    name_key_secondary: string;
+}
+
+export interface Tournament {
+    id: number;
+    theme: string;
+    active: boolean;
+}

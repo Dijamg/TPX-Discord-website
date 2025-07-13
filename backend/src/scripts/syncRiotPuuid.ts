@@ -9,12 +9,9 @@ export const syncRiotPuuid = async () => {
         console.log(`Found ${members.length} members to sync`);
         
         for (const member of members) {
-            console.log(`MEMBER TO BE UPDATED: ${JSON.stringify(member)}`);
-            console.log(`SYNCING RIOT UUID FOR ${member.riot_game_name} ${member.riot_tag_line}`);
             try {
                 const riotPuuid = await RiotService.getRiotUuid(member.riot_game_name!, member.riot_tag_line!);
                 await MemberService.updateMemberPuuid(member.id, riotPuuid);
-                console.log(`Successfully updated member ${member.id} with puuid: ${riotPuuid}`);
             } catch (error) {
                 console.error(`Error syncing member ${member.id}:`, error);
             }

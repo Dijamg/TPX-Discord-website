@@ -99,3 +99,4 @@ INSERT INTO Members (name, role, img_url, riot_game_name, riot_tag_line, riot_pu
     'placeholder'
 ); 
 
+INSERT INTO tournaments (theme) VALUES ('TPX 2v2-Challenge');

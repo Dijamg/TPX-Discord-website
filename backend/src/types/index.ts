@@ -43,4 +43,11 @@ export type MasteryInfo = {
   championName: string;
 }
 
+export type UpcomingClashTournament = {
+  id: number;
+  themeId: string;
+  nameKey: string;
+  nameKeySecondary: string;
+}
+
 

@@ -1,8 +1,9 @@
 import axios from 'axios';
-import { BasicSummonerInfo, CurrentSeasonInfo, MasteryInfo, RiotAccountResponse } from '../types';
+import { BasicSummonerInfo, CurrentSeasonInfo, MasteryInfo, RiotAccountResponse, UpcomingClashTournament } from '../types';
 import { getChampionIdToNameMap } from '../utils/masteryUtils';
 
 const ACCOUNT_V1_URL = "https://europe.api.riotgames.com/riot/account/v1/accounts/by-riot-id/"
+const CLASH_V1_URL = "https://euw1.api.riotgames.com/lol/clash/v1/tournaments"
 
 const getSummonerV4Url = (region: string) => {
     return `https://${region}.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/`;
@@ -77,5 +78,18 @@ export const getTotalMasteryScore = async (riotPuuid: string, riot_region: strin
             'X-Riot-Token': process.env.RIOT_API_KEY!
         }
     });
+    return response.data;
+}
+
+export const getUpcomingClashTournaments = async (): Promise<UpcomingClashTournament[]> => {
+    const response = await axios.get<UpcomingClashTournament[]>(CLASH_V1_URL, {
+        headers: {
+            'X-Riot-Token': process.env.RIOT_API_KEY!
+        }
+    });
+
+    console.log("UPCOMING CLASH TOURNAMENTS: ");
+    console.log(JSON.stringify(response.data));
+
     return response.data;
 }
