@@ -56,17 +56,17 @@ export type Tournament = {
 
 export type LolMatchHistory = {
     matchId: string,
-    puuid: string,
-    championName: string,
+    riot_puuid: string,
+    champion_name: string,
     win: boolean,
     kills: number,
     deaths: number,
     assists: number,
-    killParticipationPercent: number,
-    totalMinionsKilled: number,
-    csPerMinute: number,
-    matchDuration: number,
-    matchDate: Date,
+    kill_participation_percent: number,
+    total_minions_killed: number,
+    cs_per_minute: number,
+    match_duration: number,
+    match_date: Date,
 }
 
 export type AllProps = {

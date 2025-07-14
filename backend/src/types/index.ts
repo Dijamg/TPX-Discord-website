@@ -71,11 +71,13 @@ export type LolParticipantDto = {
   puuid: string;
   teamId: number;
   championName: string;
+  championId: number;
   win: boolean;
   kills: number;
   deaths: number;
   assists: number;
   totalMinionsKilled: number;
+  neutralMinionsKilled: number;
 }
 
 

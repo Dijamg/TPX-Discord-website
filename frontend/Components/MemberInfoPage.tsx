@@ -47,6 +47,7 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
   const basicLolInfo = allProps.basicLolInfo.find(b => b.riot_puuid === member.riot_puuid);
   const currentSeasonLolInfo = allProps.currentSeasonLolInfo.find(c => c.riot_puuid === member.riot_puuid);
   const masteryInfo = allProps.masteryInfo.filter(m => m.riot_puuid === member.riot_puuid);
+  const recentRankedHistory = allProps.lolMatchHistory.filter(r => r.riot_puuid === member.riot_puuid);
 
   const summonerIconUrl = `https://ddragon.leagueoflegends.com/cdn/15.13.1/img/profileicon/${basicLolInfo?.summoner_icon_id}.png`;
   const opggUrl = `https://op.gg/lol/summoners/${member.riot_region.toLowerCase().slice(0, -1)}/${member.riot_game_name + "-" + member.riot_tag_line}`;
@@ -170,32 +171,78 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
             </div>
           </div>
           {/* Right column: 2/3 - Champion Masteries */}
-          <div className="p-6 w-full md:w-2/3 flex flex-col items-center md:items-start justify-center md:mt-0 md:self-start">
-            <h2 className="text-lg font-bold text-gray-400 mb-2 border-b-2 border-purple-400 w-full text-center pb-2">Top Champion Masteries</h2>
-            <div className="flex flex-row flex-wrap justify-center md:justify-center gap-6 p-4 w-full">
-              {masteryInfo.slice(0, 5).map((mastery, idx) => (
-                <div key={idx} className="flex flex-col items-center w-20">
-                  <img
-                    src={getChampionIconUrl(mastery.champion_name)}
-                    alt={mastery.champion_name}
-                    className="w-18 h-18 rounded mb-1 border-2 border-purple-400 bg-gray-800"
-                  />
-                  <span className="text-sm font-semibold text-gray-300">Lvl {mastery.champion_level}</span>
-                  <span className="text-xs text-gray-400">{mastery.champion_points.toLocaleString()} pts</span>
-                </div>
-              ))}
-            </div>
-            {/* Total Mastery Score */}
-            {basicLolInfo?.total_mastery_points !== undefined && (
-              <div className="w-full flex flex-col items-center mt-2 mb-7">
-                <span className="text-2xl font-bold text-gray-400">Total Mastery Score</span>
-                <span className="text-2xl font-extrabold text-gray-200">{basicLolInfo.total_mastery_points.toLocaleString()}</span>
+          <div className="w-full md:w-2/3">
+            <div className="w-full flex flex-col items-center md:items-start justify-center md:mt-0 md:self-start px-6 pt-6 ">
+              <h2 className="text-lg font-bold text-gray-400 mb-2 border-b-2 border-purple-400 w-full text-center pb-2">Top Champion Masteries</h2>
+              <div className="flex flex-row flex-wrap justify-center md:justify-center gap-6 p-4 w-full">
+                {masteryInfo.slice(0, 5).map((mastery, idx) => (
+                  <div key={idx} className="flex flex-col items-center w-20">
+                    <img
+                      src={getChampionIconUrl(mastery.champion_name)}
+                      alt={mastery.champion_name}
+                      className="w-18 h-18 rounded mb-1 border-2 border-purple-400 bg-gray-800"
+                    />
+                    <span className="text-sm font-semibold text-gray-300">Lvl {mastery.champion_level}</span>
+                    <span className="text-xs text-gray-400">{mastery.champion_points.toLocaleString()} pts</span>
+                  </div>
+                ))}
               </div>
-            )}
+              {/* Total Mastery Score */}
+              {basicLolInfo?.total_mastery_points !== undefined && (
+                <div className="w-full flex flex-col items-center mt-2 mb-7">
+                  <span className="text-2xl font-bold text-gray-400">Total Mastery Score</span>
+                  <span className="text-2xl font-extrabold text-gray-200">{basicLolInfo.total_mastery_points.toLocaleString()}</span>
+                </div>
+              )}
+            </div>
             {/* Recent Ranked History (Solo/Duo) */}
-            <div className="w-full flex flex-col items-center">
+            <div className="w-full flex flex-col items-center md:items-start justify-center md:mt-0 md:self-start px-6 ">
               <h2 className="text-base font-bold text-gray-400 mb-2 border-b-2 border-purple-400 w-full text-center pb-2">Recent Ranked History (Solo/Duo)</h2>
-              
+              <div className="flex flex-row flex-wrap justify-center gap-12 p-4 w-full">
+                {recentRankedHistory
+                  .slice()
+                  .sort((a, b) => new Date(a.match_date).getTime() - new Date(b.match_date).getTime())
+                  .map((entry, idx) => (
+                    <div
+                      key={idx}
+                      className="flex flex-col items-center w-20"
+                    >
+                      <img
+                        src={getChampionIconUrl(entry.champion_name)}
+                        alt={entry.champion_name}
+                        className={`w-18 h-18 rounded mb-1 border-2 ${entry.win ? 'border-green-500' : 'border-red-500'} bg-gray-800`}
+                        style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto' }}
+                      />
+                      <div className="flex flex-row justify-center items-center text-lg font-bold">
+                        <span className="text-gray-300">{entry.kills}</span>
+                        <span className="text-gray-500"> / </span>
+                        <span className="text-red-600">{entry.deaths}</span>
+                        <span className="text-gray-500"> / </span>
+                        <span className="text-gray-300">{entry.assists}</span>
+                      </div>
+                      <div className="text-sm text-gray-400 mt-1 whitespace-nowrap flex flex-row items-center justify-center">
+                        {entry.total_minions_killed} CS - {entry.kill_participation_percent}% Kills P.
+                      </div>
+                      <div className="text-xs text-gray-400 mt-1">
+                        {(() => {
+                          const now = new Date();
+                          const matchDate = new Date(entry.match_date);
+                          const diffMs = now.getTime() - matchDate.getTime();
+                          const diffMins = Math.floor(diffMs / 60000);
+                          const diffHours = Math.floor(diffMins / 60);
+                          const diffDays = Math.floor(diffHours / 24);
+                          if (diffDays >= 1) {
+                            return `${diffDays}d ago`;
+                          } else if (diffHours >= 1) {
+                            return `${diffHours}h ${diffMins % 60}m ago`;
+                          } else {
+                            return `${diffMins}m ago`;
+                          }
+                        })()}
+                      </div>
+                    </div>
+                  ))}
+              </div>
             </div>
           </div>
           

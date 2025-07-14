@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { BasicSummonerInfo, CurrentSeasonInfo, MasteryInfo, RiotAccountResponse, UpcomingClashTournament, LolMatchHistory, LolMatchDto, LolParticipantDto } from '../types';
-import { getChampionIdToNameMap } from '../utils/masteryUtils';
+import { getChampionIdToNameMap } from '../utils/championUtils';
 import { getMatchRegionFromPlatform } from '../utils/regionUtils';
 
 const ACCOUNT_V1_URL = "https://europe.api.riotgames.com/riot/account/v1/accounts/by-riot-id/"
@@ -119,18 +119,20 @@ export const getMatchDetails = async (matchIds: string[], puuid: string, riot_re
             const kp = ((findWantedPlayer.kills + findWantedPlayer.assists) / teamKills) || 0;
             const kpPercent = +(kp * 100).toFixed(1);
 
-            const csPerMinute = +(findWantedPlayer.totalMinionsKilled / (matchDetails.info.gameDuration / 60)).toFixed(1) || 0;
+            const championIdToNameMap = await getChampionIdToNameMap()
+
+            const csPerMinute = +((findWantedPlayer.totalMinionsKilled + findWantedPlayer.neutralMinionsKilled) / (matchDetails.info.gameDuration / 60)).toFixed(1) || 0;
 
             results.push({
                 matchId: matchId,
                 puuid: puuid,
-                championName: findWantedPlayer.championName,
+                championName: championIdToNameMap[findWantedPlayer.championId],
                 win: findWantedPlayer.win,
                 kills: findWantedPlayer.kills,
                 deaths: findWantedPlayer.deaths,
                 assists: findWantedPlayer.assists,
                 killParticipationPercent: kpPercent,
-                totalMinionsKilled: findWantedPlayer.totalMinionsKilled,
+                totalMinionsKilled: findWantedPlayer.totalMinionsKilled + findWantedPlayer.neutralMinionsKilled,
                 csPerMinute: csPerMinute,
                 matchDuration: matchDetails.info.gameDuration,
                 matchDate: new Date(matchDetails.info.gameEndTimestamp)
@@ -149,7 +151,7 @@ export const getMatchHistory = async (riotPuuid: string, riot_region: string): P
             'X-Riot-Token': process.env.RIOT_API_KEY!
         },
         params: {
-            count: 2,
+            count: 5,
             queue: 420,
             start: 0
         }

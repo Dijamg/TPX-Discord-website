@@ -19,7 +19,7 @@ export const getChampionIdToNameMap = async (): Promise<Record<string, string>> 
   const map: Record<string, string> = {};
 
   Object.values(champions).forEach((champ: any) => {
-    map[champ.key] = champ.id;
+    map[champ.key] = champ.id;  
   });
 
   cachedChampionMap = map;
