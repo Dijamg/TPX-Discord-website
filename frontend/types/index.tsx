@@ -45,6 +45,7 @@ export type UpcomingClashTournament = {
     theme_id: string,
     name_key: string,
     name_key_secondary: string,
+    start_date: Date,
 }
 
 export type Tournament = {

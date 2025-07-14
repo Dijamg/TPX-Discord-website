@@ -17,7 +17,10 @@ export const syncUpcomingClashes = async () => {
 
         //Add all upcoming clashes
         for (const clash of upcomingClashes) {
-            await TournamentService.addUpcomingClashTournament(clash.themeId, clash.nameKey, clash.nameKeySecondary);
+            if(clash.schedule.length > 0) {
+                const startTime = new Date(clash.schedule[0].startTime);
+                await TournamentService.addUpcomingClashTournament(clash.themeId, clash.nameKey, clash.nameKeySecondary, startTime);
+            }
         }
         console.log(`Synced upcoming clashes`);
     } catch (error) {

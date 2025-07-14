@@ -6,3 +6,4 @@ export * as LolCurrentSeasonInfoService from "./lolCurrentSeasonInfo";
 export * as LolMasteryInfoService from "./lolMasteryInfo";
 export * as TournamentService from "./tournaments";
 export * as LolMatchHistoryService from "./LolMatchHistory";
+export * as AccountService from "./account";

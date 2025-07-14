@@ -6,7 +6,6 @@ export interface Member {
     riot_game_name: string | null;
     riot_tag_line: string | null;
     riot_puuid: string | null;
-    lostarkname: string | null;
     description: string;
     riot_region: string;    
     revision_date: Date;
@@ -49,6 +48,7 @@ export interface UpcomingClashTournament {
     theme_id: string;
     name_key: string;
     name_key_secondary: string;
+    start_date: Date;
     revision_date: Date;
 }
 
@@ -57,6 +57,7 @@ export interface Tournament {
     theme: string;
     active: boolean;
     img_url: string | null;
+    start_date: Date;
     revision_date: Date;
 }
 
@@ -74,5 +75,13 @@ export interface LolMatchHistory {
     cs_per_minute: number;
     match_duration: number;
     match_date: Date;
+    revision_date: Date;
+}
+
+export interface Account {
+    id: number;
+    username: string;
+    password: string;
+    is_admin: boolean;
     revision_date: Date;
 }

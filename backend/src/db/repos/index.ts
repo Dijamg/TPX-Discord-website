@@ -4,6 +4,7 @@ import { LolCurrentSeasonInfoRepository } from "./lolCurrentSeasonInfo";
 import { LolMasteryInfoRepository } from "./lolMasteryInfo";
 import { LolMatchHistoryRepository } from "./lolMatchHistory";
 import { TournamentRepository } from "./tournament";
+import { AccountRepository } from "./account";
 // Database Interface Extensions:
 interface IExtensions {
     members: MembersRepository;
@@ -12,6 +13,7 @@ interface IExtensions {
     lolMasteryInfo: LolMasteryInfoRepository;
     lolMatchHistory: LolMatchHistoryRepository;
     tournament: TournamentRepository;
+    account: AccountRepository;
 }
 
-export { IExtensions, MembersRepository, LolBasicInfoRepository, LolCurrentSeasonInfoRepository, LolMasteryInfoRepository, LolMatchHistoryRepository, TournamentRepository };
+export { IExtensions, MembersRepository, LolBasicInfoRepository, LolCurrentSeasonInfoRepository, LolMasteryInfoRepository, LolMatchHistoryRepository, TournamentRepository, AccountRepository };

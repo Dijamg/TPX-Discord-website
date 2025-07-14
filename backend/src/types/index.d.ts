@@ -48,6 +48,12 @@ export type UpcomingClashTournament = {
   themeId: string;
   nameKey: string;
   nameKeySecondary: string;
+  schedule: ClashSchedule[];
+}
+
+export type ClashSchedule = {
+  startTime: Date;
+  registrationTime: Date;
 }
 
 export type LolMatchDto = {
@@ -80,9 +86,6 @@ export type LolParticipantDto = {
   neutralMinionsKilled: number;
 }
 
-
-
-
 export type LolMatchHistory = {
   matchId: string;
   puuid: string;
@@ -98,4 +101,12 @@ export type LolMatchHistory = {
   matchDate: Date;
 }
 
+export type Credentials = {
+  username: string;
+  password: string;
+}
 
+export type JwtToken = {
+  accountId: number;
+  username: string;
+};

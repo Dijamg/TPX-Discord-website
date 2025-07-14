@@ -44,7 +44,7 @@ export class TournamentRepository {
     }
 
     // Adds an upcoming clash tournament
-    addUpcomingClashTournament(theme_id: string, name_key: string, name_key_secondary: string): Promise<null> {
-        return this.db.none("INSERT INTO upcoming_clash_tournaments (theme_id, name_key, name_key_secondary) VALUES ($1, $2, $3)", [theme_id, name_key, name_key_secondary]);
+    addUpcomingClashTournament(theme_id: string, name_key: string, name_key_secondary: string, start_date: Date): Promise<null> {
+        return this.db.none("INSERT INTO upcoming_clash_tournaments (theme_id, name_key, name_key_secondary, start_date) VALUES ($1, $2, $3, $4)", [theme_id, name_key, name_key_secondary, start_date]);
     }
 }

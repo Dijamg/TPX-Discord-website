@@ -1,30 +1,39 @@
 import express from "express";
 import cors from 'cors';
 import { initScheduler } from "./scripts/scheduler";
-import lolBasicInfoRouter from "./routes/lolBasicInfoRouter";
-import lolCurrentSeasonInfoRouter from "./routes/lolCurrentSeasonInfoRouter";
-import lolMasteryInfoRouter from "./routes/lolMasteryInfoRouter";
-import upcomingClashTournamentsRouter from "./routes/upcomingClashTournamentsRouter";
-import tournamentsRouter from "./routes/tournamentsRouter";
-import lolMatchHistoryRouter from "./routes/lolMatchHistoryRouter";
-import membersRouter from "./routes/membersRouter";
+import lolBasicInfoRoutes from "./routes/lolBasicInfo.routes";
+import lolCurrentSeasonInfoRoutes from "./routes/lolCurrentSeasonInfo.routes";
+import lolMasteryInfoRoutes from "./routes/lolMasteryInfo.routes";
+import upcomingClashTournamentsRoutes from "./routes/upcomingClashTournaments.routes";
+import tournamentsRoutes from "./routes/tournaments.routes";
+import lolMatchHistoryRoutes from "./routes/lolMatchHistory.routes";
+import membersRoutes from "./routes/members.routes";
+import { AccountService } from "./services";
+import authRoutes from "./routes/auth.routes";
 
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use('/lol-basic-info', lolBasicInfoRouter);
-app.use('/lol-current-season-info', lolCurrentSeasonInfoRouter);
-app.use('/lol-mastery-info', lolMasteryInfoRouter);
-app.use('/upcoming-clash-tournaments', upcomingClashTournamentsRouter);
-app.use('/tournaments', tournamentsRouter);
-app.use('/lol-match-history', lolMatchHistoryRouter);
-app.use('/members', membersRouter);
+app.use('/lol-basic-info', lolBasicInfoRoutes);
+app.use('/lol-current-season-info', lolCurrentSeasonInfoRoutes);
+app.use('/lol-mastery-info', lolMasteryInfoRoutes);
+app.use('/upcoming-clash-tournaments', upcomingClashTournamentsRoutes);
+app.use('/tournaments', tournamentsRoutes);
+app.use('/lol-match-history', lolMatchHistoryRoutes);
+app.use('/members', membersRoutes);
+app.use('/auth', authRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).send('OK');
+});
+
+// for testing 
+app.get('/accounts', async (req, res) => {
+  const accounts = await AccountService.getAll();
+  res.status(200).json(accounts);
 });
 
 const PORT = process.env.NODE_DOCKER_PORT ?? 8080;
