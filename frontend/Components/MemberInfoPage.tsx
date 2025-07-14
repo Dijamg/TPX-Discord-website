@@ -216,7 +216,7 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
                       <div className="flex flex-row justify-center items-center text-lg font-bold">
                         <span className="text-gray-300">{entry.kills}</span>
                         <span className="text-gray-500"> / </span>
-                        <span className="text-red-600">{entry.deaths}</span>
+                        <span className="text-red-800">{entry.deaths}</span>
                         <span className="text-gray-500"> / </span>
                         <span className="text-gray-300">{entry.assists}</span>
                       </div>

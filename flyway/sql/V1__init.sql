@@ -8,7 +8,8 @@ CREATE TABLE members (
     riot_puuid VARCHAR(255) UNIQUE,
     riot_region VARCHAR(255) NOT NULL DEFAULT 'EUW1',
     lost_ark_name VARCHAR(255),
-    description TEXT NOT NULL
+    description TEXT NOT NULL,
+    revision_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE lol_basic_info (
@@ -18,18 +19,6 @@ CREATE TABLE lol_basic_info (
     summoner_icon_id INT NOT NULL,
     peak_rank VARCHAR(255),
     total_mastery_points INT NOT NULL,
-    revision_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE lol_current_rank_info (
-    id SERIAL PRIMARY KEY,
-    riot_puuid VARCHAR(255) REFERENCES members(riot_puuid),
-    current_tier VARCHAR(255) NOT NULL,
-    current_rank VARCHAR(255) NOT NULL,
-    current_league_points INT NOT NULL,
-    wins INT NOT NULL,
-    losses INT NOT NULL,
-    peak_rank VARCHAR(255) NOT NULL,
     revision_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -59,14 +48,16 @@ CREATE TABLE upcoming_clash_tournaments (
     id SERIAL PRIMARY KEY,
     theme_id VARCHAR(255) NOT NULL,
     name_key VARCHAR(255) NOT NULL,
-    name_key_secondary VARCHAR(255) NOT NULL
+    name_key_secondary VARCHAR(255) NOT NULL,
+    revision_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE tournaments (
     id SERIAL PRIMARY KEY,  
     theme VARCHAR(255) NOT NULL,
     active BOOLEAN NOT NULL DEFAULT FALSE,
-    img_url VARCHAR(512)
+    img_url VARCHAR(512),
+    revision_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE lol_match_history (
