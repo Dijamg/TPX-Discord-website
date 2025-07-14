@@ -30,8 +30,8 @@ import { LolBasicInfo, LolCurrentSeasonInfo, LolMasteryInfo } from "../models";
     }
 
     // Tries to find lol mastery info of a member by riot_puuid;
-    findByPuuid(puuid: string): Promise<LolMasteryInfo | null> {
-        return this.db.oneOrNone("SELECT * FROM lol_mastery_info WHERE riot_puuid = $1", puuid);
+    findByPuuid(puuid: string): Promise<LolMasteryInfo[]> {
+        return this.db.any("SELECT * FROM lol_mastery_info WHERE riot_puuid = $1 ORDER BY champion_points DESC", puuid);
     }
 
     // Tries to find lol mastery info of a member by riot_puuid;

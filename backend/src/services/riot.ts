@@ -160,8 +160,5 @@ export const getMatchHistory = async (riotPuuid: string, riot_region: string): P
     const lastFiveMatches = response.data
     const matchDetails = await getMatchDetails(lastFiveMatches, riotPuuid, riot_region);
 
-    console.log("matchDetails");
-    console.log(matchDetails);
-
     return matchDetails;
 }

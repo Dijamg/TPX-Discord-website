@@ -9,6 +9,7 @@ export interface Member {
     lostarkname: string | null;
     description: string;
     riot_region: string;    
+    revision_date: Date;
 }
 
 export interface LolBasicInfo {
@@ -48,6 +49,7 @@ export interface UpcomingClashTournament {
     theme_id: string;
     name_key: string;
     name_key_secondary: string;
+    revision_date: Date;
 }
 
 export interface Tournament {
@@ -55,6 +57,7 @@ export interface Tournament {
     theme: string;
     active: boolean;
     img_url: string | null;
+    revision_date: Date;
 }
 
 export interface LolMatchHistory {

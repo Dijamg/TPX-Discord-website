@@ -7,7 +7,7 @@ export const getAllLolMasteryInfo = async (): Promise<LolMasteryInfo[]> => {
 };
 
 // Get lol basic info by puuid
-export const getLolMasteryInfoByPuuid = async (puuid: string): Promise<LolMasteryInfo | null> => {
+export const getLolMasteryInfoByPuuid = async (puuid: string): Promise<LolMasteryInfo[]> => {
   return await db.lolMasteryInfo.findByPuuid(puuid);
 };
 

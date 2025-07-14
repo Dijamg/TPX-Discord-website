@@ -4,6 +4,7 @@
 import { MemberService, RiotService } from "../services";
 
 export const syncRiotPuuid = async () => {
+    console.log('Syncing riot puuid');
     try {
         const members = await MemberService.getMembersWithNoRiotPuuid();
         console.log(`Found ${members.length} members to sync`);
@@ -16,6 +17,7 @@ export const syncRiotPuuid = async () => {
                 console.error(`Error syncing member ${member.id}:`, error);
             }
         }
+        console.log(`Synced riot puuid for all members`);
     } catch (error) {
         console.error('Error fetching members:', error);
     }

@@ -1,147 +1,36 @@
-import express, { Express, Request, Response } from "express";
+import express from "express";
 import cors from 'cors';
-import { syncRiotPuuid } from "./scripts/syncRiotPuuid";
-import { syncBasicLolInfo } from "./scripts/syncBasicLolInfo";
-import { LolBasicInfoService, LolCurrentSeasonInfoService, LolMasteryInfoService, LolMatchHistoryService, MemberService, TournamentService } from "./services/index";
-import { syncCurrentSeasonLolInfo } from "./scripts/syncCurrentSeasonLolInfo";
-import { syncMasteryInfo } from "./scripts/syncMasteryInfo";
-import { syncUpcomingClashes } from "./scripts/syncUpcomingClashes";
-import { syncMatchHistory } from "./scripts/syncMatchHistory";
+import { initScheduler } from "./scripts/scheduler";
+import lolBasicInfoRouter from "./routes/lolBasicInfoRouter";
+import lolCurrentSeasonInfoRouter from "./routes/lolCurrentSeasonInfoRouter";
+import lolMasteryInfoRouter from "./routes/lolMasteryInfoRouter";
+import upcomingClashTournamentsRouter from "./routes/upcomingClashTournamentsRouter";
+import tournamentsRouter from "./routes/tournamentsRouter";
+import lolMatchHistoryRouter from "./routes/lolMatchHistoryRouter";
+import membersRouter from "./routes/membersRouter";
+
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-
-app.get('/members', async (req, res) => {
-  try {
-    res.send(await MemberService.getAllMembers());
-} catch (error) {
-  console.log(error);
-    res.status(500).send("Error querying database");
-}
-});
-
-app.get('/members/:id', async (req, res) => {
-  try {
-    res.send(await MemberService.getMemberById(parseInt(req.params.id)));
-} catch (error) {
-    res.status(500).send("Error querying database");
-}
-});
-
-app.get('/lol-basic-info', async (req, res) => {
-  try {
-    res.send(await LolBasicInfoService.getAllLolBasicInfo());
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Error querying database");
-  }
-});
-
-app.get('/lol-basic-info/:id', async (req, res) => {
-  try {
-    res.send(await LolBasicInfoService.getLolBasicInfoById(parseInt(req.params.id)));
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Error querying database");
-  }
-});
-
-app.get('/lol-current-season-info', async (req, res) => {
-  try {
-    res.send(await LolCurrentSeasonInfoService.getAllLolCurrentSeasonInfo());
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Error querying database");
-  }
-});
-
-app.get('/lol-current-season-info/:id', async (req, res) => { 
-  try {
-    res.send(await LolCurrentSeasonInfoService.getLolCurrentSeasonInfoById(parseInt(req.params.id)));
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Error querying database");
-  }
-});
-
-app.get('/lol-mastery-info', async (req, res) => {
-  try {
-    res.send(await LolMasteryInfoService.getAllLolMasteryInfo());
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Error querying database");
-  }
-});
-
-app.get('/lol-mastery-info/:id', async (req, res) => {
-  try {
-    res.send(await LolMasteryInfoService.getLolMasteryInfoById(parseInt(req.params.id)));
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Error querying database");
-  }
-});
-
-app.get('/upcoming-clash-tournaments', async (req, res) => {
-  try {
-    res.send(await TournamentService.getAllUpcomingClashTournaments());
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Error querying database");
-  }
-});
-
-app.get('/tournaments', async (req, res) => {
-  try {
-    res.send(await TournamentService.getAllTournaments());
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Error querying database");
-  }
-});
-
-app.get('/lol-match-history', async (req, res) => { 
-  try {
-    res.send(await LolMatchHistoryService.getAllLolMatchHistory());
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Error querying database");
-  }
-});
+app.use('/lol-basic-info', lolBasicInfoRouter);
+app.use('/lol-current-season-info', lolCurrentSeasonInfoRouter);
+app.use('/lol-mastery-info', lolMasteryInfoRouter);
+app.use('/upcoming-clash-tournaments', upcomingClashTournamentsRouter);
+app.use('/tournaments', tournamentsRouter);
+app.use('/lol-match-history', lolMatchHistoryRouter);
+app.use('/members', membersRouter);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).send('OK');
 });
 
-
-
 const PORT = process.env.NODE_DOCKER_PORT ?? 8080;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-}); 
 
-// Run syncs sequentially
-const runSyncs = async () => {
-  try {
-    console.log('Starting syncRiotPuuid...');
-    await syncRiotPuuid();
-    console.log('syncRiotPuuid completed, starting syncBasicLolInfo...');
-    await syncBasicLolInfo();
-    console.log('syncBasicLolInfo completed, starting syncCurrentSeasonLolInfo...');
-    await syncCurrentSeasonLolInfo();
-    console.log('syncCurrentSeasonLolInfo completed, starting syncMasteryInfo...');
-    await syncMasteryInfo();
-    console.log('syncMasteryInfo completed, starting syncUpcomingClashes...');
-    await syncUpcomingClashes();
-    console.log('syncUpcomingClashes completed, starting syncMatchHistory...');
-    await syncMatchHistory();
-    console.log('All syncs completed');
-  } catch (error) {
-    console.error('Error during syncs:', error);
-  }
-};
-
-runSyncs();
+initScheduler().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+});

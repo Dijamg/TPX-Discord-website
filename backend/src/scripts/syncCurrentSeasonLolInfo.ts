@@ -1,6 +1,7 @@
 import { MemberService, RiotService, LolCurrentSeasonInfoService } from "../services";
 
 export const syncCurrentSeasonLolInfo = async () => {
+    console.log('Syncing current season lol info');
     try {
         //Get all members with riot_puuid
         const members = await MemberService.getMembersWithRiotPuuid();
@@ -27,6 +28,7 @@ export const syncCurrentSeasonLolInfo = async () => {
                 console.error(`Error syncing member ${member.id}:`, error);
             }
         }
+        console.log(`Synced current season info for all members`);
     } catch (error) {
         console.error('Error fetching members:', error);
     }

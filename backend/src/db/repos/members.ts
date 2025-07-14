@@ -45,6 +45,6 @@ export class MembersRepository {
 
     // Updates a member's puuid
     updatePuuid(id: number, puuid: string): Promise<Member | null> {
-        return this.db.oneOrNone("UPDATE members SET riot_puuid = $1 WHERE id = $2 RETURNING *", [puuid, id]);
+        return this.db.oneOrNone("UPDATE members SET riot_puuid = $1, revision_date = CURRENT_TIMESTAMP WHERE id = $2 RETURNING *", [puuid, id]);
     }
 }

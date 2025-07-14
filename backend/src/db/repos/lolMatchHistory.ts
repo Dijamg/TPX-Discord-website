@@ -30,8 +30,8 @@ import { LolBasicInfo, LolCurrentSeasonInfo, LolMasteryInfo, LolMatchHistory } f
     }
 
     // Tries to find lol match history of a member by riot_puuid;
-    findByPuuid(puuid: string): Promise<LolMatchHistory | null> {
-        return this.db.oneOrNone("SELECT * FROM lol_match_history WHERE riot_puuid = $1", puuid);
+    findByPuuid(puuid: string): Promise<LolMatchHistory[]> {
+        return this.db.any("SELECT * FROM lol_match_history WHERE riot_puuid = $1 ORDER BY match_date DESC", puuid);
     }
 
     // Add lol match history by puuid
@@ -42,5 +42,10 @@ import { LolBasicInfo, LolCurrentSeasonInfo, LolMasteryInfo, LolMatchHistory } f
     // Delete lol match history by puuid
     deleteByPuuid(puuid: string): Promise<null> {
         return this.db.none("DELETE FROM lol_match_history WHERE riot_puuid = $1", puuid);
+    }
+
+    // Trim to 5 matches by deleting older matches
+    trimTo5(puuid: string): Promise<null> {
+        return this.db.none("DELETE FROM lol_match_history WHERE riot_puuid = $1 AND id NOT IN (SELECT id FROM lol_match_history WHERE riot_puuid = $1 ORDER BY match_date DESC LIMIT 5)", puuid);
     }
 }

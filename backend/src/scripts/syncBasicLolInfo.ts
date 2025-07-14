@@ -1,6 +1,7 @@
 import { MemberService, RiotService, LolBasicInfoService, PeakRankScraperService } from "../services";
 
 export const syncBasicLolInfo = async () => {
+    console.log('Syncing basic lol info');
     try {
         //Get all members with riot_puuid
         const members = await MemberService.getMembersWithRiotPuuid();
@@ -27,6 +28,7 @@ export const syncBasicLolInfo = async () => {
                 console.error(`Error syncing member ${member.id}:`, error);
             }
         }
+        console.log(`Synced basic info for all members`);
     } catch (error) {
         console.error('Error fetching members:', error);
     }
