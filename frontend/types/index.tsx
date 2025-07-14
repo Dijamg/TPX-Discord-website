@@ -11,13 +11,6 @@ export type Member = {
     riot_region: string,
 }
 
-export type Tournament = {
-    id: number,
-    name: string,
-    description: string,
-    img_url: string | null,
-}
-
 export type BasicLolInfo = {
     id: number,
     riot_puuid: string,
@@ -47,9 +40,41 @@ export type MasteryInfo = {
     champion_points: number,
 }
 
+export type UpcomingClashTournament = {
+    id: number,
+    theme_id: string,
+    name_key: string,
+    name_key_secondary: string,
+}
+
+export type Tournament = {
+    id: number,
+    theme: string,
+    active: boolean,
+    img_url: string | null,
+}
+
+export type LolMatchHistory = {
+    matchId: string,
+    puuid: string,
+    championName: string,
+    win: boolean,
+    kills: number,
+    deaths: number,
+    assists: number,
+    killParticipationPercent: number,
+    totalMinionsKilled: number,
+    csPerMinute: number,
+    matchDuration: number,
+    matchDate: Date,
+}
+
 export type AllProps = {
     members: Member[],
     basicLolInfo: BasicLolInfo[],
     currentSeasonLolInfo: CurrentSeasonLolInfo[],
-    masteryInfo: MasteryInfo[]
+    masteryInfo: MasteryInfo[],
+    upcomingClashTournaments: UpcomingClashTournament[],
+    tournaments: Tournament[],
+    lolMatchHistory: LolMatchHistory[],
 }

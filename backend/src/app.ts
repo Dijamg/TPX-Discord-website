@@ -2,10 +2,11 @@ import express, { Express, Request, Response } from "express";
 import cors from 'cors';
 import { syncRiotPuuid } from "./scripts/syncRiotPuuid";
 import { syncBasicLolInfo } from "./scripts/syncBasicLolInfo";
-import { LolBasicInfoService, LolCurrentSeasonInfoService, LolMasteryInfoService, MemberService, TournamentService } from "./services/index";
+import { LolBasicInfoService, LolCurrentSeasonInfoService, LolMasteryInfoService, LolMatchHistoryService, MemberService, TournamentService } from "./services/index";
 import { syncCurrentSeasonLolInfo } from "./scripts/syncCurrentSeasonLolInfo";
 import { syncMasteryInfo } from "./scripts/syncMasteryInfo";
 import { syncUpcomingClashes } from "./scripts/syncUpcomingClashes";
+import { syncMatchHistory } from "./scripts/syncMatchHistory";
 
 const app = express();
 app.use(cors());
@@ -14,7 +15,6 @@ app.use(express.json());
 
 app.get('/members', async (req, res) => {
   try {
-    console.log("getAllMembers111");
     res.send(await MemberService.getAllMembers());
 } catch (error) {
   console.log(error);
@@ -102,6 +102,15 @@ app.get('/tournaments', async (req, res) => {
   }
 });
 
+app.get('/lol-match-history', async (req, res) => { 
+  try {
+    res.send(await LolMatchHistoryService.getAllLolMatchHistory());
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Error querying database");
+  }
+});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).send('OK');
@@ -127,6 +136,8 @@ const runSyncs = async () => {
     await syncMasteryInfo();
     console.log('syncMasteryInfo completed, starting syncUpcomingClashes...');
     await syncUpcomingClashes();
+    console.log('syncUpcomingClashes completed, starting syncMatchHistory...');
+    await syncMatchHistory();
     console.log('All syncs completed');
   } catch (error) {
     console.error('Error during syncs:', error);

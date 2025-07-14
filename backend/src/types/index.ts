@@ -50,4 +50,50 @@ export type UpcomingClashTournament = {
   nameKeySecondary: string;
 }
 
+export type LolMatchDto = {
+  metadata: LolMetadataDto;
+  info: LolInfoDto;
+}
+
+export type LolMetadataDto = {
+  dataVersion: string;
+  matchId: string;
+  participants: string[];
+}
+
+export type LolInfoDto = { 
+  gameEndTimestamp: number;
+  gameDuration: number;
+  participants: LolParticipantDto[];
+}
+
+export type LolParticipantDto = {
+  puuid: string;
+  teamId: number;
+  championName: string;
+  win: boolean;
+  kills: number;
+  deaths: number;
+  assists: number;
+  totalMinionsKilled: number;
+}
+
+
+
+
+export type LolMatchHistory = {
+  matchId: string;
+  puuid: string;
+  championName: string;
+  win: boolean;
+  kills: number;
+  deaths: number;
+  assists: number;
+  killParticipationPercent: number;
+  totalMinionsKilled: number;
+  csPerMinute: number;
+  matchDuration: number;
+  matchDate: Date;
+}
+
 

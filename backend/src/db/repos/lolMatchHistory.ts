@@ -1,0 +1,46 @@
+// src/db/repos/lolBasicInfo.ts
+import { IDatabase, IMain } from "pg-promise";
+import { LolBasicInfo, LolCurrentSeasonInfo, LolMasteryInfo, LolMatchHistory } from "../models";
+
+    export class LolMatchHistoryRepository {
+     /**
+     * @param db
+     * Automated database connection context/interface.
+     *
+     * If you ever need to access other repositories from this one,
+     * you will have to replace type 'IDatabase<any>' with 'any'.
+     *
+     * @param pgp
+     * Library's root, if ever needed, like to access 'helpers'
+     * or other namespaces available from the root.
+     */
+     constructor(
+        private db: IDatabase<any>,
+        private pgp: IMain,
+    ) {}
+
+        //get all lol_match_history
+    getAll(): Promise<LolMatchHistory[]> {
+        return this.db.any("SELECT * FROM lol_match_history");
+    }
+
+    //get lol_match_history by id
+    findById(id: number): Promise<LolMatchHistory | null> {
+        return this.db.oneOrNone("SELECT * FROM lol_match_history WHERE id = $1", id);
+    }
+
+    // Tries to find lol match history of a member by riot_puuid;
+    findByPuuid(puuid: string): Promise<LolMatchHistory | null> {
+        return this.db.oneOrNone("SELECT * FROM lol_match_history WHERE riot_puuid = $1", puuid);
+    }
+
+    // Add lol match history by puuid
+    add(puuid: string, match_id: string, champion_name: string, win: boolean, kills: number, deaths: number, assists: number, total_minions_killed: number, match_duration: number, match_date: Date, kill_participation_percent: number, cs_per_minute: number): Promise<LolMatchHistory> {
+        return this.db.one("INSERT INTO lol_match_history (riot_puuid, match_id, champion_name, win, kills, deaths, assists, total_minions_killed, match_duration, match_date, kill_participation_percent, cs_per_minute) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *", [puuid, match_id, champion_name, win, kills, deaths, assists, total_minions_killed, match_duration, match_date, kill_participation_percent, cs_per_minute]);
+    }
+
+    // Delete lol match history by puuid
+    deleteByPuuid(puuid: string): Promise<null> {
+        return this.db.none("DELETE FROM lol_match_history WHERE riot_puuid = $1", puuid);
+    }
+}

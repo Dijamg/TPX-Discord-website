@@ -65,7 +65,25 @@ CREATE TABLE upcoming_clash_tournaments (
 CREATE TABLE tournaments (
     id SERIAL PRIMARY KEY,  
     theme VARCHAR(255) NOT NULL,
-    active BOOLEAN NOT NULL DEFAULT FALSE
+    active BOOLEAN NOT NULL DEFAULT FALSE,
+    img_url VARCHAR(512)
+);
+
+CREATE TABLE lol_match_history (
+    id SERIAL PRIMARY KEY,
+    riot_puuid VARCHAR(255) REFERENCES members(riot_puuid),
+    match_id VARCHAR(255) NOT NULL,
+    champion_name VARCHAR(255) NOT NULL,
+    win BOOLEAN NOT NULL,
+    kills INT NOT NULL,
+    deaths INT NOT NULL,
+    assists INT NOT NULL,
+    kill_participation_percent FLOAT NOT NULL,
+    total_minions_killed INT NOT NULL,
+    cs_per_minute FLOAT NOT NULL,
+    match_duration INT NOT NULL,
+    match_date TIMESTAMP NOT NULL,
+    revision_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 

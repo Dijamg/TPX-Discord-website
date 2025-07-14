@@ -8,7 +8,7 @@ export interface Member {
     riot_puuid: string | null;
     lostarkname: string | null;
     description: string;
-    riot_region: string;
+    riot_region: string;    
 }
 
 export interface LolBasicInfo {
@@ -19,6 +19,7 @@ export interface LolBasicInfo {
     summoner_icon_id: number;
     peak_rank: string;
     total_mastery_points: number;
+    revision_date: Date;
 }
 
 export interface LolCurrentSeasonInfo {
@@ -30,6 +31,7 @@ export interface LolCurrentSeasonInfo {
     league_points: number;
     wins: number;
     losses: number;
+    revision_date: Date;
 }
 
 export interface LolMasteryInfo {
@@ -38,6 +40,7 @@ export interface LolMasteryInfo {
     champion_name: string;
     champion_level: number;
     champion_points: number;
+    revision_date: Date;
 }
 
 export interface UpcomingClashTournament {
@@ -51,4 +54,22 @@ export interface Tournament {
     id: number;
     theme: string;
     active: boolean;
+    img_url: string | null;
+}
+
+export interface LolMatchHistory {
+    id: number;
+    riot_puuid: string;
+    match_id: string;
+    champion_name: string;
+    win: boolean;
+    kills: number;
+    deaths: number;
+    assists: number;
+    kill_participation_percent: number;
+    total_minions_killed: number;
+    cs_per_minute: number;
+    match_duration: number;
+    match_date: Date;
+    revision_date: Date;
 }

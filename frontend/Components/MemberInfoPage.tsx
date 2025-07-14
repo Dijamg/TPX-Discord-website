@@ -57,9 +57,9 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
   const getCurrentSeasonRankInfo = () => {
     if(currentSeasonLolInfo){
       return(
-        <div className="shadow p-6 flex flex-col items-centers mb-4">
+        <div className="shadow p-6 flex flex-col items-centers ">
           <h2 className="text-lg font-bold text-gray-400 mb-2 border-b-2 border-purple-400 w-full text-center pb-2">Current Rank</h2>
-          <div className="w-full flex flex-col items-center py-6">
+          <div className="w-full flex flex-col items-center pt-4">
             <img src={currentRankIconUrl} alt={currentSeasonLolInfo?.tier + "_" + currentSeasonLolInfo?.rank} className="w-28 h-28 mb-2" />
             <div className="flex flex-row w-full justify-between mt-2">
               {/* Left: Rank and LP */}
@@ -78,12 +78,12 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
       )
     } else {
       return(
-        <div className="shadow p-6 flex flex-col items-centers mb-4">
+        <div className="shadow p-6 flex flex-col items-centers">
               <h2 className="text-lg font-bold text-gray-400 mb-2 border-b-2  border-purple-400 w-full text-center pb-2">Current Rank</h2>
-              <div className="w-full flex flex-col items-center py-6">
+              <div className="w-full flex flex-col items-center pt-4">
                 <img src={unrankedIconUrl} alt="Unranked" className="w-28 h-28 mb-2" />
-                <span className="text-3xl  text-gray-400 mb-2">Unranked</span>
-                <span className="text-xl  text-gray-400 mb-2">This player has not played this season</span>
+                <span className="text-3xl  text-gray-400 mb-1">Unranked</span>
+                <span className="text-xl  text-gray-400">This player has not played this season</span>
               </div>
             </div>
       )
@@ -161,10 +161,10 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
             {/* Current Rank box (large) */}
             {getCurrentSeasonRankInfo()}
             {/* Peak Rank box (smaller) */}
-            <div className="shadow p-4 flex flex-col items-center border--2 border-purple-400">
+            <div className="shadow p-4 flex flex-col items-center">
               <h2 className="text-base font-bold text-gray-400 mb-2 border-b-2 border-purple-400 w-full text-center pb-2">Peak Rank</h2>
               <div className="w-full flex flex-col items-center py-2">
-                <img src={peakRankIconUrl} alt={basicLolInfo?.peak_rank} className="w-12 h-12 mb-2" />
+                <img src={peakRankIconUrl} alt={basicLolInfo?.peak_rank} className="w-12 h-12 my-2" />
                 <span className="text-lg font-semibold text-gray-400 capitalize">{basicLolInfo?.peak_rank?.replace('_', ' ') || 'N/A'}</span>
               </div>
             </div>
@@ -187,12 +187,18 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
             </div>
             {/* Total Mastery Score */}
             {basicLolInfo?.total_mastery_points !== undefined && (
-              <div className="w-full flex flex-col items-center mt-2">
-                <span className="text-lg font-bold text-purple-400">Total Mastery Score</span>
-                <span className="text-2xl font-extrabold text-gray-400">{basicLolInfo.total_mastery_points.toLocaleString()}</span>
+              <div className="w-full flex flex-col items-center mt-2 mb-7">
+                <span className="text-2xl font-bold text-gray-400">Total Mastery Score</span>
+                <span className="text-2xl font-extrabold text-gray-200">{basicLolInfo.total_mastery_points.toLocaleString()}</span>
               </div>
             )}
+            {/* Recent Ranked History (Solo/Duo) */}
+            <div className="w-full flex flex-col items-center">
+              <h2 className="text-base font-bold text-gray-400 mb-2 border-b-2 border-purple-400 w-full text-center pb-2">Recent Ranked History (Solo/Duo)</h2>
+              
+            </div>
           </div>
+          
         </div>
       </div>
     </div>
