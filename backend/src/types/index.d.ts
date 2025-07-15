@@ -113,4 +113,5 @@ export type AdminCredentials = Credentials & {
 export type JwtToken = {
   accountId: number;
   username: string;
+  isAdmin: boolean;
 };

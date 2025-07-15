@@ -1,3 +1,5 @@
+CREATE TYPE member_role AS ENUM ('Member', 'Moderator', 'Owner', 'Founder', 'Co-Owner');
+
 CREATE TABLE accounts (
     id SERIAL PRIMARY KEY,   
     username VARCHAR(100) NOT NULL UNIQUE,
@@ -9,9 +11,9 @@ CREATE TABLE accounts (
 CREATE TABLE members (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL, 
-    role VARCHAR(100) NOT NULL,
+    role member_role NOT NULL,
     img_url VARCHAR(255) NOT NULL,
-    riot_game_name VARCHAR(100),
+    riot_game_name VARCHAR(100),    
     riot_tag_line VARCHAR(100),
     riot_puuid VARCHAR(100) UNIQUE,
     riot_region VARCHAR(100) NOT NULL DEFAULT 'EUW1',

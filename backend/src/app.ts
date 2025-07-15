@@ -11,6 +11,7 @@ import membersRoutes from "./routes/members.routes";
 import { AccountService } from "./services";
 import authRoutes from "./routes/auth.routes";
 import { authMiddleware } from "./middlewares/authMiddleware";
+import { adminMiddleware } from "./middlewares/adminMiddleware";
 
 
 const app = express();
@@ -32,7 +33,7 @@ app.get('/health', (req, res) => {
 });
 
 // for testing 
-app.get('/accounts', authMiddleware, async (req, res) => {
+app.get('/accounts', authMiddleware, adminMiddleware, async (req, res) => {
   try {
     const accounts = await AccountService.getAll();
     res.status(200).json(accounts);

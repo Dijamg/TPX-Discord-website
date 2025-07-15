@@ -50,7 +50,8 @@ router.post('/login', async (req, res) => {
         console.log(`Account ${credentials.username} logged in successfully`);
         const tokenPayload: JwtToken = {
             accountId: account.id,
-            username: account.username
+            username: account.username,
+            isAdmin: account.is_admin
         };
         const token = jwt.sign(tokenPayload, JWT_SECRET, { expiresIn: '1h' });
         res.status(200).json({ 

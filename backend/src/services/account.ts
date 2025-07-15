@@ -19,7 +19,7 @@ export async function authenticate(credentials: Credentials): Promise<Account> {
     const accountFound = await db.account.getByUsername(credentials.username);
 
     if (!accountFound) {
-        throw new Error("Account not found");
+        throw new Error("Invalid username or password");
     }
 
     const match = await bcrypt.compare(credentials.password, accountFound.password);
@@ -27,7 +27,7 @@ export async function authenticate(credentials: Credentials): Promise<Account> {
     if (match) {
         return accountFound;
     } else {
-        throw new Error(`Invalid password for ${credentials.username}`);
+        throw new Error("Invalid username or password");
     }
 }
 
