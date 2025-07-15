@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { AccountService } from '../services';
-import { Credentials, JwtToken } from '../types';
+import { AdminCredentials, Credentials, JwtToken } from '../types';
 import jwt from 'jsonwebtoken';
 
 const router = Router();
@@ -10,14 +10,38 @@ const JWT_SECRET = process.env.JWT_SECRET!;
 router.post('/register', async (req, res) => {
     const credentials: Credentials = req.body;
     try {
-        await AccountService.add(credentials.username, credentials.password, false);
+        const newAccount = await AccountService.add(credentials.username, credentials.password, false);
         console.log(`Account ${credentials.username} registered successfully`);
-        res.status(201).json();
+        res.status(201).json({
+            message: "Account registered successfully",
+            id: newAccount.id,
+            username: newAccount.username,
+          });
     } catch (error) {
-        if (error instanceof Error) res.status(400).send(error.message);
+        if (error instanceof Error) res.status(400).send({ error: error.message });
         else res.status(500).send();
     }   
 });
+
+router.post('/register-admin', async (req, res) => {
+    const credentials: AdminCredentials = req.body;
+    if (credentials.adminSecret !== process.env.ADMIN_SECRET) {
+        return res.status(403).json({ error: 'Unauthorized' });
+    }
+
+    try {
+        const newAccount = await AccountService.add(credentials.username, credentials.password, true);
+        console.log(`Admin account ${credentials.username} registered successfully`);
+        res.status(201).json({
+            message: "Admin account registered successfully",
+            id: newAccount.id,
+            username: newAccount.username,
+        });
+    } catch (error) {
+        if (error instanceof Error) res.status(400).send({ error: error.message });
+        else res.status(500).send();
+    }
+})
 
 router.post('/login', async (req, res) => {
     const credentials: Credentials = req.body;
@@ -33,10 +57,10 @@ router.post('/login', async (req, res) => {
             message: 'Login successful',
             id: account.id,
             username: account.username,
-            token: token
+            token: `Bearer ${token}`
          });
     } catch (error) {
-        if (error instanceof Error) res.status(400).send(error.message);
+        if (error instanceof Error) res.status(400).send({ error: error.message });
         else res.status(500).send();
     }
 });

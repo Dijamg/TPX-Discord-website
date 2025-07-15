@@ -10,15 +10,11 @@ export async function add(username: string, password: string, is_admin: boolean)
         throw new Error("This username is already taken");
     }
     
-    await bcrypt.hash(password, 10)
-        .then(hash => {
-            console.log(`Hashed pw ${hash}`);
-            password = hash;
-        });
+    password = await bcrypt.hash(password, 10);
 
     return await db.account.add(username, password, is_admin);
 }
-
+  
 export async function authenticate(credentials: Credentials): Promise<Account> {
     const accountFound = await db.account.getByUsername(credentials.username);
 

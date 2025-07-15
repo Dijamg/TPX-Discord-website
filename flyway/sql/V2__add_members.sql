@@ -92,3 +92,5 @@ INSERT INTO Members (name, role, img_url, riot_game_name, riot_tag_line, riot_pu
 
 INSERT INTO tournaments (theme, active, img_url, start_date) VALUES ('TPX 5v5 CUSTOMS CUP 2025', true, 'https://cmsassets.rgpub.io/sanity/images/dsfx7636/news_live/89a02acb4e25a0083d9072ca226c25eac75da6bd-1280x720.jpg?auto=format&fit=crop&q=80&h=537&w=956&crop=center', '2025-12-24 12:00:00');
 INSERT INTO tournaments (theme, start_date) VALUES ('TPX 2v2-Challenge', '2025-07-14 12:00:00');
+
+INSERT INTO accounts (username, password) VALUES ('johndoe', 'somehash');

@@ -106,6 +106,10 @@ export type Credentials = {
   password: string;
 }
 
+export type AdminCredentials = Credentials & {
+  adminSecret: string;
+}
+
 export type JwtToken = {
   accountId: number;
   username: string;

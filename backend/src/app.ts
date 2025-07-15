@@ -10,6 +10,7 @@ import lolMatchHistoryRoutes from "./routes/lolMatchHistory.routes";
 import membersRoutes from "./routes/members.routes";
 import { AccountService } from "./services";
 import authRoutes from "./routes/auth.routes";
+import { authMiddleware } from "./middlewares/authMiddleware";
 
 
 const app = express();
@@ -31,9 +32,13 @@ app.get('/health', (req, res) => {
 });
 
 // for testing 
-app.get('/accounts', async (req, res) => {
-  const accounts = await AccountService.getAll();
-  res.status(200).json(accounts);
+app.get('/accounts', authMiddleware, async (req, res) => {
+  try {
+    const accounts = await AccountService.getAll();
+    res.status(200).json(accounts);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
 });
 
 const PORT = process.env.NODE_DOCKER_PORT ?? 8080;

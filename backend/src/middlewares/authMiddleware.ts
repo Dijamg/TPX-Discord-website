@@ -19,9 +19,12 @@ export const authMiddleware: RequestHandler = async (req, res, next) => {
 
         next();
     } catch (error) {
-        console.log(error);
-        res.status(403).send({
-            error: new Error("Invalid token!"),
-        });
+        console.error(error);
+        res.status(403).json({
+            error: {
+              message: error instanceof Error ? error.message : 'Invalid token',
+              code: 'AUTH_FAILED',
+            }
+          });
     }
 }       
