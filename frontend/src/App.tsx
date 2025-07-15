@@ -1,15 +1,18 @@
 import React, {useState, useEffect} from 'react'
 import './index.css'
 import Frontpage from '../Components/Frontpage'
-import MemberService from '../Services/Member'
-import BasicLolInfoService from '../Services/BasicLolInfo'
+import MemberService from '../Services/member'
+import BasicLolInfoService from '../Services/basicLolInfo'
 import { AllProps, BasicLolInfo, CurrentSeasonLolInfo, LolMatchHistory, MasteryInfo, Member, Tournament, UpcomingClashTournament } from '../types'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MemberInfoPage from '../Components/MemberInfoPage'
-import CurrentSeasonLolInfoService from '../Services/CurrentSeasonLolInfo'
-import MasteryInfoService from '../Services/MasteryInfo'
+import CurrentSeasonLolInfoService from '../Services/currentSeasonLolInfo'
+import MasteryInfoService from '../Services/masteryInfo'
 import TournamentService from '../Services/tournament'
-import MatchHistoryService from '../Services/MatchHistory'
+import MatchHistoryService from '../Services/matchHistory'
+import LoginPage from '../Components/LoginPage'
+import RegisterPage from '../Components/RegisterPage'
+import { AuthContext } from '../context/authContext'
 
 const App = () => {
   const [members, setMembers] = useState<Member[]>([])
@@ -19,6 +22,7 @@ const App = () => {
   const [upcomingClashTournaments, setUpcomingClashTournaments] = useState<UpcomingClashTournament[]>([])
   const [tournaments, setTournaments] = useState<Tournament[]>([])
   const [lolMatchHistory, setLolMatchHistory] = useState<LolMatchHistory[]>([])
+  const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -68,12 +72,16 @@ const props: AllProps = {
 
   return (
     <div>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Frontpage allProps={props}/>} />
-          <Route path="/members/:id" element={<MemberInfoPage allProps={props} />} />
-        </Routes>
-      </Router>
+      <AuthContext.Provider value={{ token, setToken }}>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Frontpage allProps={props}/>} />
+            <Route path="/members/:id" element={<MemberInfoPage allProps={props} />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+          </Routes>
+        </Router>
+      </AuthContext.Provider>
     </div>
   );
 }

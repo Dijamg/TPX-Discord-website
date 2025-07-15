@@ -6,7 +6,6 @@ export type Member = {
     riot_game_name: string | null, 
     riot_tag_line: string | null, 
     riot_puuid: string | null, 
-    lostarkname: string | null, 
     description: string,
     riot_region: string,
 }
@@ -68,6 +67,12 @@ export type LolMatchHistory = {
     cs_per_minute: number,
     match_duration: number,
     match_date: Date,
+}
+
+// Both login and register use the same form data so no point in creating two different types
+export type FormData = {
+    username: string,
+    password: string,
 }
 
 export type AllProps = {

@@ -22,6 +22,12 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
         {notFound ? 'User not found' : 'Loading member info...'}
       </div>
     );
+  } else if(member.riot_puuid === null){
+    return (
+      <div className="bg-gray-900 text-white min-h-screen">
+        User ${member.name} has not linked their League of Legends account and this site currently only supports League of Legends.
+      </div>
+    );
   }
 
   const romanToNumber = (roman: string | undefined) => {
