@@ -11,6 +11,14 @@ services:
     depends_on:
       - frontend
       - backend
+
+  redis:
+    image: redis:latest
+    command: redis-server /usr/local/etc/redis/redis.conf
+    volumes:
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+    expose:
+      - 6379
   db:
     image: postgres:14.1
     container_name: tpx_db_cont
@@ -63,10 +71,13 @@ services:
     ports:
         - 8080
     depends_on:
+      redis:
+        condition: service_started
       db:
         condition: service_healthy
       flyway:
         condition: service_completed_successfully
+      
     env_file:
       - project.env
       - ./backend/.env
