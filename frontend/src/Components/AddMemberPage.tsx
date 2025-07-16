@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MemberService from '../Services/member';
+import axios from 'axios';
 
 const MEMBER_ROLES = ['Member', 'Moderator', 'Owner', 'Founder', 'Co-Owner'];
 const REGIONS = [
@@ -20,6 +21,7 @@ const AddMemberPage = ({fetchData}: {fetchData: () => void}) => {
   const [riotTagline, setRiotTagline] = useState('');
   const [addRiot, setAddRiot] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const [fileSelected, setFileSelected] = useState<File>()
 
@@ -35,6 +37,7 @@ const AddMemberPage = ({fetchData}: {fetchData: () => void}) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMsg(null);
     
     if(!fileSelected) return;
     setIsSubmitting(true);
@@ -44,17 +47,14 @@ const AddMemberPage = ({fetchData}: {fetchData: () => void}) => {
     formData.append("upload_preset", uploadPreset);
 
     try {
-        const res = await fetch(
+        const res = await axios.post(
           `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-          {
-            method: "POST",
-            body: formData,
-          }
+          formData
         );
-        const data = await res.json();
+        const data = res.data;
 
         if(!data.secure_url) {
-            alert("Error uploading image");
+            setErrorMsg("Error uploading image");
             setIsSubmitting(false);
             return;
         }
@@ -77,8 +77,8 @@ const AddMemberPage = ({fetchData}: {fetchData: () => void}) => {
           navigate('/');
 
       } catch (err: any) {
-        alert("Error adding member: " + err.response.data);
-        console.error("Upload Error:", err.response.data);
+        setErrorMsg("Error adding member: " + err.response?.data);
+        console.error("Upload Error:", err.response?.data);
         //remove image from cloudinary to be implemented later
         setIsSubmitting(false);
         return
@@ -110,6 +110,10 @@ const AddMemberPage = ({fetchData}: {fetchData: () => void}) => {
         <h2 className="text-3xl font-bold text-white">Add a member</h2>
       </div>
       <form className="mt-8 w-full max-w-lg bg-gray-800 p-8 rounded-lg shadow-md flex flex-col gap-6 " onSubmit={handleSubmit}>
+        {/* Error message */}
+        {errorMsg && (
+          <div className="mb-4 text-center text-red-400 font-semibold">{errorMsg}</div>
+        )}
         {/* Name */}
         <div>
           <label className="block text-white mb-1" htmlFor="name">Name</label>

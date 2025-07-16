@@ -11,6 +11,8 @@ const RegisterPage = () => {
     password: '',
   });
 
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -21,6 +23,7 @@ const RegisterPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMsg(null);
     try {
       const response = await register(formData);
       if (response.status === 201) {
@@ -29,10 +32,10 @@ const RegisterPage = () => {
     } catch (error: any) {
       if (error.response && error.response.data) {
         console.log('Register failed', error.response.data.error);
-        alert(error.response.data.error);
+        setErrorMsg(error.response.data.error);
       } else {
         console.log('Unknown error', error);
-        alert('Something went wrong. Try again later.');
+        setErrorMsg('Something went wrong. Try again later.');
       }
     }
   };
@@ -62,6 +65,9 @@ const RegisterPage = () => {
         <h2 className="text-2xl font-bold text-white mb-8 text-center">
           Create an account
         </h2>
+        {errorMsg && (
+          <div className="mb-4 text-center text-red-400 font-semibold">{errorMsg}</div>
+        )}
         <form className="w-full flex flex-col gap-4" onSubmit={handleSubmit}>
           <div>
             <label

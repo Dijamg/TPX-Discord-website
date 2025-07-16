@@ -19,6 +19,7 @@ const AddTournamentPage = ({fetchData}: {fetchData: () => void}) => {
   const [timezone, setTimezone] = useState('Europe/Helsinki');
   const [fileSelected, setFileSelected] = useState<File>();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const cloudName = "dqwjh7xhr"
   const uploadPreset = "unsigned_preset"
@@ -39,6 +40,7 @@ const AddTournamentPage = ({fetchData}: {fetchData: () => void}) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMsg(null);
     if(!fileSelected) return;
     setIsSubmitting(true);
     const formData = new FormData();
@@ -55,7 +57,7 @@ const AddTournamentPage = ({fetchData}: {fetchData: () => void}) => {
         );
         const data = await res.json();
         if(!data.secure_url) {
-            alert("Error uploading image");
+            setErrorMsg("Error uploading image");
             setIsSubmitting(false);
             return;
         }
@@ -70,13 +72,14 @@ const AddTournamentPage = ({fetchData}: {fetchData: () => void}) => {
         await fetchData();
         navigate('/');
       } catch (err: any) {
-        alert("Error adding tournament: " + err.response?.data);
+        setErrorMsg("Error adding tournament: " + err.response?.data);
         console.error("Upload Error:", err.response?.data);
         setIsSubmitting(false);
         return
       }
     } catch (error) {
       console.error(error);
+      setErrorMsg("Unknown error occurred.");
       setIsSubmitting(false);
     }
     setIsSubmitting(false);
@@ -101,7 +104,11 @@ const AddTournamentPage = ({fetchData}: {fetchData: () => void}) => {
       <div className="pt-32 w-full flex justify-center">
         <h2 className="text-3xl font-bold text-white">Add a tournament</h2>
       </div>
-      <form className="mt-8 w-full max-w-lg bg-gray-800 p-8 rounded-lg shadow-md flex flex-col gap-6 ">
+      <form className="mt-8 w-full max-w-lg bg-gray-800 p-8 rounded-lg shadow-md flex flex-col gap-6 " onSubmit={handleSubmit}>
+        {/* Error message */}
+        {errorMsg && (
+          <div className="mb-4 text-center text-red-400 font-semibold">{errorMsg}</div>
+        )}
         {/* Name */}
         <div>
           <label className="block text-white mb-1" htmlFor="name">Name</label>

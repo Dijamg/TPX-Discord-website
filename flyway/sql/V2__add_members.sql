@@ -1,7 +1,7 @@
 INSERT INTO Members (name, role, img_url, riot_game_name, riot_tag_line, riot_puuid, description, riot_region) VALUES (    
     'Dual',
     'Owner',
-    'https://res.cloudinary.com/dqwjh7xhr/image/upload/v1752662966/profileIcon4025_zjg6ta.webp',
+    'https://res.cloudinary.com/dqwjh7xhr/image/upload/v1752683921/protected/dual.webp',
     'TPX Dual',
     'EUW',
     NULL,
@@ -12,7 +12,7 @@ INSERT INTO Members (name, role, img_url, riot_game_name, riot_tag_line, riot_pu
 INSERT INTO Members (name, role, img_url, riot_game_name, riot_tag_line, riot_puuid, description, riot_region) VALUES (    
     'Kadeem',
     'Co-Owner',
-    'https://res.cloudinary.com/dqwjh7xhr/image/upload/v1752663056/images_h0tmfb.jpg',
+    'https://res.cloudinary.com/dqwjh7xhr/image/upload/v1752683983/protected/kadeem.jpg',
     'kadeem',
     '718',
     NULL,
@@ -23,7 +23,7 @@ INSERT INTO Members (name, role, img_url, riot_game_name, riot_tag_line, riot_pu
 INSERT INTO Members (name, role, img_url, riot_game_name, riot_tag_line, riot_puuid, description, riot_region) VALUES (    
     'VT',
     'Founder',
-    'https://res.cloudinary.com/dqwjh7xhr/image/upload/v1752663079/profileIcon6482_oq7n2w.jpg',
+    'https://res.cloudinary.com/dqwjh7xhr/image/upload/v1752684025/protected/vt.jpg',
     'Tunnettu',
     'Plugi',
     NULL,  
@@ -34,7 +34,7 @@ INSERT INTO Members (name, role, img_url, riot_game_name, riot_tag_line, riot_pu
 INSERT INTO Members (name, role, img_url, riot_game_name, riot_tag_line, riot_puuid, description, riot_region) VALUES (    
     'NepNep',
     'Founder',
-    'https://res.cloudinary.com/dqwjh7xhr/image/upload/v1752663112/profileIcon5993_xzc7hf.webp',
+    'https://res.cloudinary.com/dqwjh7xhr/image/upload/v1752684074/protected/nepnep.webp',
     'N3pN3p',
     'EUW',
     NULL,
@@ -45,7 +45,7 @@ INSERT INTO Members (name, role, img_url, riot_game_name, riot_tag_line, riot_pu
 INSERT INTO Members (name, role, img_url, riot_game_name, riot_tag_line, riot_puuid, description, riot_region) VALUES (    
     'Lenkkis',
     'Founder',
-    'https://res.cloudinary.com/dqwjh7xhr/image/upload/v1752663137/MemberImages_2Fautistikissa_gqpfsy.jpg',
+    'https://res.cloudinary.com/dqwjh7xhr/image/upload/v1752684123/protected/lenkkis.jpg',
     'lenkkis',
     'SNEED',
     NULL,
@@ -56,7 +56,7 @@ INSERT INTO Members (name, role, img_url, riot_game_name, riot_tag_line, riot_pu
 INSERT INTO Members (name, role, img_url, riot_game_name, riot_tag_line, riot_puuid, description, riot_region) VALUES (    
     'BZI',
     'Moderator',
-    'https://res.cloudinary.com/dqwjh7xhr/image/upload/v1752663160/d3dd8219807e2594f15b64facbc0355b69d7fd5d_oww3qr.jpg',
+    'https://res.cloudinary.com/dqwjh7xhr/image/upload/v1752684171/protected/bzi.jpg',
     'Best Voli Iraq',
     'EUW',
     NULL,
@@ -67,7 +67,7 @@ INSERT INTO Members (name, role, img_url, riot_game_name, riot_tag_line, riot_pu
 INSERT INTO Members (name, role, img_url, riot_game_name, riot_tag_line, riot_puuid, description, riot_region) VALUES (    
     'Alpha070',
     'Member',
-    'https://res.cloudinary.com/dqwjh7xhr/image/upload/v1752663180/profileIcon3462_xvwvbw.webp',
+    'https://res.cloudinary.com/dqwjh7xhr/image/upload/v1752684221/protected/alpha.webp',
     'Alphass',
     'EUW',
     NULL,
@@ -79,7 +79,7 @@ INSERT INTO Members (name, role, img_url, riot_game_name, riot_tag_line, riot_pu
 INSERT INTO Members (name, role, img_url, riot_game_name, riot_tag_line, riot_puuid, description, riot_region) VALUES (    
     'Randomderp',
     'Member',
-    'https://res.cloudinary.com/dqwjh7xhr/image/upload/v1752663206/28c87e8e119d4c4ae989bf1a72d362ac_mmcvns.jpg',
+    'https://res.cloudinary.com/dqwjh7xhr/image/upload/v1752684257/protected/randomderp.jpg',
     'random derp',
     'EUW',
     NULL,
@@ -90,7 +90,7 @@ INSERT INTO Members (name, role, img_url, riot_game_name, riot_tag_line, riot_pu
 INSERT INTO Members (name, role, img_url, riot_game_name, riot_tag_line, riot_puuid, description, riot_region) VALUES (    
     'Sineberry',
     'Member',
-    'https://res.cloudinary.com/dqwjh7xhr/image/upload/v1752663230/profileIcon5961_i64bft.webp',
+    'https://res.cloudinary.com/dqwjh7xhr/image/upload/v1752684298/protected/sineberry.webp',
     'sineberrykoff',
     'EUW',
     NULL,
@@ -99,5 +99,5 @@ INSERT INTO Members (name, role, img_url, riot_game_name, riot_tag_line, riot_pu
 );
 
 
-INSERT INTO tournaments (theme, active, img_url, start_date) VALUES ('TPX 5v5 CUSTOMS CUP 2025', true, 'https://res.cloudinary.com/dqwjh7xhr/image/upload/v1752663256/89a02acb4e25a0083d9072ca226c25eac75da6bd-1280x720_bohcto.jpg', '2025-12-24T12:00:00Z');
+INSERT INTO tournaments (theme, active, img_url, start_date) VALUES ('TPX 5v5 CUSTOMS CUP 2025', true, 'https://res.cloudinary.com/dqwjh7xhr/image/upload/v1752684419/protected/tourney.jpg', '2025-12-24T12:00:00Z');
 INSERT INTO tournaments (theme, start_date) VALUES ('TPX 2v2-Challenge', '2022-07-18T12:00:00Z');

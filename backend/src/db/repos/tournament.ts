@@ -40,7 +40,7 @@ export class TournamentRepository {
 
     // Deletes an upcoming clash tournament by id
     deleteUpcomingClashTournament(id: number): Promise<null> {
-        return this.db.none("DELETE FROM upcoming_clash_tournaments WHERE id = $1", id);
+        return this.db.oneOrNone("DELETE FROM upcoming_clash_tournaments WHERE id = $1 RETURNING *", id);
     }
 
     // Adds an upcoming clash tournament
@@ -55,7 +55,7 @@ export class TournamentRepository {
 
     // Deletes a tournament by id
     deleteTournament(id: number): Promise<null> {
-        return this.db.none("DELETE FROM tournaments WHERE id = $1", id);
+        return this.db.oneOrNone("DELETE FROM tournaments WHERE id = $1 RETURNING *", id);
     }
 
     // Update tournament active status

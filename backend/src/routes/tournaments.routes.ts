@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { TournamentService } from '../services/index';
+import { CloudinaryService, TournamentService } from '../services/index';
 import { authMiddleware } from "../middlewares/authMiddleware";
 import { adminMiddleware } from "../middlewares/adminMiddleware";
 
@@ -39,6 +39,11 @@ router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
 router.delete('/:id/delete', authMiddleware, adminMiddleware, async (req, res) => {
   try {
     const data = await TournamentService.deleteTournament(parseInt(req.params.id));
+    // If the tournament has an image url and it is a cloudinary url, delete the image. Protected images are not deleted.
+    if(data && data.img_url && data.img_url.includes('cloudinary') && !data.img_url.includes('protected')) {
+      await CloudinaryService.deleteImage(data.img_url);
+      console.log(`Deleted image ${data.img_url}`);
+    }
     res.send(data);
   } catch (error) {
     console.error(error);

@@ -12,6 +12,8 @@ const LoginPage = () => {
     password: '',
   });
 
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -22,6 +24,7 @@ const LoginPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMsg(null);
     try {
       const response = await login(formData);
       if (response.status === 200) {
@@ -30,10 +33,10 @@ const LoginPage = () => {
     } catch (error: any) {
       if(error.response && error.response.data) {
         console.log("Login failed", error.response.data.error);
-        alert(error.response.data.error);
+        setErrorMsg(error.response.data.error);
       } else {
         console.log("Unknown error", error);
-        alert("Something went wrong. Try again later.");
+        setErrorMsg("Something went wrong. Try again later.");
       }
     }
   };
@@ -63,6 +66,9 @@ const LoginPage = () => {
         <h2 className="text-2xl font-bold text-white mb-8 text-center">
           Sign in to your account
         </h2>
+        {errorMsg && (
+          <div className="mb-4 text-center text-red-400 font-semibold">{errorMsg}</div>
+        )}
         <form className="w-full flex flex-col gap-4" onSubmit={handleSubmit}>
           <div>
             <label

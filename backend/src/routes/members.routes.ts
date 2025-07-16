@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { MemberService } from '../services/index';
+import { MemberService, CloudinaryService } from '../services/index';
 import { authMiddleware } from "../middlewares/authMiddleware";
 import { adminMiddleware } from "../middlewares/adminMiddleware";
 import { syncNewMemberInfo } from '../scripts/syncNewMemberInfo';
@@ -47,6 +47,11 @@ router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
 router.delete('/:id/delete', authMiddleware, adminMiddleware, async (req, res) => {
   try {
     const member = await MemberService.deleteMember(parseInt(req.params.id));
+    // If the member has an image url and it is a cloudinary url, delete the image. Protected images are not deleted.
+    if(member && member.img_url && member.img_url.includes('cloudinary') && !member.img_url.includes('protected')) {
+      await CloudinaryService.deleteImage(member.img_url);
+      console.log(`Deleted image ${member.img_url}`);
+    }
     res.send(member);
   } catch (error) {
     console.error(error);

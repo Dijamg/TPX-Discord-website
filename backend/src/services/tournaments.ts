@@ -29,7 +29,7 @@ export const addTournament = async (tournament: Omit<Tournament, 'id' | 'revisio
   return await db.tournament.addTournament(tournament);
 }
 
-export const deleteTournament = async (id: number): Promise<null> => {
+export const deleteTournament = async (id: number): Promise<Tournament | null> => {
   return await db.tournament.deleteTournament(id);
 }
 
