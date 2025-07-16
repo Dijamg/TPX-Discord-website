@@ -9,6 +9,10 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
 
   const [notFound, setNotFound] = useState(false);
 
+  const handleBackClick = () => {
+    navigate('/')
+  }
+
   useEffect(() => {
     if (!member) {
       const timer = setTimeout(() => setNotFound(true), 3000);
@@ -19,13 +23,50 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
   if (!member) {
     return (
       <div className="bg-gray-900 text-white min-h-screen">
-        {notFound ? 'User not found' : 'Loading member info...'}
+        {/* Simple navbar bar - same styling as main navbar but no content */}
+        <nav className="top-0 w-full bg-gray-900 shadow-md z-50" style={{ position: 'fixed', height: '4.5rem' }}>
+          <div className="h-18 flex items-center">
+            <img
+              src="/assets/navbar_banner.PNG"
+              alt="TPX Banner"
+              className="h-full w-auto m-0 p-0 cursor-pointer"
+              onClick={handleBackClick}
+            />
+          </div>
+        </nav>
+        <div className="pt-24 flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-white mb-4">
+              {notFound ? 'User not found' : 'Loading member info...'}
+            </h1>
+          </div>
+        </div>
       </div>
     );
   } else if(member.riot_puuid === null){
     return (
       <div className="bg-gray-900 text-white min-h-screen">
-        User ${member.name} has not linked their League of Legends account and this site currently only supports League of Legends.
+        {/* Simple navbar bar - same styling as main navbar but no content */}
+        <nav className="top-0 w-full bg-gray-900 shadow-md z-50" style={{ position: 'fixed', height: '4.5rem' }}>
+          <div className="h-18 flex items-center">
+            <img
+              src="/assets/navbar_banner.PNG"
+              alt="TPX Banner"
+              className="h-full w-auto m-0 p-0 cursor-pointer"
+              onClick={handleBackClick}
+            />
+          </div>
+        </nav>
+        <div className="pt-24 flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-white mb-4">
+              User {member.name} has not linked their League of Legends account
+            </h1>
+            <p className="text-gray-400">
+              This site currently only supports League of Legends.
+            </p>
+          </div>
+        </div>
       </div>
     );
   }
@@ -95,10 +136,6 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
             </div>
       )
     }
-  }
-
-  const handleBackClick = () => {
-    navigate('/')
   }
 
   return (
