@@ -57,4 +57,9 @@ export class MembersRepository {
     delete(id: number): Promise<Member | null> {
         return this.db.oneOrNone("DELETE FROM members WHERE id = $1 RETURNING *", +id);
     }
+
+    // Finds a member by riot data
+    findByRiotData(riotGameName: string, riotTagLine: string, riotRegion: string): Promise<Member | null> {
+        return this.db.oneOrNone("SELECT * FROM members WHERE riot_game_name = $1 AND riot_tag_line = $2 AND riot_region = $3", [riotGameName, riotTagLine, riotRegion]);
+    }
 }

@@ -28,3 +28,7 @@ export const addMember = async (member: Omit<Member, 'id' | 'revision_date' | 'r
 export const deleteMember = async (id: number): Promise<Member | null> => {
   return await db.members.delete(id);
 };
+
+export const getMemberByRiotData = async (riotGameName: string, riotTagLine: string, riotRegion: string): Promise<Member | null> => {
+  return await db.members.findByRiotData(riotGameName, riotTagLine, riotRegion);
+};

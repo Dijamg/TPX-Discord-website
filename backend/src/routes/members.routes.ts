@@ -16,6 +16,12 @@ router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
     // Name and tagline can be validated by finding a puuid with them
     // Region can be validated by checking if SummonerV4 returns a valid response with the region and the puuid
     if(req.body.riot_game_name && req.body.riot_tag_line && req.body.riot_region) {
+      //First we check if a member with these same riot data exists
+      const existingMember = await MemberService.getMemberByRiotData(req.body.riot_game_name, req.body.riot_tag_line, req.body.riot_region);
+      if(existingMember) {
+        return res.status(400).send('Member with these riot data already exists');
+      }
+
       console.log(`Validating riot data for ${req.body.riot_game_name} ${req.body.riot_tag_line} ${req.body.riot_region}`);
       riotPuuid = await RiotService.getRiotUuid(req.body.riot_game_name, req.body.riot_tag_line);
       if(!riotPuuid) {
