@@ -36,8 +36,7 @@ const ClashTournamentCard = ({ tournament }: { tournament: UpcomingClashTourname
         />
       </div>
       <div className="p-4 text-center">
-        <h4 className="mb-1 text-xl font-semibold text-purple-400 truncate">{StringToTitleCase(tournament.name_key)}</h4>
-        <h3 className="text-xl text-gray-400 truncate">{StringToTitleCase(tournament.name_key_secondary)}</h3>
+        <h4 className="mb-1 text-xl font-semibold text-purple-400 truncate">{StringToTitleCase(tournament.name_key)} ({StringToTitleCase(tournament.name_key_secondary)})</h4>
         <h2 className="text-gray-400 truncate">{getHelsinkiDate(new Date(tournament.start_date).toISOString())}</h2>
       </div>
     </div>

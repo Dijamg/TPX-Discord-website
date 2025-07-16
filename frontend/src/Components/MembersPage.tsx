@@ -20,10 +20,12 @@ const Members = ({ members }: { members: Member[] }) => {
                     {isAdmin && (
                         <button
                             onClick={handleAddMember}
-                            className="absolute right-0 top-0 text-purple-400 hover:text-purple-300 hover:cursor-pointer font-bold text-6xl transition-colors duration-200"
+                            className="absolute right-0 top-0 text-purple-400 hover:text-purple-300 hover:cursor-pointer font-bold text-6xl transition-colors duration-200 m-0 p-0"
                             title="Add new member"
                         >
-                            +
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-12 h-12">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+                            </svg>
                         </button>
                     )}
                 </div>
