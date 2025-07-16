@@ -21,3 +21,10 @@ export const updateMemberPuuid = async (id: number, puuid: string): Promise<Memb
   return await db.members.updatePuuid(id, puuid);
 };
 
+export const addMember = async (member: Omit<Member, 'id' | 'revision_date' | 'riot_puuid'>): Promise<Member> => {
+  return await db.members.add(member);
+};
+
+export const deleteMember = async (id: number): Promise<Member | null> => {
+  return await db.members.delete(id);
+};

@@ -5,13 +5,17 @@ import { FormData } from "../types";
 import AuthService from "../Services/auth";
 
 export const useAuth = () => {
-    const { contextToken: token, addToken, addUsername, removeToken, setToken } = useToken();
+    const { contextToken: token, addToken, addUsername, addIsAdmin, removeToken, setToken, removeIsAdmin } = useToken();
     const { getItem } = useCookies();
 
     useEffect(() => {
         const token = getItem("TOKEN");
+        const isAdmin = getItem("IS_ADMIN");
         if (token) {
             addToken(token);
+        }
+        if (isAdmin) {
+            addIsAdmin(isAdmin);
         }
     }, []);
 
@@ -20,6 +24,7 @@ export const useAuth = () => {
         if (response.data.token) {
             addToken(response.data.token);
             addUsername(response.data.username)
+            addIsAdmin(response.data.isAdmin)
         }
         console.log(AuthService.getUsername())
         return response;
@@ -27,6 +32,7 @@ export const useAuth = () => {
 
     const logout = () => {
         removeToken();
+        removeIsAdmin();
     };
 
     return { token, login, logout, setToken };

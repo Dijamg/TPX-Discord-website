@@ -13,6 +13,11 @@ export const syncBasicLolInfo = async () => {
                 //Get basic info from riot api
                 const basicInfo = await RiotService.getBasicSummonerInfo(member.riot_puuid!, member.riot_region!);
 
+                if(!basicInfo) {
+                    console.log(`No basic info found for ${member.riot_puuid}`);
+                    continue;
+                }
+
                 //Get peak rank from op.gg
                 const peakRank = await PeakRankScraperService.getPeakRank(`${member.riot_game_name}-${member.riot_tag_line}`, member.riot_region!);
 
@@ -20,9 +25,9 @@ export const syncBasicLolInfo = async () => {
                 const totalMasteryPoints = await RiotService.getTotalMasteryScore(member.riot_puuid!, member.riot_region!);
 
                 if (currentBasicInfo) {
-                    await LolBasicInfoService.updateLolBasicInfoByPuuid(member.riot_puuid!, basicInfo.summonerLevel, basicInfo.profileIconId, peakRank, totalMasteryPoints);
+                    await LolBasicInfoService.updateLolBasicInfoByPuuid(member.riot_puuid!, basicInfo!.summonerLevel, basicInfo!.profileIconId, peakRank, totalMasteryPoints);
                 } else {
-                    await LolBasicInfoService.addLolBasicInfoByPuuid(member.riot_puuid!, basicInfo.summonerLevel, basicInfo.profileIconId, peakRank, totalMasteryPoints);
+                    await LolBasicInfoService.addLolBasicInfoByPuuid(member.riot_puuid!, basicInfo!.summonerLevel, basicInfo!.profileIconId, peakRank, totalMasteryPoints);
                 }
             } catch (error) {
                 console.error(`Error syncing member ${member.id}:`, error);

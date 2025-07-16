@@ -1,10 +1,12 @@
 import axios from "axios";
 import * as cheerio from 'cheerio';
 import { getHighestRank } from "../utils/scraperUtils";
+import { getOpggRegionFromPlatform } from "../utils/regionUtils";
 
 export const getPeakRank = async (summonerName: string, riot_region: string): Promise<string | null> => {
 
-  const region = riot_region.toLowerCase().slice(0, -1);
+  const region = getOpggRegionFromPlatform(riot_region);
+
   const opggUrl = `https://op.gg/lol/summoners/${region}/${summonerName}`;
   try {
     const ranks: string[] = [];

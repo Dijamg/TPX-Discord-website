@@ -19,3 +19,24 @@ export const getMatchRegionFromPlatform = (region: string): string | null => {
   
     return regionMap[region.toUpperCase() as keyof typeof regionMap] || null;
   }
+
+  export const getOpggRegionFromPlatform = (platform: string): string | null => {
+    const opggMap = {
+      NA1: "na",
+      BR1: "br",
+      LA1: "lan",
+      LA2: "las",
+  
+      EUN1: "eune",
+      EUW1: "euw",
+      TR1: "tr",
+      RU: "ru",
+  
+      KR: "kr", 
+      JP1: "jp",
+  
+      OC1: "oce",
+    };
+  
+    return opggMap[platform.toUpperCase() as keyof typeof opggMap] || null;
+  };

@@ -30,22 +30,32 @@ const getMatchV5Url = (region: string, matchId: string) => {
     return `https://${getMatchRegionFromPlatform(region)}.api.riotgames.com/lol/match/v5/matches/${matchId}`;
 }
 
-export const getRiotUuid = async (riotGameName: string, riotTagLine: string): Promise<string> => {
-    const response = await axios.get<RiotAccountResponse>(`${ACCOUNT_V1_URL}${riotGameName}/${riotTagLine}`, {
-        headers: {
-            'X-Riot-Token': process.env.RIOT_API_KEY!
-        }
-    });
-    return response.data.puuid;
+export const getRiotUuid = async (riotGameName: string, riotTagLine: string): Promise<string | null> => {
+    try {
+        const response = await axios.get<RiotAccountResponse>(`${ACCOUNT_V1_URL}${riotGameName}/${riotTagLine}`, {
+            headers: {
+                'X-Riot-Token': process.env.RIOT_API_KEY!
+            }
+            });
+            return response.data.puuid;
+    } catch (error) {
+        console.error(`Error getting riot uuid for ${riotGameName} ${riotTagLine}:`, error);
+        return null;
+    }
 }
 
-export const getBasicSummonerInfo = async (riotPuuid: string, riot_region: string): Promise<BasicSummonerInfo> => {
-    const response = await axios.get<BasicSummonerInfo>(`${getSummonerV4Url(riot_region)}${riotPuuid}`, {
-        headers: {
-            'X-Riot-Token': process.env.RIOT_API_KEY!
-        }
-    });
-    return response.data;
+export const getBasicSummonerInfo = async (riotPuuid: string, riot_region: string): Promise<BasicSummonerInfo | null> => {
+    try {
+        const response = await axios.get<BasicSummonerInfo>(`${getSummonerV4Url(riot_region)}${riotPuuid}`, {
+            headers: {
+                'X-Riot-Token': process.env.RIOT_API_KEY!
+            }
+            });
+            return response.data;
+    } catch (error) {
+        console.error(`Error getting basic summoner info for ${riotPuuid} in ${riot_region}:`, error);
+        return null;
+    }
 }
 
 export const getCurrentSeasonInfo = async (riotPuuid: string, riot_region: string): Promise<CurrentSeasonInfo[]> => {

@@ -18,6 +18,11 @@ export class MembersRepository {
         private pgp: IMain,
     ) {}
 
+    // Creates a new member
+    add(member: Omit<Member, 'id' | 'revision_date' | 'riot_puuid'>): Promise<Member> {
+        return this.db.one("INSERT INTO members (name, role, img_url, riot_game_name, riot_tag_line, riot_region, description) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *", [member.name, member.role, member.img_url, member.riot_game_name, member.riot_tag_line, member.riot_region, member.description]);
+    }
+
     // Tries to find a member from id;
     findById(id: number): Promise<Member | null> {
         return this.db.oneOrNone("SELECT * FROM members WHERE id = $1", +id);
@@ -46,5 +51,10 @@ export class MembersRepository {
     // Updates a member's puuid
     updatePuuid(id: number, puuid: string): Promise<Member | null> {
         return this.db.oneOrNone("UPDATE members SET riot_puuid = $1, revision_date = CURRENT_TIMESTAMP WHERE id = $2 RETURNING *", [puuid, id]);
+    }
+
+    // deletes a member
+    delete(id: number): Promise<Member | null> {
+        return this.db.oneOrNone("DELETE FROM members WHERE id = $1 RETURNING *", +id);
     }
 }

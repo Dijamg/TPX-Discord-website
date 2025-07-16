@@ -6,7 +6,7 @@ import TournamentsPage from '../Components/TournamentsPage'
 import { AllProps, Member } from '../types'
 import Navbar from './Navbar'
 
-const Frontpage = ({ allProps }: { allProps: AllProps }) => (
+const Frontpage = ({ allProps, refreshKey }: { allProps: AllProps, refreshKey: number }) => (
     <div>
         <Navbar/>
         <Heropage/>

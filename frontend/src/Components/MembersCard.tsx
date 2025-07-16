@@ -1,29 +1,58 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Member } from '../types'
 import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '../context/authContext'
+import MemberService from '../Services/member'
 
 const MembersCard = ({ member }: { member: Member }) => {
   const navigate = useNavigate();
+  const { isAdmin } = useContext(AuthContext);
 
   const handleClick = () => {
     navigate(`/members/${member.id}`);
   };
 
+  const handleDelete = async (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent navigation when clicking delete
+    
+    const confirmed = window.confirm(`Are you sure you want to delete ${member.name}?`);
+    
+    if (confirmed) {
+      try {
+        await MemberService.deleteMember(member.id);
+        // Refresh the page to update the member list
+        window.location.reload();
+      } catch (error) {
+        console.error('Error deleting member:', error);
+        alert('Failed to delete member. Please try again.');
+      }
+    }
+  };
+
   return (
     <div
-      className="flex flex-col bg-gray-800 shadow-sm border border-gray-700 rounded-lg my-4 w-full cursor-pointer transition-transform duration-200 hover:scale-105 hover:shadow-xl"
+      className="flex flex-col bg-gray-800 shadow-sm border border-gray-700 rounded-lg my-4 w-full cursor-pointer transition-transform duration-200 hover:scale-105 hover:shadow-xl relative"
       onClick={handleClick}
     >
       <div className="m-2 overflow-hidden rounded-md h-80 flex justify-center items-center">
         <img className="w-full h-full object-cover" src={member.img_url} alt="profile-picture" />
       </div>
-      <div className="p-4 text-center">
+      <div className="p-4 text-center relative">
         <h4 className="mb-1 text-xl font-semibold text-purple-400">
           {member.name}
         </h4>
         <p className="text-sm font-semibold text-gray-400 uppercase">
           {member.role}
         </p>
+        {isAdmin && (
+          <button
+            onClick={handleDelete}
+            className="absolute top-2 right-2 text-red-500 hover:text-red-400 hover:cursor-pointer font-bold text-5xl transition-colors duration-200"
+            title="Delete member"
+          >
+            ×
+          </button>
+        )}
       </div>
     </div>
   )

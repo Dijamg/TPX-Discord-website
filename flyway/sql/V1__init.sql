@@ -12,13 +12,19 @@ CREATE TABLE members (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL, 
     role member_role NOT NULL,
-    img_url VARCHAR(255) NOT NULL,
+    img_url VARCHAR(255) NOT NULL DEFAULT 'https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o=',
     riot_game_name VARCHAR(100),    
     riot_tag_line VARCHAR(100),
     riot_puuid VARCHAR(100) UNIQUE,
-    riot_region VARCHAR(100) NOT NULL DEFAULT 'EUW1',
+    riot_region VARCHAR(100),
     description TEXT,
-    revision_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    revision_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT all_or_none_check
+    CHECK (
+      (riot_game_name IS NULL AND riot_tag_line IS NULL AND riot_region IS NULL)
+      OR
+      (riot_game_name IS NOT NULL AND riot_tag_line IS NOT NULL AND riot_region IS NOT NULL)
+    )
 );
 
 CREATE TABLE lol_basic_info (

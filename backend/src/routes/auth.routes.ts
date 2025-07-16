@@ -58,7 +58,8 @@ router.post('/login', async (req, res) => {
             message: 'Login successful',
             id: account.id,
             username: account.username,
-            token: `Bearer ${token}`
+            token: `Bearer ${token}`,
+            isAdmin: account.is_admin
          });
     } catch (error) {
         if (error instanceof Error) res.status(400).send({ error: error.message });

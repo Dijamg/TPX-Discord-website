@@ -7,7 +7,7 @@ export interface Member {
     riot_tag_line: string | null;
     riot_puuid: string | null;
     description: string;
-    riot_region: string;    
+    riot_region: string | null;    
     revision_date: Date;
 }
 
