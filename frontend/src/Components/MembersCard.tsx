@@ -34,6 +34,26 @@ const MembersCard = ({ member }: { member: Member }) => {
       className="flex flex-col bg-gray-800 shadow-sm border border-gray-700 rounded-lg my-4 w-full cursor-pointer transition-transform duration-200 hover:scale-105 hover:shadow-xl relative"
       onClick={handleClick}
     >
+      {/* Delete button in top right corner for admins */}
+      {isAdmin && (
+        <button
+          onClick={handleDelete}
+          className="absolute right-0 text-red-500 hover:text-red-400 cursor-pointer font-bold text-9xl z-10 -mt-8"
+          style={{
+            top: '-1.25rem', // -20px, even higher than top-0
+            lineHeight: '1',
+            padding: 0,
+            filter: 'none',
+            opacity: 1,
+            pointerEvents: 'auto',
+            background: 'none',
+            border: 'none',
+          }}
+          title="Delete member"
+        >
+          ×
+        </button>
+      )}
       <div className="m-2 overflow-hidden rounded-md h-80 flex justify-center items-center">
         <img className="w-full h-full object-cover" src={member.img_url} alt="profile-picture" />
       </div>
@@ -44,15 +64,6 @@ const MembersCard = ({ member }: { member: Member }) => {
         <p className="text-sm font-semibold text-gray-400 uppercase">
           {member.role}
         </p>
-        {isAdmin && (
-          <button
-            onClick={handleDelete}
-            className="absolute top-2 right-2 text-red-500 hover:text-red-400 hover:cursor-pointer font-bold text-5xl transition-colors duration-200"
-            title="Delete member"
-          >
-            ×
-          </button>
-        )}
       </div>
     </div>
   )

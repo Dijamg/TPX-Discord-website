@@ -63,7 +63,7 @@ const Navbar = () => {
                 Logged in as <span className="font-bold">{username}</span>
               </div>
               <button
-                onClick={logout}
+                onClick={() => { logout(); window.location.reload(); }}
                 className="w-full text-left px-4 py-2 text-red-800 hover:text-purple-400 transition"
               >
                 Logout
@@ -90,10 +90,10 @@ const Navbar = () => {
       return (
         <button
           onClick={(e) => {
-            // these to avoid instantly goin back to login page.
             e.preventDefault();
             e.stopPropagation();
             logout();
+            window.location.reload();
           }}
           className="block cursor-pointer text-purple-400 capitalize transition"
           aria-label="Logout"

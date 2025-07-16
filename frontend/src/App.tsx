@@ -16,6 +16,8 @@ import AddMemberPage from './Components/AddMemberPage'
 import PublicRoute from './Components/PublicRoute'
 import AdminRoute from './Components/AdminRoute'
 import AuthProvider from './context/authProvider'
+import AddTournamentPage from './Components/AddTournamentPage'
+import Footer from './Components/Footer';
 
 const App = () => {
   const [members, setMembers] = useState<Member[]>([])
@@ -77,7 +79,7 @@ const props: AllProps = {
 }
 
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       <AuthProvider>
         <Router>
           <Routes>
@@ -87,8 +89,10 @@ const props: AllProps = {
             <Route path="/login" element={<PublicRoute><LoginPage /></PublicRoute>} />
             <Route path="/register" element={<PublicRoute><RegisterPage /></PublicRoute>} />
 
-            <Route path="/add-member" element={<AdminRoute><AddMemberPage members={members} setMembers={setMembers} fetchData={fetchData}/></AdminRoute>}/>
+            <Route path="/add-member" element={<AdminRoute><AddMemberPage fetchData={fetchData}/></AdminRoute>}/>
+            <Route path="/add-tournament" element={<AdminRoute><AddTournamentPage fetchData={fetchData}/></AdminRoute>}/>
           </Routes>
+          <Footer />
         </Router>
       </AuthProvider>
     </div>

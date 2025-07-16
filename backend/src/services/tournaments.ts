@@ -25,3 +25,16 @@ export const addUpcomingClashTournament = async (theme_id: string, name_key: str
   return await db.tournament.addUpcomingClashTournament(theme_id, name_key, name_key_secondary, start_date);
 }
 
+export const addTournament = async (tournament: Omit<Tournament, 'id' | 'revision_date'>): Promise<Tournament> => {
+  return await db.tournament.addTournament(tournament);
+}
+
+export const deleteTournament = async (id: number): Promise<null> => {
+  return await db.tournament.deleteTournament(id);
+}
+
+export const updateTournamentActiveStatus = async (id: number, active: boolean): Promise<null> => {
+  return await db.tournament.updateTournamentActiveStatus(id, active);
+}
+
+

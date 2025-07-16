@@ -47,4 +47,19 @@ export class TournamentRepository {
     addUpcomingClashTournament(theme_id: string, name_key: string, name_key_secondary: string, start_date: Date): Promise<null> {
         return this.db.none("INSERT INTO upcoming_clash_tournaments (theme_id, name_key, name_key_secondary, start_date) VALUES ($1, $2, $3, $4)", [theme_id, name_key, name_key_secondary, start_date]);
     }
+
+    // Adds a tournament
+    addTournament(tournament: Omit<Tournament, 'id' | 'revision_date'>): Promise<Tournament> {
+        return this.db.one("INSERT INTO tournaments (theme, img_url, start_date) VALUES ($1, $2, $3) RETURNING *", [tournament.theme, tournament.img_url, tournament.start_date]);
+    }
+
+    // Deletes a tournament by id
+    deleteTournament(id: number): Promise<null> {
+        return this.db.none("DELETE FROM tournaments WHERE id = $1", id);
+    }
+
+    // Update tournament active status
+    updateTournamentActiveStatus(id: number, active: boolean): Promise<null> {
+        return this.db.none("UPDATE tournaments SET active = $1 WHERE id = $2", [active, id]);
+    }
 }

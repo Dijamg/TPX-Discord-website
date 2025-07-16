@@ -9,6 +9,10 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
 
   const [notFound, setNotFound] = useState(false);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleBackClick = () => {
     navigate('/')
   }

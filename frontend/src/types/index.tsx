@@ -52,6 +52,7 @@ export type Tournament = {
     theme: string,
     active: boolean,
     img_url: string | null,
+    start_date: Date,
 }
 
 export type LolMatchHistory = {

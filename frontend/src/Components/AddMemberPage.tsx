@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MemberService from '../Services/member';
-import { Member } from '../types';
 
 const MEMBER_ROLES = ['Member', 'Moderator', 'Owner', 'Founder', 'Co-Owner'];
 const REGIONS = [
@@ -10,7 +9,7 @@ const REGIONS = [
   'KR', 'JP1' // Asia
 ];
 
-const AddMemberPage = ({members, setMembers, fetchData}: {members: Member[], setMembers: (members: Member[]) => void, fetchData: () => void}) => {
+const AddMemberPage = ({fetchData}: {fetchData: () => void}) => {
   const navigate = useNavigate();
 
   const [name, setName] = useState('');
@@ -29,7 +28,6 @@ const AddMemberPage = ({members, setMembers, fetchData}: {members: Member[], set
   //Updates the selected image file.
   const _fileSelectedHandler = (e: FileList | null) => {
     if( e != null){
-        console.log(e[0])
         setFileSelected(e[0])
     }
 }
@@ -71,6 +69,7 @@ const AddMemberPage = ({members, setMembers, fetchData}: {members: Member[], set
             description: description
           });
 
+          // Update information of the site by fetching current data from db
           await fetchData();
           navigate('/');
 

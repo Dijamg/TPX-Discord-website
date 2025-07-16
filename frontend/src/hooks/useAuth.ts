@@ -26,7 +26,6 @@ export const useAuth = () => {
             addUsername(response.data.username)
             addIsAdmin(response.data.isAdmin)
         }
-        console.log(AuthService.getUsername())
         return response;
     };
 

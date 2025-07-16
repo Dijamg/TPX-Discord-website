@@ -6,6 +6,7 @@ import { syncCurrentSeasonLolInfo } from "./syncCurrentSeasonLolInfo";
 import { syncMasteryInfo } from "./syncMasteryInfo";
 import { syncUpcomingClashes } from "./syncUpcomingClashes";
 import { syncMatchHistory } from "./syncMatchHistory";
+import { syncTournamentsActiveStatus } from './syncTournamentsActiveStatus';
 
 const jobLocks: Record<string, boolean> = {};
 
@@ -64,6 +65,7 @@ export const initScheduler = async () => {
   // Every 12 hours
   cron.schedule('0 */12 * * *', gated(syncRiotPuuid, 'syncRiotPuuid'));
   cron.schedule('0 */12 * * *', gated(syncMasteryInfo, 'syncMasteryInfo'));
+  cron.schedule('0 */12 * * *', gated(syncTournamentsActiveStatus, 'syncTournamentsActiveStatus'));
 
   // Every 1 hour
   cron.schedule('0 * * * *', gated(syncBasicLolInfo, 'syncBasicLolInfo'));

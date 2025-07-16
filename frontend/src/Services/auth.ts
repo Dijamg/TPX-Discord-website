@@ -13,7 +13,6 @@ export const register = async (data: FormData) => {
 export const login = async (data: FormData) => {
     const request = axios.post(`/api/auth/login`, data);
     const response = await request;
-    console.log(response.data)
     return request;
 };
 
