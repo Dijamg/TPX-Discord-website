@@ -18,6 +18,7 @@ const AddTournamentPage = ({fetchData}: {fetchData: () => void}) => {
   const [startTime, setStartTime] = useState('');
   const [timezone, setTimezone] = useState('Europe/Helsinki');
   const [fileSelected, setFileSelected] = useState<File>();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const cloudName = "dqwjh7xhr"
   const uploadPreset = "unsigned_preset"
@@ -38,13 +39,11 @@ const AddTournamentPage = ({fetchData}: {fetchData: () => void}) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if(!fileSelected) return;
-
+    setIsSubmitting(true);
     const formData = new FormData();
     formData.append("file", fileSelected);
     formData.append("upload_preset", uploadPreset);
-
     try {
       try {
         const res = await fetch(
@@ -55,35 +54,32 @@ const AddTournamentPage = ({fetchData}: {fetchData: () => void}) => {
           }
         );
         const data = await res.json();
-
         if(!data.secure_url) {
             alert("Error uploading image");
+            setIsSubmitting(false);
             return;
         }
-
-        // Use luxon to convert local date+time+timezone to UTC ISO string
         const localDateTime = DateTime.fromISO(`${startDate}T${startTime}`, { zone: timezone });
         const startDateInUTC = localDateTime.toUTC().toISO();
-
         const tournament = await TournamentService.addTournament({
           theme: name,
           active: true,
           start_date: new Date(startDateInUTC!),
           img_url: data.secure_url,
         });
-
-        // Update information of the site by fetching current data from db
         await fetchData();
         navigate('/');
-
       } catch (err: any) {
         alert("Error adding tournament: " + err.response?.data);
         console.error("Upload Error:", err.response?.data);
+        setIsSubmitting(false);
         return
       }
     } catch (error) {
       console.error(error);
+      setIsSubmitting(false);
     }
+    setIsSubmitting(false);
   };
 
   return (
@@ -144,10 +140,11 @@ const AddTournamentPage = ({fetchData}: {fetchData: () => void}) => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="mt-4 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-400 hover:bg-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-400"
+          className={`mt-4 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-400 hover:bg-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-400 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
           onClick={handleSubmit}
+          disabled={isSubmitting}
         >
-          Submit
+          {isSubmitting ? 'Submitting...' : 'Submit'}
         </button>
       </form>
     </div>

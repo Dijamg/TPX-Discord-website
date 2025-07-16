@@ -19,6 +19,7 @@ const AddMemberPage = ({fetchData}: {fetchData: () => void}) => {
   const [riotName, setRiotName] = useState('');
   const [riotTagline, setRiotTagline] = useState('');
   const [addRiot, setAddRiot] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [fileSelected, setFileSelected] = useState<File>()
 
@@ -36,6 +37,7 @@ const AddMemberPage = ({fetchData}: {fetchData: () => void}) => {
     e.preventDefault();
     
     if(!fileSelected) return;
+    setIsSubmitting(true);
 
     const formData = new FormData();
     formData.append("file", fileSelected);
@@ -53,11 +55,12 @@ const AddMemberPage = ({fetchData}: {fetchData: () => void}) => {
 
         if(!data.secure_url) {
             alert("Error uploading image");
+            setIsSubmitting(false);
             return;
         }
 
 
-        if(!role) return;
+        if(!role) { setIsSubmitting(false); return; }
 
         const member =  await MemberService.add({
             name: name,
@@ -76,9 +79,12 @@ const AddMemberPage = ({fetchData}: {fetchData: () => void}) => {
       } catch (err: any) {
         alert("Error adding member: " + err.response.data);
         console.error("Upload Error:", err.response.data);
+        //remove image from cloudinary to be implemented later
+        setIsSubmitting(false);
         return
       }
-    };
+    setIsSubmitting(false);
+  };
 
   const handleBackClick = () => {
     navigate('/');
@@ -196,9 +202,10 @@ const AddMemberPage = ({fetchData}: {fetchData: () => void}) => {
         </div>
         <button
           type="submit"
-          className="mt-4 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-400 hover:bg-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-400"
+          className={`mt-4 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-400 hover:bg-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-400 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
+          disabled={isSubmitting}
         >
-          Submit
+          {isSubmitting ? 'Submitting...' : 'Submit'}
         </button>
       </form>
     </div>
