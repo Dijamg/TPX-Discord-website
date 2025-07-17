@@ -62,7 +62,10 @@ router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
       return res.status(400).send('Invalid region for the given riot game name and tag line');
     }
 
-    //Now we can add the account to the database
+    //Now we can add the account to the database, Add game name and tag line as returned by riot api
+    req.body.riot_game_name = riotAccount.gameName;
+    req.body.riot_tag_line = riotAccount.tagLine;
+
     const data = await LolAccountInfoService.addLolAccountInfo(req.body);
 
     // Sync rest of the information before returning.
