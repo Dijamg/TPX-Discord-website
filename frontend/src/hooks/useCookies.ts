@@ -22,7 +22,7 @@ export const useCookies = () => {
     };
 
     const removeItem = (key: string) => {
-        cookies.remove(key);
+        cookies.remove(key, { path: '/' });
         setValue(null);
     };
 

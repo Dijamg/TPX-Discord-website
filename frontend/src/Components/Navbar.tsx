@@ -63,7 +63,10 @@ const Navbar = () => {
                 Logged in as <span className="font-bold">{username}</span>
               </div>
               <button
-                onClick={() => { logout(); window.location.reload(); }}
+                onClick={() => {
+                  logout();
+                  setTimeout(() => window.location.reload(), 100);
+                }}
                 className="w-full text-left px-4 py-2 text-red-800 hover:text-purple-400 transition"
               >
                 Logout

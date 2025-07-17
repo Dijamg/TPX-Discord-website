@@ -52,7 +52,7 @@ const MemberInfoPageContent = ({
             {getCurrentSeasonRankInfo()}
             {/* Peak Rank box (smaller) */}
             <div className="shadow p-4 flex flex-col items-center">
-              <h2 className="text-base font-bold text-gray-400 mb-2 border-b-2 border-purple-400 w-full text-center pb-2">Peak Rank</h2>
+              <h2 className="text-base font-bold text-gray-400 mb-2 border-b-2 border-purple-400 w-full text-center pb-2">End of Season peak rank</h2>
               <div className="w-full flex flex-col items-center py-2">
                 {basicLolInfo?.peak_rank && (
                   <img src={peakRankIconUrl} alt={basicLolInfo.peak_rank} className="w-12 h-12 my-2" />
