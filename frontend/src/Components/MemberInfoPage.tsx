@@ -208,7 +208,7 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
               <span className="text-3xl font-bold text-white">
                 {summonerName}
               </span>
-              <span className="ml-2 text-xl text-gray-400 opacity-80">({getOpggRegionFromPlatform(member.riot_region)})</span>
+              <span className="ml-2 text-xl text-gray-400 opacity-80">({getOpggRegionFromPlatform(member.riot_region)?.toUpperCase()})</span>
               <a
                 href={opggUrl}
                 target="_blank"
