@@ -29,6 +29,14 @@ export const deleteMember = async (id: number): Promise<Member | null> => {
   return await db.members.delete(id);
 };
 
-export const getMemberByRiotData = async (riotGameName: string, riotTagLine: string, riotRegion: string): Promise<Member | null> => {
-  return await db.members.findByRiotData(riotGameName, riotTagLine, riotRegion);
+export const getMemberByRiotData = async (riotGameName: string, riotTagLine: string): Promise<Member | null> => {
+  return await db.members.findByRiotData(riotGameName, riotTagLine);
+};
+
+export const getMemberByName = async (name: string): Promise<Member | null> => {
+  return await db.members.findByName(name);
+};
+
+export const getMemberByRiotPuuid = async (riotPuuid: string): Promise<Member | null> => {
+  return await db.members.findByRiotPuuid(riotPuuid);
 };

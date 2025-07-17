@@ -11,12 +11,12 @@ export const syncRiotPuuid = async () => {
         
         for (const member of members) {
             try {   
-                const riotPuuid = await RiotService.getRiotUuid(member.riot_game_name!, member.riot_tag_line!);
-                if(!riotPuuid) {
+                const riotAccount = await RiotService.getRiotAccountV1(member.riot_game_name!, member.riot_tag_line!);
+                if(!riotAccount) {
                     console.log(`No riot puuid found for ${member.riot_game_name} ${member.riot_tag_line}`);
                     continue;
                 }
-                await MemberService.updateMemberPuuid(member.id, riotPuuid);
+                await MemberService.updateMemberPuuid(member.id, riotAccount.puuid);
             } catch (error) {
                 console.error(`Error syncing member ${member.id}:`, error);
             }

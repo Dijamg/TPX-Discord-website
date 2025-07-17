@@ -2,6 +2,27 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Member, AllProps } from '../types'
 
+export const getOpggRegionFromPlatform = (platform: string): string | null => {
+  const opggMap = {
+    NA1: "na",
+    BR1: "br",
+    LA1: "lan",
+    LA2: "las",
+
+    EUN1: "eune",
+    EUW1: "euw",
+    TR1: "tr",
+    RU: "ru",
+
+    KR: "kr", 
+    JP1: "jp",
+
+    OC1: "oce",
+  };
+
+  return opggMap[platform.toUpperCase() as keyof typeof opggMap] || null;
+};
+
 const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
   const navigate = useNavigate()
   const { id } = useParams()
@@ -101,7 +122,7 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
   const recentRankedHistory = allProps.lolMatchHistory.filter(r => r.riot_puuid === member.riot_puuid);
 
   const summonerIconUrl = `https://ddragon.leagueoflegends.com/cdn/15.13.1/img/profileicon/${basicLolInfo?.summoner_icon_id}.png`;
-  const opggUrl = `https://op.gg/lol/summoners/${member.riot_region.toLowerCase().slice(0, -1)}/${member.riot_game_name + "-" + member.riot_tag_line}`;
+  const opggUrl = `https://op.gg/lol/summoners/${getOpggRegionFromPlatform(member.riot_region)}/${member.riot_game_name + "-" + member.riot_tag_line}`;
   const peakRankIconUrl = `https://opgg-static.akamaized.net/images/medals_mini/${basicLolInfo?.peak_rank}.png`;
   const unrankedIconUrl = `https://opgg-static.akamaized.net/images/medals/default.png`;
   const currentRankIconUrl = `https://opgg-static.akamaized.net/images/medals/${currentSeasonLolInfo?.tier.toLowerCase() + "_" + romanToNumber(currentSeasonLolInfo?.rank)}.png`;
@@ -159,6 +180,7 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
       {/* Purely cosmetic nav tabs for now */}
       <div className="pt-24 bg-gray-900" onClick={() => {
         console.log(masteryInfo);
+        console.log(basicLolInfo?.peak_rank);
       }}>
         <ul className="ml-4 mr-4 flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-700 dark:border-gray-700 dark:text-gray-400">
           <li className="me-2">
@@ -212,7 +234,9 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
             <div className="shadow p-4 flex flex-col items-center">
               <h2 className="text-base font-bold text-gray-400 mb-2 border-b-2 border-purple-400 w-full text-center pb-2">Peak Rank</h2>
               <div className="w-full flex flex-col items-center py-2">
-                <img src={peakRankIconUrl} alt={basicLolInfo?.peak_rank} className="w-12 h-12 my-2" />
+                {basicLolInfo?.peak_rank && (
+                  <img src={peakRankIconUrl} alt={basicLolInfo.peak_rank} className="w-12 h-12 my-2" />
+                )}
                 <span className="text-lg font-semibold text-gray-400 capitalize">{basicLolInfo?.peak_rank?.replace('_', ' ') || 'N/A'}</span>
               </div>
             </div>

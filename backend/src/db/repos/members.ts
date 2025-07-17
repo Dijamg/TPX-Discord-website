@@ -59,7 +59,17 @@ export class MembersRepository {
     }
 
     // Finds a member by riot data
-    findByRiotData(riotGameName: string, riotTagLine: string, riotRegion: string): Promise<Member | null> {
-        return this.db.oneOrNone("SELECT * FROM members WHERE riot_game_name = $1 AND riot_tag_line = $2 AND riot_region = $3", [riotGameName, riotTagLine, riotRegion]);
+    findByRiotData(riotGameName: string, riotTagLine: string): Promise<Member | null> {
+        return this.db.oneOrNone("SELECT * FROM members WHERE riot_game_name = $1 AND riot_tag_line = $2", [riotGameName, riotTagLine]);
+    }
+
+    // Finds a member by name
+    findByName(name: string): Promise<Member | null> {
+        return this.db.oneOrNone("SELECT * FROM members WHERE name = $1", name);
+    }
+
+    // Finds a member by riot puuid
+    findByRiotPuuid(riotPuuid: string): Promise<Member | null> {
+        return this.db.oneOrNone("SELECT * FROM members WHERE riot_puuid = $1", riotPuuid);
     }
 }

@@ -30,14 +30,14 @@ const getMatchV5Url = (region: string, matchId: string) => {
     return `https://${getMatchRegionFromPlatform(region)}.api.riotgames.com/lol/match/v5/matches/${matchId}`;
 }
 
-export const getRiotUuid = async (riotGameName: string, riotTagLine: string): Promise<string | null> => {
+export const getRiotAccountV1 = async (riotGameName: string, riotTagLine: string): Promise<RiotAccountResponse | null> => {
     try {
         const response = await axios.get<RiotAccountResponse>(`${ACCOUNT_V1_URL}${riotGameName}/${riotTagLine}`, {
             headers: {
                 'X-Riot-Token': process.env.RIOT_API_KEY!
             }
             });
-            return response.data.puuid;
+            return response.data;
     } catch (error) {
         console.error(`Error getting riot uuid for ${riotGameName} ${riotTagLine}:`, error);
         return null;
