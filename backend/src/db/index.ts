@@ -8,6 +8,7 @@ import {
     TournamentRepository,
     LolMatchHistoryRepository,
     AccountRepository,
+    LolAccountInfoRepository,
 } from "./repos/index";
 
 type ExtendedProtocol = IDatabase<IExtensions> & IExtensions;
@@ -27,6 +28,7 @@ const initOptions: IInitOptions<IExtensions> = {
         obj.lolMatchHistory = new LolMatchHistoryRepository(obj, pgp);
         obj.tournament = new TournamentRepository(obj, pgp);
         obj.account = new AccountRepository(obj, pgp);
+        obj.lolAccountInfo = new LolAccountInfoRepository(obj, pgp);
     },
 };
 

@@ -1,3 +1,5 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 CREATE TYPE member_role AS ENUM ('Member', 'Moderator', 'Owner', 'Founder', 'Co-Owner');
 
 CREATE TABLE accounts (
@@ -10,27 +12,28 @@ CREATE TABLE accounts (
 
 CREATE TABLE members (
     id SERIAL PRIMARY KEY,
+    member_uuid UUID UNIQUE NOT NULL DEFAULT uuid_generate_v4(),
     name VARCHAR(100) UNIQUE NOT NULL, 
     role member_role NOT NULL,
     img_url VARCHAR(255) NOT NULL DEFAULT 'https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o=',
-    riot_game_name VARCHAR(100),    
-    riot_tag_line VARCHAR(100),
-    riot_puuid VARCHAR(100) UNIQUE,
-    riot_region VARCHAR(100),
     description TEXT,
+    revision_date TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE lol_account_info (
+    id SERIAL PRIMARY KEY,
+    riot_puuid VARCHAR(100) UNIQUE,
+    member_id UUID REFERENCES members(member_uuid) ON DELETE CASCADE,
+    riot_game_name VARCHAR(100) NOT NULL,
+    riot_tag_line VARCHAR(100) NOT NULL,
+    riot_region VARCHAR(100) NOT NULL,
     revision_date TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT all_or_none_check
-    CHECK (
-      (riot_game_name IS NULL AND riot_tag_line IS NULL AND riot_region IS NULL)
-      OR
-      (riot_game_name IS NOT NULL AND riot_tag_line IS NOT NULL AND riot_region IS NOT NULL)
-    ),
-    CONSTRAINT unique_member_identity UNIQUE (riot_game_name, riot_tag_line, riot_region)
+    CONSTRAINT unique_member_identity UNIQUE (riot_game_name, riot_tag_line)
 );
 
 CREATE TABLE lol_basic_info (
     id SERIAL PRIMARY KEY,
-    riot_puuid VARCHAR(100) REFERENCES members(riot_puuid) ON DELETE CASCADE,
+    riot_puuid VARCHAR(100) REFERENCES lol_account_info(riot_puuid) ON DELETE CASCADE,
     summoner_level INT NOT NULL,
     summoner_icon_id INT NOT NULL,
     peak_rank VARCHAR(100),
@@ -41,7 +44,7 @@ CREATE TABLE lol_basic_info (
 
 CREATE TABLE lol_current_season_info (
     id SERIAL PRIMARY KEY,
-    riot_puuid VARCHAR(100) REFERENCES members(riot_puuid) ON DELETE CASCADE,
+    riot_puuid VARCHAR(100) REFERENCES lol_account_info(riot_puuid) ON DELETE CASCADE,
     queue_type VARCHAR(100) NOT NULL DEFAULT 'RANKED_SOLO_5x5',
     tier VARCHAR(100) NOT NULL,
     rank VARCHAR(100) NOT NULL,
@@ -54,7 +57,7 @@ CREATE TABLE lol_current_season_info (
 
 CREATE TABLE lol_mastery_info (
     id SERIAL PRIMARY KEY,
-    riot_puuid VARCHAR(100) REFERENCES members(riot_puuid) ON DELETE CASCADE,
+    riot_puuid VARCHAR(100) REFERENCES lol_account_info(riot_puuid) ON DELETE CASCADE,
     champion_name VARCHAR(100) NOT NULL,
     champion_level INT NOT NULL,
     champion_points INT NOT NULL,
@@ -100,7 +103,7 @@ CREATE TABLE tournaments (
 
 CREATE TABLE lol_match_history (
     id SERIAL PRIMARY KEY,
-    riot_puuid VARCHAR(100) REFERENCES members(riot_puuid) ON DELETE CASCADE,
+    riot_puuid VARCHAR(100) REFERENCES lol_account_info(riot_puuid) ON DELETE CASCADE,
     match_id VARCHAR(100) NOT NULL,
     champion_name VARCHAR(100) NOT NULL,
     win BOOLEAN NOT NULL,

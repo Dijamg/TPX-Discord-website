@@ -1,5 +1,5 @@
 import db from "../db";
-import { LolBasicInfo, LolCurrentSeasonInfo } from '../db/models';
+import { LolCurrentSeasonInfo } from '../db/models';
 
 // Get all lol basic info
 export const getAllLolCurrentSeasonInfo = async (): Promise<LolCurrentSeasonInfo[]> => {

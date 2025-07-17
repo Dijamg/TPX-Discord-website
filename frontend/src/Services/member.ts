@@ -7,7 +7,7 @@ const getAll = async (): Promise<Member[]> => {
   return response.data;
 };
 
-const add = async (member: Omit<Member, 'id' | 'revision_date' | 'riot_puuid'>): Promise<Member> => {
+const add = async (member: Omit<Member, 'id' | 'revision_date' | 'member_uuid'>): Promise<Member> => {
   try {
     const response = await axios.post<Member>('/api/members', member, { headers: authHeader() });
     return response.data;

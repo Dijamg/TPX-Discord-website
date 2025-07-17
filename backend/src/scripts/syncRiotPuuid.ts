@@ -1,29 +1,29 @@
 //This script is used to update the riot_uuid field in the members
 //table for the entries that have a riot_game_name and riot_tag_line but no riot_uuid
 
-import { MemberService, RiotService } from "../services";
+import { LolAccountInfoService, RiotService } from "../services";
 
 export const syncRiotPuuid = async () => {
     console.log('Syncing riot puuid');
     try {
-        const members = await MemberService.getMembersWithNoRiotPuuid();
-        console.log(`Found ${members.length} members to sync`);
+        const accountInfos = await LolAccountInfoService.getAllLolAccountInfoWithNoRiotPuuid();
+        console.log(`Found ${accountInfos.length} account infos to sync`);
         
-        for (const member of members) {
+        for (const accountInfo of accountInfos) {
             try {   
-                const riotAccount = await RiotService.getRiotAccountV1(member.riot_game_name!, member.riot_tag_line!);
+                const riotAccount = await RiotService.getRiotAccountV1(accountInfo.riot_game_name!, accountInfo.riot_tag_line!);
                 if(!riotAccount) {
-                    console.log(`No riot puuid found for ${member.riot_game_name} ${member.riot_tag_line}`);
+                    console.log(`No riot puuid found for ${accountInfo.riot_game_name} ${accountInfo.riot_tag_line}`);
                     continue;
                 }
-                await MemberService.updateMemberPuuid(member.id, riotAccount.puuid);
+                await LolAccountInfoService.updateLolAccountInfoRiotPuuid(accountInfo.id, riotAccount.puuid);
             } catch (error) {
-                console.error(`Error syncing member ${member.id}:`, error);
+                console.error(`Error syncing account info ${accountInfo.id}:`, error);
             }
         }
-        console.log(`Synced riot puuid for all members`);
+        console.log(`Synced riot puuid for all account infos`);
     } catch (error) {
-        console.error('Error fetching members:', error);
+        console.error('Error fetching account infos:', error);
     }
 }
 

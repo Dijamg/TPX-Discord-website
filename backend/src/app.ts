@@ -12,6 +12,7 @@ import { AccountService } from "./services";
 import authRoutes from "./routes/auth.routes";
 import { authMiddleware } from "./middlewares/authMiddleware";
 import { adminMiddleware } from "./middlewares/adminMiddleware";
+import lolAccountInfoRoutes from "./routes/lolAccountInfo.routes";
 
 
 const app = express();
@@ -26,6 +27,7 @@ app.use('/tournaments', tournamentsRoutes);
 app.use('/lol-match-history', lolMatchHistoryRoutes);
 app.use('/members', membersRoutes);
 app.use('/auth', authRoutes);
+app.use('/lol-account-info', lolAccountInfoRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {

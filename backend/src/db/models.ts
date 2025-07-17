@@ -1,19 +1,25 @@
 export interface Member {
     id: number;
+    member_uuid: string;
     name: string;
     role: string;
     img_url: string | null;
+    description: string;
+    revision_date: Date;
+}
+
+export interface LolAccountInfo {
+    id: number;
+    member_id: string;
+    riot_puuid: string;
     riot_game_name: string | null;
     riot_tag_line: string | null;
-    riot_puuid: string | null;
-    description: string;
-    riot_region: string | null;    
+    riot_region: string | null;
     revision_date: Date;
 }
 
 export interface LolBasicInfo {
     id: number;
-    member_id: number;
     riot_puuid: string;
     summoner_level: number;
     summoner_icon_id: number;

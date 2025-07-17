@@ -3,7 +3,7 @@ import './index.css'
 import Frontpage from './Components/Frontpage'
 import MemberService from './Services/member'
 import BasicLolInfoService from './Services/basicLolInfo'
-import { AllProps, BasicLolInfo, CurrentSeasonLolInfo, LolMatchHistory, MasteryInfo, Member, Tournament, UpcomingClashTournament } from './types'
+import { AllProps, BasicLolInfo, CurrentSeasonLolInfo, LolAccountInfo, LolMatchHistory, MasteryInfo, Member, Tournament, UpcomingClashTournament } from './types'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MemberInfoPage from './Components/MemberInfoPage'
 import CurrentSeasonLolInfoService from './Services/currentSeasonLolInfo'
@@ -18,6 +18,8 @@ import AdminRoute from './Components/AdminRoute'
 import AuthProvider from './context/authProvider'
 import AddTournamentPage from './Components/AddTournamentPage'
 import Footer from './Components/Footer';
+import LolAccountService from './Services/lolAccount'
+import AddLolAccountPage from './Components/AddLolAccountForm'
 
 const App = () => {
   const [members, setMembers] = useState<Member[]>([])
@@ -29,7 +31,7 @@ const App = () => {
   const [lolMatchHistory, setLolMatchHistory] = useState<LolMatchHistory[]>([])
   const [token, setToken] = useState<string | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
-
+  const [lolAccount, setLolAccount] = useState<LolAccountInfo[]>([])
   const fetchData = async () => {
     try {
       const [
@@ -39,7 +41,8 @@ const App = () => {
         masteryInfoData,
         tournamentsData,
         upcomingClashTournamentsData,
-        lolMatchHistoryData
+        lolMatchHistoryData,
+        lolAccountData
       ] = await Promise.all([
         MemberService.getAll(),
         BasicLolInfoService.getAll(),
@@ -47,7 +50,8 @@ const App = () => {
         MasteryInfoService.getAll(),
         TournamentService.getAllTournaments(),
         TournamentService.getAllUpcomingClashTournaments(),
-        MatchHistoryService.getAll()
+        MatchHistoryService.getAll(),
+        LolAccountService.getAll()
       ]);
   
       setMembers(membersData);
@@ -57,6 +61,7 @@ const App = () => {
       setTournaments(tournamentsData);
       setUpcomingClashTournaments(upcomingClashTournamentsData);
       setLolMatchHistory(lolMatchHistoryData);
+      setLolAccount(lolAccountData);
   
       setRefreshKey(prev => prev + 1); // this will cause Frontpage to remount
     } catch (error) {
@@ -75,7 +80,8 @@ const props: AllProps = {
   masteryInfo,
   upcomingClashTournaments,
   tournaments,
-  lolMatchHistory
+  lolMatchHistory,
+  lolAccount
 }
 
   return (
@@ -91,6 +97,7 @@ const props: AllProps = {
 
             <Route path="/add-member" element={<AdminRoute><AddMemberPage fetchData={fetchData}/></AdminRoute>}/>
             <Route path="/add-tournament" element={<AdminRoute><AddTournamentPage fetchData={fetchData}/></AdminRoute>}/>
+            <Route path="/members/:id/add-lol-account" element={<AdminRoute><AddLolAccountPage allProps={props} fetchData={fetchData}/></AdminRoute>}/>
           </Routes>
           <Footer />
         </Router>

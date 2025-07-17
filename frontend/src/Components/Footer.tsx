@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-white py-12 w-full mt-auto">
+    <footer className="bg-gray-900 text-white py-12 w-full mt-auto" >
       <div className="flex flex-col items-center">
         <div className="flex space-x-8 mb-8">
           {/* Discord Icon */}

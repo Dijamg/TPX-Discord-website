@@ -1,12 +1,18 @@
 export type Member = {
     id: number,
+    member_uuid: string,
     name: string,
     role: string,
     img_url: string, 
+    description: string,
+}
+
+export type LolAccountInfo = {
+    id: number,
+    member_id: string,
     riot_game_name: string | null, 
     riot_tag_line: string | null, 
     riot_puuid: string | null, 
-    description: string,
     riot_region: string,
 }
 
@@ -84,4 +90,5 @@ export type AllProps = {
     upcomingClashTournaments: UpcomingClashTournament[],
     tournaments: Tournament[],
     lolMatchHistory: LolMatchHistory[],
+    lolAccount: LolAccountInfo[],
 }

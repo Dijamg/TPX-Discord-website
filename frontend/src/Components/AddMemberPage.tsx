@@ -16,10 +16,6 @@ const AddMemberPage = ({fetchData}: {fetchData: () => void}) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [role, setRole] = useState('');
-  const [region, setRegion] = useState('');
-  const [riotName, setRiotName] = useState('');
-  const [riotTagline, setRiotTagline] = useState('');
-  const [addRiot, setAddRiot] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
@@ -38,51 +34,48 @@ const AddMemberPage = ({fetchData}: {fetchData: () => void}) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg(null);
-    
-    if(!fileSelected) return;
-    setIsSubmitting(true);
+
+    if (!fileSelected || !role || !name) {
+      setErrorMsg("Please fill in all fields");
+      return;
+    }
 
     const formData = new FormData();
     formData.append("file", fileSelected);
     formData.append("upload_preset", uploadPreset);
 
     try {
-        const res = await axios.post(
-          `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-          formData
-        );
-        const data = res.data;
+      setIsSubmitting(true);
 
-        if(!data.secure_url) {
-            setErrorMsg("Error uploading image");
-            setIsSubmitting(false);
-            return;
-        }
+      const res = await axios.post(
+        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+        formData
+      );
+      const data = res.data;
 
-
-        if(!role) { setIsSubmitting(false); return; }
-
-        const member =  await MemberService.add({
-            name: name,
-            role: role,
-            img_url: data.secure_url,
-            riot_game_name: riotName,
-            riot_tag_line: riotTagline,
-            riot_region: region,
-            description: description
-          });
-
-          // Update information of the site by fetching current data from db
-          await fetchData();
-          navigate('/');
-
-      } catch (err: any) {
-        setErrorMsg("Error adding member: " + err.response?.data);
-        console.error("Upload Error:", err.response?.data);
-        //remove image from cloudinary to be implemented later
+      if (!data.secure_url) {
+        setErrorMsg("Error uploading image");
         setIsSubmitting(false);
-        return
+        return;
       }
+
+      await MemberService.add({
+        name: name,
+        role: role,
+        img_url: data.secure_url,
+        description: description
+      });
+
+      // Update information of the site by fetching current data from db
+      await fetchData();
+      navigate('/');
+    } catch (err: any) {
+      setErrorMsg("Error adding member: " + err.response?.data);
+      console.error("Upload Error:", err.response?.data);
+      //remove image from cloudinary to be implemented later
+      setIsSubmitting(false);
+      return;
+    }
     setIsSubmitting(false);
   };
 
@@ -116,12 +109,16 @@ const AddMemberPage = ({fetchData}: {fetchData: () => void}) => {
         )}
         {/* Name */}
         <div>
-          <label className="block text-white mb-1" htmlFor="name">Name</label>
+          <label className="block text-white mb-1" htmlFor="name">
+            Name <span className="text-red-500">*</span>
+          </label>
           <input id="name" value={name} onChange={e => setName(e.target.value)} className="w-full px-3 py-2 rounded bg-gray-700 text-white focus:outline-none" required />
         </div>
         {/* Role */}
         <div>
-          <label className="block text-white mb-1" htmlFor="role">Role</label>
+          <label className="block text-white mb-1" htmlFor="role">
+            Role <span className="text-red-500">*</span>
+          </label>
           <select
             id="role"
             value={role}
@@ -137,62 +134,11 @@ const AddMemberPage = ({fetchData}: {fetchData: () => void}) => {
         </div>
         {/* Image */}
         <div>
-          <label className="block text-white mb-1" htmlFor="image">Image</label>
+          <label className="block text-white mb-1" htmlFor="image">
+            Image <span className="text-red-500">*</span>
+          </label>
           <input id="image" type="file" accept="image/*" className="w-full px-3 py-2 rounded bg-gray-700 text-white focus:outline-none" required onChange={e => _fileSelectedHandler(e.target.files)} />
         </div>
-        {/* Add Riot Account Toggle */}
-        <div className="flex items-center gap-2">
-          <input
-            id="addRiot"
-            type="checkbox"
-            checked={addRiot}
-            onChange={() => setAddRiot(v => !v)}
-            className="form-checkbox h-5 w-5 text-purple-400"
-          />
-          <label htmlFor="addRiot" className="text-white select-none cursor-pointer">Add Riot account</label>
-        </div>
-        {/* Riot Fields (conditionally rendered) */}
-        {addRiot && (
-          <>
-            <div>
-              <label className="block text-white mb-1" htmlFor="riotName">Riot Name</label>
-              <input
-                id="riotName"
-                type="text"
-                value={riotName}
-                onChange={e => setRiotName(e.target.value)}
-                required={addRiot}
-                className="w-full px-3 py-2 rounded bg-gray-700 text-white focus:outline-none"
-              />
-            </div>
-            <div>
-              <label className="block text-white mb-1" htmlFor="riotTagline">Riot Tagline</label>
-              <input
-                id="riotTagline"
-                type="text"
-                value={riotTagline}
-                onChange={e => setRiotTagline(e.target.value)}
-                required={addRiot}
-                className="w-full px-3 py-2 rounded bg-gray-700 text-white focus:outline-none"
-              />
-            </div>
-            <div>
-              <label className="block text-white mb-1" htmlFor="region">Region</label>
-              <select
-                id="region"
-                value={region}
-                onChange={e => setRegion(e.target.value)}
-                required={addRiot}
-                className="w-full px-3 py-2 rounded bg-gray-700 text-white focus:outline-none"
-              >
-                <option value="">Select region</option>
-                {REGIONS.map((reg) => (
-                  <option key={reg} value={reg}>{reg}</option>
-                ))}
-              </select>
-            </div>
-          </>
-        )}
         {/* Description */}
         <div>
           <label className="block text-white mb-1" htmlFor="description">Description</label>
