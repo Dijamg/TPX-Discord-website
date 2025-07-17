@@ -79,7 +79,6 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
   const masteryInfo = allProps.masteryInfo.filter(m => m.riot_puuid === lolAccounts[activeAccountIdx]?.riot_puuid);
   const recentRankedHistory = allProps.lolMatchHistory.filter(r => r.riot_puuid === lolAccounts[activeAccountIdx]?.riot_puuid);
 
-  // Helper: getOpggRegionFromPlatform
   const getOpggRegionFromPlatform = (platform: string): string | null => {
     const opggMap = {
       NA1: "na",
@@ -107,26 +106,33 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
     return 0;
   };
 
-  // Helper: getChampionIconUrl
   const getChampionIconUrl = (championName: string) => {
     return `https://ddragon.leagueoflegends.com/cdn/15.13.1/img/champion/${championName}.png`;
   };
 
-  // Derived variables for the active account
+
   const summonerIconUrl = `https://ddragon.leagueoflegends.com/cdn/15.13.1/img/profileicon/${basicLolInfo?.summoner_icon_id}.png`;
   const opggUrl = `https://op.gg/lol/summoners/${getOpggRegionFromPlatform(lolAccounts[activeAccountIdx]?.riot_region || '')}/${lolAccounts[activeAccountIdx]?.riot_game_name + "-" + lolAccounts[activeAccountIdx]?.riot_tag_line}`;
   const peakRankIconUrl = `https://opgg-static.akamaized.net/images/medals_mini/${basicLolInfo?.peak_rank}.png`;
   const unrankedIconUrl = `https://opgg-static.akamaized.net/images/medals/default.png`;
   const currentRankIconUrl = `https://opgg-static.akamaized.net/images/medals/${currentSeasonLolInfo?.tier?.toLowerCase() + "_" + romanToNumber(currentSeasonLolInfo?.rank)}.png`;
 
-  // Helper: getCurrentSeasonRankInfo
+  const getCurrentRankIconUrl = () => {
+      if(currentSeasonLolInfo?.tier === "EMERALD") {
+        return 'https://opgg-static.akamaized.net/images/medals_new/emerald.png'
+      } else {
+        return currentRankIconUrl;
+      }
+  };
+
+
   const getCurrentSeasonRankInfo = () => {
     if (currentSeasonLolInfo) {
       return (
         <div className="shadow p-6 flex flex-col items-centers ">
           <h2 className="text-lg font-bold text-gray-400 mb-2 border-b-2 border-purple-400 w-full text-center pb-2">Current Rank</h2>
           <div className="w-full flex flex-col items-center pt-4">
-            <img src={currentRankIconUrl} alt={currentSeasonLolInfo?.tier + "_" + currentSeasonLolInfo?.rank} className="w-28 h-28 mb-2" />
+            <img src={getCurrentRankIconUrl()} alt={currentSeasonLolInfo?.tier + "_" + currentSeasonLolInfo?.rank} className="w-28 h-28 mb-2" />
             <div className="flex flex-row w-full justify-between mt-2">
               {/* Left: Rank and LP */}
               <div className="flex flex-col items-start">
