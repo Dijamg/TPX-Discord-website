@@ -67,6 +67,8 @@ services:
       - project.env
     networks:
       - tpx-net
+    expose:
+      - 80
     deploy:
       replicas: 2
       restart_policy:
