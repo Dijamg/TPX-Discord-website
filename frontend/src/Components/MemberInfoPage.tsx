@@ -55,7 +55,7 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
         <nav className="top-0 w-full bg-gray-900 shadow-md z-50" style={{ position: 'fixed', height: '4.5rem' }}>
           <div className="h-18 flex items-center">
             <img
-              src="/public/assets/navbar_banner.PNG"
+              src="/assets/navbar_banner.PNG"
               alt="TPX Banner"
               className="h-full w-auto m-0 p-0 cursor-pointer"
               onClick={handleBackClick}
@@ -160,7 +160,7 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
       <nav className="top-0 w-full bg-gray-900 shadow-md z-50" style={{ position: 'fixed', height: '4.5rem' }}>
         <div className="h-18 flex items-center">
           <img
-            src="/public/assets/navbar_banner.PNG"
+            src="/assets/navbar_banner.PNG"
             alt="TPX Banner"
             className="h-full w-auto m-0 p-0 cursor-pointer"
             onClick={handleBackClick}

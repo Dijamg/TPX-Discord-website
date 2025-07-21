@@ -162,7 +162,7 @@ const Navbar = () => {
             offset={0}
             className="cursor-pointer flex items-center h-full"
           >
-            <img src="/public/assets/navbar_banner.PNG" alt="TPX Banner" className="h-full w-auto m-0 p-0" />
+            <img src="/assets/navbar_banner.PNG" alt="TPX Banner" className="h-full w-auto m-0 p-0" />
           </Link>
         </div>
         

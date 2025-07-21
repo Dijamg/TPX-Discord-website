@@ -70,7 +70,7 @@ const AddLolAccountForm = ({ allProps, fetchData }: { allProps: AllProps, fetchD
       >
         <div className="h-18 flex items-center">
           <img
-            src="/public/assets/navbar_banner.PNG"
+            src="/assets/navbar_banner.PNG"
             alt="TPX Banner"
             className="h-full w-auto m-0 p-0 cursor-pointer"
             onClick={handleBackClick}

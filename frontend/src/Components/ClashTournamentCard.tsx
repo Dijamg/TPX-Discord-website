@@ -30,7 +30,7 @@ const ClashTournamentCard = ({ tournament }: { tournament: UpcomingClashTourname
     >
       <div className="m-2 overflow-hidden rounded-md h-48 flex justify-center items-center bg-gray-900">
         <img
-          src={'/public/assets/clash.png'}
+          src={'/assets/clash.png'}
           alt={tournament.name_key}
           className="w-full h-full object-cover"
         />

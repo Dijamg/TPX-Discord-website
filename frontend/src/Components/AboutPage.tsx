@@ -5,7 +5,7 @@ const AboutPage = () => (
     <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-stretch gap-8">
       {/* Left column: Image */}
       <div className="w-full md:w-1/2 flex flex-col justify-center">
-        <img src="/public/assets/tpx_logo.webp" alt="TPX Logo" className="w-full max-w-full h-auto max-h-96 object-contain border-l-8 border-purple-400" />
+        <img src="/assets/tpx_logo.webp" alt="TPX Logo" className="w-full max-w-full h-auto max-h-96 object-contain border-l-8 border-purple-400" />
       </div>
       {/* Right column: Text */}
       <div className="w-full md:w-1/2 flex flex-col justify-center">
@@ -48,7 +48,7 @@ const AboutPage = () => (
       {/* Right column: Image */}
       <div className="flex-shrink-0 flex flex-col items-center md:justify-start w-full md:w-1/2 h-full">
         <img
-          src="/public/assets/tpxvsgg.png"
+          src="/assets/tpxvsgg.png"
           alt="TPX vs GG"
           className="w-full max-w-full max-h-96 h-auto object-contain rounded-lg shadow-lg border-r-8 border-purple-400"
         />
