@@ -62,7 +62,6 @@ services:
       context: ./frontend
       dockerfile: Dockerfile.prod
     image: frontend
-    container_name: tpx_frontend_prod_cont
     restart: on-failure
     env_file:
       - project.env
@@ -81,7 +80,6 @@ services:
       context: ./backend
       dockerfile: Dockerfile.prod
     image: backend
-    container_name: tpx_backend_prod_cont
     restart: on-failure
     depends_on:
       redis:
