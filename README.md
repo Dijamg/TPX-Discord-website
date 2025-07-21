@@ -18,6 +18,7 @@ This website presents various League of Legends statistics for accounts of diffe
 - Admin panel for managing members and accounts
 - Secure authentication and role-based access
 - Responsive, modern UI
+- Separate Dev and production build
 
 ## ⚙️ Tech Stack
 
