@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import tailwindcss from '@tailwindcss/vite'
+
 export default defineConfig({
   server: {
     watch: {
@@ -7,7 +8,10 @@ export default defineConfig({
     },
     host: true,
     strictPort: true,
-    port: 5173
+    port: 5173,
+  },
+  build: {
+    outDir: 'dist',
   },
   plugins: [
     tailwindcss(),
