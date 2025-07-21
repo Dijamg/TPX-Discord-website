@@ -171,25 +171,29 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
         <ul className="ml-4 mr-4 flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-700 dark:border-gray-700 dark:text-gray-400">
           {/* Mobile: Single centered tab with arrows */}
           <div className="w-full flex justify-center items-center md:hidden py-2">
-            <button
-              onClick={() => setActiveAccountIdx((prev) => (prev > 0 ? prev - 1 : lolAccounts.length - 1))}
-              className="px-2 text-2xl text-purple-400 focus:outline-none"
-              aria-label="Previous Account"
-              disabled={lolAccounts.length === 0}
-            >
-              <span style={{fontSize: '2rem', fontWeight: 'bold', display: 'inline-block', verticalAlign: 'middle'}}>&#x25C0;</span>
-            </button>
+            {lolAccounts.length > 1 && (
+              <button
+                onClick={() => setActiveAccountIdx((prev) => (prev > 0 ? prev - 1 : lolAccounts.length - 1))}
+                className="px-2 text-2xl text-purple-400 focus:outline-none"
+                aria-label="Previous Account"
+                disabled={lolAccounts.length === 0}
+              >
+                <span style={{fontSize: '2rem', fontWeight: 'bold', display: 'inline-block', verticalAlign: 'middle'}}>&#x25C0;</span>
+              </button>
+            )}
             <span className="mx-4 font-bold text-lg text-purple-400">
-              {lolAccounts.length > 0 ? `Account ${activeAccountIdx + 1}` : 'No Accounts'}
+              {lolAccounts.length > 0 ? `Account ${activeAccountIdx + 1}/${lolAccounts.length}` : 'No Accounts'}
             </span>
-            <button
-              onClick={() => setActiveAccountIdx((prev) => (prev < lolAccounts.length - 1 ? prev + 1 : 0))}
-              className="px-2 text-2xl text-purple-400 focus:outline-none"
-              aria-label="Next Account"
-              disabled={lolAccounts.length === 0}
-            >
-              <span style={{fontSize: '2rem', fontWeight: 'bold', display: 'inline-block', verticalAlign: 'middle'}}>&#x25B6;</span>
-            </button>
+            {lolAccounts.length > 1 && (
+              <button
+                onClick={() => setActiveAccountIdx((prev) => (prev < lolAccounts.length - 1 ? prev + 1 : 0))}
+                className="px-2 text-2xl text-purple-400 focus:outline-none"
+                aria-label="Next Account"
+                disabled={lolAccounts.length === 0}
+              >
+                <span style={{fontSize: '2rem', fontWeight: 'bold', display: 'inline-block', verticalAlign: 'middle'}}>&#x25B6;</span>
+              </button>
+            )}
             {isAdmin && lolAccounts.length > 0 && (
               <span
                 className="text-red-500 cursor-pointer text-base align-middle ml-2"
@@ -199,7 +203,7 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
                 ×
               </span>
             )}
-            {isAdmin && lolAccounts.length === 0 && (
+            {isAdmin && (
               <button
                 onClick={() => navigate(`/members/${member.id}/add-lol-account`)}
                 className="ml-4 w-12 inline-block px-3 py-1.5 font-bold text-2xl text-center border-b text-purple-400 bg-gray-900 hover:bg-gray-800 border-transparent cursor-pointer"
