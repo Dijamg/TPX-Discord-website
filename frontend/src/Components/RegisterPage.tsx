@@ -53,14 +53,14 @@ const RegisterPage = () => {
       >
         <div className="h-18 flex items-center">
           <img
-            src="/assets/navbar_banner.PNG"
+            src="/public/assets/navbar_banner.PNG"
             alt="TPX Banner"
             className="h-full w-auto m-0 p-0 cursor-pointer"
             onClick={handleBackClick}
           />
         </div>
       </nav>
-      <img src={'../assets/tpx_logo.webp'} alt="Logo" className="w-16 h-16 mb-8" />
+      <img src={'../public/assets/tpx_logo.webp'} alt="Logo" className="w-16 h-16 mb-8" />
       <div className="bg-transparent px-8 py-10 rounded-lg flex flex-col items-center w-full max-w-md">
         <h2 className="text-2xl font-bold text-white mb-8 text-center">
           Create an account

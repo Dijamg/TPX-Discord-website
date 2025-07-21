@@ -94,7 +94,7 @@ const AddTournamentPage = ({fetchData}: {fetchData: () => void}) => {
       >
         <div className="h-18 flex items-center">
           <img
-            src="/assets/navbar_banner.PNG"
+            src="/public/assets/navbar_banner.PNG"
             alt="TPX Banner"
             className="h-full w-auto m-0 p-0 cursor-pointer"
             onClick={handleBackClick}

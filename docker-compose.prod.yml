@@ -1,6 +1,5 @@
 version: '3.8'
 name: "tpx-app"
-
 services:
   nginx:
     image: nginx:latest
@@ -16,7 +15,6 @@ services:
       - backend
     networks:
       - tpx-net
-
   redis:
     image: redis:latest
     command: redis-server /usr/local/etc/redis/redis.conf
@@ -26,15 +24,12 @@ services:
       - 6379
     networks:
       - tpx-net
-
   db:
     image: postgres:14.1
     container_name: tpx_db_prod_cont
-    restart: unless-stopped
+    restart: "on-failure"
     env_file:
       - project.env
-    volumes:
-      - ./prod-db-data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U username -d database"]
       interval: 5s
@@ -43,7 +38,6 @@ services:
       start_period: 5s
     networks:
       - tpx-net
-
   flyway:
     image: flyway/flyway:9.11.0-alpine
     depends_on:
@@ -56,33 +50,24 @@ services:
       - project.env
     networks:
       - tpx-net
-
   frontend:
     build:
-      context: ./frontend
-      dockerfile: Dockerfile.prod
+     context: ./frontend
+     dockerfile: Dockerfile.prod
     image: frontend
-    restart: on-failure
-    env_file:
-      - project.env
+    container_name: tpx_frontend_prod_cont
+    expose:
+      - 3000
     networks:
       - tpx-net
-    expose:
-      - 80
-    deploy:
-      replicas: 2
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 30s
-
   backend:
     build:
-      context: ./backend
-      dockerfile: Dockerfile.prod
+     context: ./backend
+     dockerfile: Dockerfile.prod
     image: backend
-    restart: on-failure
+    container_name: tpx_backend_prod_cont
+    ports:
+        - 8080
     depends_on:
       redis:
         condition: service_started
@@ -90,20 +75,12 @@ services:
         condition: service_healthy
       flyway:
         condition: service_completed_successfully
+
     env_file:
       - project.env
       - ./backend/.env
-    expose:
-      - 8080
     networks:
       - tpx-net
-    deploy:
-      replicas: 2
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 30s
 
 volumes:
   db_data:

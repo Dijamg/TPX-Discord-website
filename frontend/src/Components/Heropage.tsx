@@ -3,7 +3,7 @@ import { Link } from 'react-scroll'
 
 const Heropage = () => (
   <div
-    className="hero h-screen bg-[url('/assets/tpx_homepage.png')] bg-cover bg-center relative"
+    className="hero h-screen bg-[url('/public/assets/tpx_homepage.png')] bg-cover bg-center relative"
     id="home-page"
   >
     <Link

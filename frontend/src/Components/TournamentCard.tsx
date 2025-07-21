@@ -73,7 +73,7 @@ const TournamentCard = ({ tournament }: { tournament: Tournament }) => {
       >
         <div className="m-2 overflow-hidden rounded-md h-48 flex justify-center items-center bg-gray-900 relative">
           <img
-            src={tournament.img_url || '/assets/trophy.png'}
+            src={tournament.img_url || '/public/assets/trophy.png'}
             alt={tournament.theme}
             className="w-full h-full object-cover"
           />
