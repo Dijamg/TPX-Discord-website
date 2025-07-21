@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-scroll';
 import { useAuth } from '../hooks/useAuth';
 import { useCookies } from '../hooks/useCookies';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [show, setShow] = useState(true);
@@ -13,7 +14,7 @@ const Navbar = () => {
   const { token, logout } = useAuth();
   const { getItem } = useCookies();
   const [username, setUsername] = useState<string | null>(null);
-
+  const navigate = useNavigate(); 
   useEffect(() => {
     const username = getItem("USERNAME");
     if (username) {
@@ -24,8 +25,8 @@ const Navbar = () => {
   const getLoginOrLogout = () => {
     if (!token) {
       return (
-        <a
-          href="/login"
+        <button
+          onClick={() => navigate('/login')}
           className="flex items-center justify-center ml-2 p-1 group transition"
           style={{ textDecoration: 'none' }}
           aria-label="Login"
@@ -33,7 +34,7 @@ const Navbar = () => {
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} className="w-6 h-6 transition-colors duration-200" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6A2.25 2.25 0 005.25 5.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M18 15l3-3m0 0l-3-3m3 3H9" className="stroke-white group-hover:stroke-purple-400" />
           </svg>
-        </a>
+        </button>
       );
     } else {
       return (
@@ -81,13 +82,13 @@ const Navbar = () => {
   const getLoginOrLogoutMobile = () => {
     if(!token) {
       return (
-        <a
-          href="/login"
+        <button
+          onClick={() => navigate('/login')}
           className="block cursor-pointer text-purple-400 capitalize transition"
           aria-label="Login"
         >
           Login
-        </a>
+        </button>
       );
     } else {
       return (
@@ -175,7 +176,6 @@ const Navbar = () => {
               duration={500}
               offset={0}
               className="cursor-pointer hover:text-purple-400 capitalize transition"
-              onClick={() => setIsMenuOpen(false)}
             >
               {section}
             </Link>
@@ -201,7 +201,7 @@ const Navbar = () => {
       </div>
       
       {/* Mobile: Dropdown Menu */}
-      <div className={`md:hidden bg-gray-900 transition-all duration-300 ${isMenuOpen ? 'max-h-60 opacity-100' : 'max-h-0 opacity-0'}`}>
+      <div className={`md:hidden bg-gray-900 transition-all duration-300 ${isMenuOpen ? 'max-h-60 opacity-100 pointer-events-auto' : 'max-h-0 opacity-0 pointer-events-none overflow-hidden'}`}>
         <div className="px-4 py-2 space-y-2">
           <Link
             to="home-page"

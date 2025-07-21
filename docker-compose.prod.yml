@@ -1,0 +1,113 @@
+version: '3.8'
+name: "tpx-app"
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: tpx_nginx_prod_cont
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.prod.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/certs:/etc/nginx/certs:ro
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - tpx-net
+
+  redis:
+    image: redis:latest
+    command: redis-server /usr/local/etc/redis/redis.conf
+    volumes:
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+    expose:
+      - 6379
+    networks:
+      - tpx-net
+
+  db:
+    image: postgres:14.1
+    container_name: tpx_db_prod_cont
+    restart: unless-stopped
+    env_file:
+      - project.env
+    volumes:
+      - ./prod-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U username -d database"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+      start_period: 5s
+    networks:
+      - tpx-net
+
+  flyway:
+    image: flyway/flyway:9.11.0-alpine
+    depends_on:
+      db:
+        condition: service_healthy
+    command: -connectRetries=60 -baselineOnMigrate=true migrate
+    volumes:
+      - ./flyway/sql:/flyway/sql
+    env_file:
+      - project.env
+    networks:
+      - tpx-net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
+    image: frontend
+    container_name: tpx_frontend_prod_cont
+    restart: on-failure
+    env_file:
+      - project.env
+    networks:
+      - tpx-net
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 30s
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    image: backend
+    container_name: tpx_backend_prod_cont
+    restart: on-failure
+    depends_on:
+      redis:
+        condition: service_started
+      db:
+        condition: service_healthy
+      flyway:
+        condition: service_completed_successfully
+    env_file:
+      - project.env
+      - ./backend/.env
+    expose:
+      - 8080
+    networks:
+      - tpx-net
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 30s
+
+volumes:
+  db_data:
+
+networks:
+  tpx-net:
+    driver: bridge

@@ -66,6 +66,7 @@ export const initScheduler = async () => {
   cron.schedule('0 */12 * * *', gated(syncRiotPuuid, 'syncRiotPuuid'));
   cron.schedule('0 */12 * * *', gated(syncMasteryInfo, 'syncMasteryInfo'));
   cron.schedule('0 */12 * * *', gated(syncTournamentsActiveStatus, 'syncTournamentsActiveStatus'));
+  cron.schedule('0 */12 * * *', gated(syncUpcomingClashes, 'syncUpcomingClashes'));
 
   // Every 1 hour
   cron.schedule('0 * * * *', gated(syncBasicLolInfo, 'syncBasicLolInfo'));
@@ -73,9 +74,6 @@ export const initScheduler = async () => {
   // Every 30 minutes
   cron.schedule('*/30 * * * *', gated(syncCurrentSeasonLolInfo, 'syncCurrentSeasonLolInfo'));
   cron.schedule('*/30 * * * *', gated(syncMatchHistory, 'syncMatchHistory'));
-
-  // Every 24 hours
-  cron.schedule('0 0 * * *', gated(syncUpcomingClashes, 'syncUpcomingClashes'));
 
   console.log('✅ Cron jobs scheduled');
 }

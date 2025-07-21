@@ -171,11 +171,10 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
         <ul className="ml-4 mr-4 flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-700 dark:border-gray-700 dark:text-gray-400">
           {lolAccounts.map((account, idx) => (
             <li className="me-2" key={idx} style={{ position: 'relative' }}>
-              <a
-                href="#"
-                aria-current="page"
+              <button
+                onClick={() => setActiveAccountIdx(idx)}
+                aria-current={activeAccountIdx === idx}
                 className={`w-36 inline-block px-3 py-1.5 font-bold text-lg text-center border-b ${activeAccountIdx === idx ? 'text-purple-400 bg-gray-900 active border-purple-400' : 'text-gray-400 bg-gray-900 hover:bg-gray-800 border-transparent'}`}
-                onClick={e => { e.preventDefault(); setActiveAccountIdx(idx); }}
                 style={{ position: 'relative', paddingRight: isAdmin && activeAccountIdx === idx ? '1.5rem' : undefined }}
               >
                 {`Account ${idx + 1}`}
@@ -189,19 +188,19 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
                     ×
                   </span>
                 )}
-              </a>
+              </button>
             </li>
           ))}
           {/* Add LoL Account Tab */}
           {isAdmin && (
             <li className="me-2">
-              <a
-                href={`/members/${member.id}/add-lol-account`}
-                className="w-12 inline-block px-3 py-1.5 font-bold text-2xl text-center border-b text-purple-400 bg-gray-900 hover:bg-gray-800 border-transparent"
+              <button
+                onClick={() => navigate(`/members/${member.id}/add-lol-account`)}
+                className="w-12 inline-block px-3 py-1.5 font-bold text-2xl text-center border-b text-purple-400 bg-gray-900 hover:bg-gray-800 border-transparent cursor-pointer"
                 style={{ lineHeight: '1.2' }}
               >
                 +
-              </a>
+              </button>
             </li>
           )}
         </ul>
