@@ -56,6 +56,7 @@ export type LolMetadataDto = {
 
 export type LolInfoDto = { 
   gameEndTimestamp: number;
+  queueId: number;
   gameDuration: number;
   participants: LolParticipantDto[];
 }
@@ -76,6 +77,7 @@ export type LolParticipantDto = {
 export type LolMatchHistory = {
   matchId: string;
   puuid: string;
+  queue: number;
   championName: string;
   win: boolean;
   kills: number;

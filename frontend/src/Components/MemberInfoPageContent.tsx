@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const MemberInfoPageContent = ({
   lolAccounts,
@@ -6,6 +6,7 @@ const MemberInfoPageContent = ({
   basicLolInfo,
   masteryInfo,
   recentRankedHistory,
+  recentNormalHistory,
   getOpggRegionFromPlatform,
   summonerIconUrl,
   opggUrl,
@@ -13,6 +14,7 @@ const MemberInfoPageContent = ({
   getCurrentSeasonRankInfo,
   getChampionIconUrl
 }: any) => {
+  const [historyType, setHistoryType] = useState<'ranked' | 'normal'>('ranked');
   const summonerName = lolAccounts[activeAccountIdx]?.riot_game_name + "#" + lolAccounts[activeAccountIdx]?.riot_tag_line;
   return (
     <>
@@ -88,9 +90,27 @@ const MemberInfoPageContent = ({
             </div>
             {/* Recent Ranked History (Solo/Duo) */}
             <div className="w-full flex flex-col items-center md:items-start justify-center md:mt-0 md:self-start px-6 ">
-              <h2 className="text-base font-bold text-gray-400 mb-2 border-b-2 border-purple-400 w-full text-center pb-2">Recent Ranked History (Solo/Duo)</h2>
+              <div className="relative w-full flex items-center justify-center mb-2">
+                <h2 className="text-base font-bold text-gray-400 border-b-2 border-purple-400 w-full text-center pb-2">Recent {historyType === 'ranked' ? 'Ranked History (Solo/Duo)' : 'Normal (Draft Pick) History'}</h2>
+                <div className="absolute right-0 top-0">
+                  <div className="relative">
+                    <select
+                      className="bg-gray-900 text-gray-400 rounded px-2 py-1 pr-7 focus:outline-none appearance-none"
+                      style={{ border: 'none', WebkitAppearance: 'none', MozAppearance: 'none', appearance: 'none' }}
+                      value={historyType}
+                      onChange={e => setHistoryType(e.target.value as 'ranked' | 'normal')}
+                    >
+                      <option value="ranked">Ranked Solo/Duo</option>
+                      <option value="normal">Normal (Draft Pick)</option>
+                    </select>
+                    <span className="pointer-events-none absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400">
+                      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+                    </span>
+                  </div>
+                </div>
+              </div>
               <div className="flex flex-row flex-wrap justify-center gap-12 p-4 w-full">
-                {recentRankedHistory
+                {(historyType === 'ranked' ? recentRankedHistory : recentNormalHistory)
                   .slice()
                   .sort((a: any, b: any) => new Date(a.match_date).getTime() - new Date(b.match_date).getTime())
                   .map((entry: any, idx: number) => (

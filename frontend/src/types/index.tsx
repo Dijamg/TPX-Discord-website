@@ -64,6 +64,7 @@ export type Tournament = {
 export type LolMatchHistory = {
     matchId: string,
     riot_puuid: string,
+    queue: number,
     champion_name: string,
     win: boolean,
     kills: number,

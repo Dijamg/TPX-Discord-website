@@ -136,6 +136,7 @@ export const getMatchDetails = async (matchIds: string[], puuid: string, riot_re
             results.push({
                 matchId: matchId,
                 puuid: puuid,
+                queue: matchDetails.info.queueId,
                 championName: championIdToNameMap[findWantedPlayer.championId],
                 win: findWantedPlayer.win,
                 kills: findWantedPlayer.kills,
@@ -154,18 +155,26 @@ export const getMatchDetails = async (matchIds: string[], puuid: string, riot_re
     return results;
 }
 
-
-export const getMatchHistoryIds = async (riotPuuid: string, riot_region: string): Promise<string[]> => {
+export const getMatchHistoryByQueue = async (riotPuuid: string, riot_region: string, queue: number): Promise<string[]> => {
     const response = await axios.get<string[]>(`${getMatchHistoryV5Url(riot_region)}${riotPuuid}/ids`, {
         headers: {
             'X-Riot-Token': process.env.RIOT_API_KEY!
         },
         params: {
             count: 5,
-            queue: 420,
+            queue: queue,
             start: 0
         }
     });
 
     return response.data;
+}
+
+export const getMatchHistoryIds = async (riotPuuid: string, riot_region: string): Promise<string[]> => {
+    const soloDuoMatchIds = await getMatchHistoryByQueue(riotPuuid, riot_region, 420 )
+    const normalDraftMatchIds = await getMatchHistoryByQueue(riotPuuid, riot_region, 400 )
+
+    const allMatchIds = [...soloDuoMatchIds, ...normalDraftMatchIds]; 
+
+    return allMatchIds;
 }

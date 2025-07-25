@@ -17,13 +17,18 @@ export const getLolMatchHistoryById = async (id: number): Promise<LolMatchHistor
 };
 
 // add lol match history by puuid
-export const addLolMatchHistoryByPuuid = async (puuid: string, match_id: string, champion_name: string, win: boolean, kills: number, deaths: number, assists: number, totalMinionsKilled: number, matchDuration: number, matchDate: Date, killParticipationPercent: number, csPerMinute: number): Promise<LolMatchHistory> => {
-    return await db.lolMatchHistory.add(puuid, match_id, champion_name, win, kills, deaths, assists, totalMinionsKilled, matchDuration, matchDate, killParticipationPercent, csPerMinute);
+export const addLolMatchHistoryByPuuid = async (puuid: string, match_id: string, queue: number, champion_name: string, win: boolean, kills: number, deaths: number, assists: number, totalMinionsKilled: number, matchDuration: number, matchDate: Date, killParticipationPercent: number, csPerMinute: number): Promise<LolMatchHistory> => {
+    return await db.lolMatchHistory.add(puuid, match_id, queue, champion_name, win, kills, deaths, assists, totalMinionsKilled, matchDuration, matchDate, killParticipationPercent, csPerMinute);
 };
 
 // delete all lol match history by puuid
 export const deleteLolMatchHistoryByPuuid = async (puuid: string): Promise<null> => {
   return await db.lolMatchHistory.deleteByPuuid(puuid);
+};
+
+// delete match history by match id
+export const deleteLolMatchHistoryByMatchId = async (matchId: string): Promise<null> => {
+  return await db.lolMatchHistory.deleteByMatchId(matchId);
 };
 
 // trim to 5 matches by deleting older matches

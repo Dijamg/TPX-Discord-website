@@ -70,6 +70,7 @@ export interface Tournament {
 export interface LolMatchHistory {
     id: number;
     riot_puuid: string;
+    queue: number;
     match_id: string;
     champion_name: string;
     win: boolean;

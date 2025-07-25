@@ -77,7 +77,9 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
   const basicLolInfo = allProps.basicLolInfo.find(b => b.riot_puuid === lolAccounts[activeAccountIdx]?.riot_puuid);
   const currentSeasonLolInfo = allProps.currentSeasonLolInfo.find(c => c.riot_puuid === lolAccounts[activeAccountIdx]?.riot_puuid);
   const masteryInfo = allProps.masteryInfo.filter(m => m.riot_puuid === lolAccounts[activeAccountIdx]?.riot_puuid);
-  const recentRankedHistory = allProps.lolMatchHistory.filter(r => r.riot_puuid === lolAccounts[activeAccountIdx]?.riot_puuid);
+  const recentMatchHistory = allProps.lolMatchHistory.filter(r => r.riot_puuid === lolAccounts[activeAccountIdx]?.riot_puuid);
+  const recentRankedHistory = recentMatchHistory.filter(match => match.queue === 420)
+  const recentNormalHistory = recentMatchHistory.filter(match => match.queue === 400)
 
   const getOpggRegionFromPlatform = (platform: string): string | null => {
     const opggMap = {
@@ -275,6 +277,7 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
             basicLolInfo={basicLolInfo}
             masteryInfo={masteryInfo}
             recentRankedHistory={recentRankedHistory}
+            recentNormalHistory={recentNormalHistory}
             getOpggRegionFromPlatform={getOpggRegionFromPlatform}
             summonerIconUrl={summonerIconUrl}
             opggUrl={opggUrl}

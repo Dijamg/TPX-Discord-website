@@ -9,25 +9,28 @@ export const syncMatchHistory = async () => {
             try {
                 //current match history in db
                 const currentMatchHistory = await LolMatchHistoryService.getLolMatchHistoryByPuuid(accountInfo.riot_puuid!);
-
-                //Get match history from riot api, last 5 matches
-                const matchHistoryIds = await RiotService.getMatchHistoryIds(accountInfo.riot_puuid!, accountInfo.riot_region!);
-
-                // filter out matches that are already in the database
                 const existingIds = new Set(currentMatchHistory.map(m => m.match_id));
 
+                //Get match history from riot api, last 5 Soloq and last 5 normal draft matches
+                const matchHistoryIds = await RiotService.getMatchHistoryIds(accountInfo.riot_puuid!, accountInfo.riot_region!);
+                const latestIds = new Set(matchHistoryIds);
+
+                // filter out matches that are already in the database
                 const newMatchHistoryIds = matchHistoryIds.filter(id => !existingIds.has(id));
 
                 const newMatchHistory = await RiotService.getMatchDetails(newMatchHistoryIds, accountInfo.riot_puuid!, accountInfo.riot_region!);
                 
                 // add new match history to database
                 for (const match of newMatchHistory) {
-                    await LolMatchHistoryService.addLolMatchHistoryByPuuid(accountInfo.riot_puuid!, match.matchId, match.championName, match.win, match.kills, match.deaths, match.assists, match.totalMinionsKilled, match.matchDuration, match.matchDate, match.killParticipationPercent, match.csPerMinute);
+                    await LolMatchHistoryService.addLolMatchHistoryByPuuid(accountInfo.riot_puuid!, match.matchId, match.queue, match.championName, match.win, match.kills, match.deaths, match.assists, match.totalMinionsKilled, match.matchDuration, match.matchDate, match.killParticipationPercent, match.csPerMinute);
                 }
 
-                // Trim the db to hold max 5 matches for each user. Do this only if there are new matches.
+                //Delete the matches currently in the database, which dont belong to latest 5 soloq and normal draft. Do this only if there are new matches.
                 if (newMatchHistory.length > 0) {
-                    await LolMatchHistoryService.trimTo5(accountInfo.riot_puuid!);
+                    const matchesToDelete = currentMatchHistory.filter((match) => !latestIds.has(match.match_id));
+                    for(const match of matchesToDelete){
+                        await LolMatchHistoryService.deleteLolMatchHistoryByMatchId(match.match_id)
+                    }
                   }
 
                 console.log(`Added ${newMatchHistory.length} new matches for ${accountInfo.riot_puuid}`);

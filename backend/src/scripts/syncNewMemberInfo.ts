@@ -41,7 +41,7 @@ export const syncNewMemberInfo = async (accountInfo: LolAccountInfo, riotPuuid: 
 
 
         for (const match of matchHistory) {
-            await LolMatchHistoryService.addLolMatchHistoryByPuuid(riotPuuid, match.matchId, match.championName, match.win, match.kills, match.deaths, match.assists, match.totalMinionsKilled, match.matchDuration, match.matchDate, match.killParticipationPercent, match.csPerMinute);
+            await LolMatchHistoryService.addLolMatchHistoryByPuuid(riotPuuid, match.matchId, match.queue, match.championName, match.win, match.kills, match.deaths, match.assists, match.totalMinionsKilled, match.matchDuration, match.matchDate, match.killParticipationPercent, match.csPerMinute);
         }   
     } catch (error) {
         console.error(`Error syncing member ${accountInfo.riot_game_name}:`, error);

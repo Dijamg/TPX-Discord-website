@@ -104,6 +104,7 @@ CREATE TABLE tournaments (
 CREATE TABLE lol_match_history (
     id SERIAL PRIMARY KEY,
     riot_puuid VARCHAR(100) REFERENCES lol_account_info(riot_puuid) ON DELETE CASCADE,
+    queue INT NOT NULL,
     match_id VARCHAR(100) NOT NULL,
     champion_name VARCHAR(100) NOT NULL,
     win BOOLEAN NOT NULL,
