@@ -35,7 +35,11 @@ export const syncNewMemberInfo = async (accountInfo: LolAccountInfo, riotPuuid: 
         }
 
         //Sync match history
-        const matchHistory = await RiotService.getMatchHistory(riotPuuid, accountInfo.riot_region!);
+        const matchHistoryIds = await RiotService.getMatchHistoryIds(riotPuuid, accountInfo.riot_region!);
+
+        const matchHistory = await RiotService.getMatchDetails(matchHistoryIds, riotPuuid, accountInfo.riot_region!);
+
+
         for (const match of matchHistory) {
             await LolMatchHistoryService.addLolMatchHistoryByPuuid(riotPuuid, match.matchId, match.championName, match.win, match.kills, match.deaths, match.assists, match.totalMinionsKilled, match.matchDuration, match.matchDate, match.killParticipationPercent, match.csPerMinute);
         }   

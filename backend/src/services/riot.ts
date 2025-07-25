@@ -155,7 +155,7 @@ export const getMatchDetails = async (matchIds: string[], puuid: string, riot_re
 }
 
 
-export const getMatchHistory = async (riotPuuid: string, riot_region: string): Promise<LolMatchHistory[]> => {
+export const getMatchHistoryIds = async (riotPuuid: string, riot_region: string): Promise<string[]> => {
     const response = await axios.get<string[]>(`${getMatchHistoryV5Url(riot_region)}${riotPuuid}/ids`, {
         headers: {
             'X-Riot-Token': process.env.RIOT_API_KEY!
@@ -167,8 +167,5 @@ export const getMatchHistory = async (riotPuuid: string, riot_region: string): P
         }
     });
 
-    const lastFiveMatches = response.data
-    const matchDetails = await getMatchDetails(lastFiveMatches, riotPuuid, riot_region);
-
-    return matchDetails;
+    return response.data;
 }

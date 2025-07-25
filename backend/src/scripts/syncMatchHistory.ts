@@ -11,14 +11,14 @@ export const syncMatchHistory = async () => {
                 const currentMatchHistory = await LolMatchHistoryService.getLolMatchHistoryByPuuid(accountInfo.riot_puuid!);
 
                 //Get match history from riot api, last 5 matches
-                const matchHistory = await RiotService.getMatchHistory(accountInfo.riot_puuid!, accountInfo.riot_region!);
+                const matchHistoryIds = await RiotService.getMatchHistoryIds(accountInfo.riot_puuid!, accountInfo.riot_region!);
 
                 // filter out matches that are already in the database
                 const existingIds = new Set(currentMatchHistory.map(m => m.match_id));
 
-                const newMatchHistory = matchHistory.filter(match =>
-                    !existingIds.has(match.matchId)
-                  );
+                const newMatchHistoryIds = matchHistoryIds.filter(id => !existingIds.has(id));
+
+                const newMatchHistory = await RiotService.getMatchDetails(newMatchHistoryIds, accountInfo.riot_puuid!, accountInfo.riot_region!);
                 
                 // add new match history to database
                 for (const match of newMatchHistory) {
