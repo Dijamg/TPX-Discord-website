@@ -9,6 +9,7 @@ const MemberInfoPageContent = ({
   recentSoloqHistory,
   recentNormalHistory,
   recentFlexHistory,
+  recentAramHistory,
   getOpggRegionFromPlatform,
   summonerIconUrl,
   opggUrl,
@@ -16,7 +17,7 @@ const MemberInfoPageContent = ({
   getCurrentSeasonRankInfo,
   getChampionIconUrl
 }: any) => {
-  const [historyType, setHistoryType] = useState<'soloq' | 'normal' | 'flex'>('soloq');
+  const [historyType, setHistoryType] = useState<'soloq' | 'normal' | 'flex' | 'aram'>('soloq');
   const summonerName = lolAccounts[activeAccountIdx]?.riot_game_name + "#" + lolAccounts[activeAccountIdx]?.riot_tag_line;
 
   const getHistoryTitle = (history: string) => {
@@ -24,6 +25,8 @@ const MemberInfoPageContent = ({
       return "Recent Ranked History (Solo/Duo)"
     } else if(history == 'flex'){
       return "Recent Ranked History (Flex)"
+    } else if(history == 'aram'){
+      return "Recent ARAM History"
     } else {
       return "Recent Normal History (Draft Pick)"
     }
@@ -35,6 +38,8 @@ const MemberInfoPageContent = ({
       historyArray = recentSoloqHistory
     } else if(history == 'flex'){
       historyArray = recentFlexHistory
+    } else if(history == 'aram'){
+      historyArray = recentAramHistory
     } else {
       historyArray = recentNormalHistory
     }
@@ -168,14 +173,15 @@ const MemberInfoPageContent = ({
                 <div className="flex justify-center sm:absolute sm:right-0 sm:top-0 mb-2 sm:mb-0 z-10">
                   <div className="relative">
                     <select
-                      className="bg-gray-900 text-gray-400 rounded px-2 py-1 pr-7 focus:outline-none appearance-none"
+                      className="bg-gray-900 text-gray-400 rounded px-2 py-1 pr-7 focus:outline-none appearance-none text-center"
                       style={{ border: 'none', WebkitAppearance: 'none', MozAppearance: 'none', appearance: 'none' }}
                       value={historyType}
-                      onChange={e => setHistoryType(e.target.value as 'soloq' | 'flex' | 'normal')}
+                      onChange={e => setHistoryType(e.target.value as 'soloq' | 'flex' | 'normal' | 'aram')}
                     >
-                      <option value="soloq">Ranked Solo/Duo</option>
-                      <option value="flex">Ranked Flex</option>
-                      <option value="normal">Normal (Draft Pick)</option>
+                      <option value="soloq" style={{ textAlign: 'center' }}>Ranked Solo/Duo</option>
+                      <option value="flex" style={{ textAlign: 'center' }}>Ranked Flex</option>
+                      <option value="normal" style={{ textAlign: 'center' }}>Normal (Draft Pick)</option>
+                      <option value="aram" style={{ textAlign: 'center' }}>ARAM</option>
                     </select>
                     <span className="pointer-events-none absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400">
                       <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>

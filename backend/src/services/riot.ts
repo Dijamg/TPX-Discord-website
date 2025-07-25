@@ -174,8 +174,9 @@ export const getMatchHistoryIds = async (riotPuuid: string, riot_region: string)
     const soloDuoMatchIds = await getMatchHistoryByQueue(riotPuuid, riot_region, 420 )
     const normalDraftMatchIds = await getMatchHistoryByQueue(riotPuuid, riot_region, 400 )
     const flexMatchIds = await getMatchHistoryByQueue(riotPuuid, riot_region, 440 )
+    const aramMatchIds = await getMatchHistoryByQueue(riotPuuid, riot_region, 450 )
 
-    const allMatchIds = [...soloDuoMatchIds, ...normalDraftMatchIds, ...flexMatchIds]; 
+    const allMatchIds = [...soloDuoMatchIds, ...normalDraftMatchIds, ...flexMatchIds, ...aramMatchIds]; 
 
     return allMatchIds;
 }

@@ -81,6 +81,7 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
   const recentSoloqHistory = recentMatchHistory.filter(match => match.queue === 420)
   const recentNormalHistory = recentMatchHistory.filter(match => match.queue === 400)
   const recentFlexHistory = recentMatchHistory.filter(match => match.queue === 440)
+  const recentAramHistory = recentMatchHistory.filter(match => match.queue === 450)
 
   const getOpggRegionFromPlatform = (platform: string): string | null => {
     const opggMap = {
@@ -280,6 +281,7 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
             recentSoloqHistory={recentSoloqHistory}
             recentNormalHistory={recentNormalHistory}
             recentFlexHistory={recentFlexHistory}
+            recentAramHistory={recentAramHistory}
             getOpggRegionFromPlatform={getOpggRegionFromPlatform}
             summonerIconUrl={summonerIconUrl}
             opggUrl={opggUrl}
