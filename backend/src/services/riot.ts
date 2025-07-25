@@ -173,8 +173,9 @@ export const getMatchHistoryByQueue = async (riotPuuid: string, riot_region: str
 export const getMatchHistoryIds = async (riotPuuid: string, riot_region: string): Promise<string[]> => {
     const soloDuoMatchIds = await getMatchHistoryByQueue(riotPuuid, riot_region, 420 )
     const normalDraftMatchIds = await getMatchHistoryByQueue(riotPuuid, riot_region, 400 )
+    const flexMatchIds = await getMatchHistoryByQueue(riotPuuid, riot_region, 440 )
 
-    const allMatchIds = [...soloDuoMatchIds, ...normalDraftMatchIds]; 
+    const allMatchIds = [...soloDuoMatchIds, ...normalDraftMatchIds, ...flexMatchIds]; 
 
     return allMatchIds;
 }

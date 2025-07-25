@@ -11,7 +11,7 @@ export const syncMatchHistory = async () => {
                 const currentMatchHistory = await LolMatchHistoryService.getLolMatchHistoryByPuuid(accountInfo.riot_puuid!);
                 const existingIds = new Set(currentMatchHistory.map(m => m.match_id));
 
-                //Get match history from riot api, last 5 Soloq and last 5 normal draft matches
+                //Get match history from riot api, last 5 Soloq, last 5 normal draft matches and last 5 flex matches
                 const matchHistoryIds = await RiotService.getMatchHistoryIds(accountInfo.riot_puuid!, accountInfo.riot_region!);
                 const latestIds = new Set(matchHistoryIds);
 

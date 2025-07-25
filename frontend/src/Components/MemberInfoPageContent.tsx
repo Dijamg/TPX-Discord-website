@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
+import { LolMatchHistory } from '../types'
 
 const MemberInfoPageContent = ({
   lolAccounts,
   activeAccountIdx,
   basicLolInfo,
   masteryInfo,
-  recentRankedHistory,
+  recentSoloqHistory,
   recentNormalHistory,
+  recentFlexHistory,
   getOpggRegionFromPlatform,
   summonerIconUrl,
   opggUrl,
@@ -14,8 +16,79 @@ const MemberInfoPageContent = ({
   getCurrentSeasonRankInfo,
   getChampionIconUrl
 }: any) => {
-  const [historyType, setHistoryType] = useState<'ranked' | 'normal'>('ranked');
+  const [historyType, setHistoryType] = useState<'soloq' | 'normal' | 'flex'>('soloq');
   const summonerName = lolAccounts[activeAccountIdx]?.riot_game_name + "#" + lolAccounts[activeAccountIdx]?.riot_tag_line;
+
+  const getHistoryTitle = (history: string) => {
+    if(history == 'soloq'){
+      return "Recent Ranked History (Solo/Duo)"
+    } else if(history == 'flex'){
+      return "Recent Ranked History (Flex)"
+    } else {
+      return "Recent Normal History (Draft Pick)"
+    }
+  }
+
+  const getMatchHistory = (history: string) => {
+    let historyArray = []
+    if(history == 'soloq'){
+      historyArray = recentSoloqHistory
+    } else if(history == 'flex'){
+      historyArray = recentFlexHistory
+    } else {
+      historyArray = recentNormalHistory
+    }
+
+    return (
+      <>
+        {historyArray
+          .slice()
+          .sort((a: any, b: any) => new Date(a.match_date).getTime() - new Date(b.match_date).getTime())
+          .map((entry: any, idx: number) => (
+            <div
+              key={idx}
+              className="flex flex-col items-center w-20"
+            >
+              <img
+                src={getChampionIconUrl(entry.champion_name)}
+                alt={entry.champion_name}
+                className={`w-18 h-18 rounded mb-1 border-2 ${entry.win ? 'border-green-500' : 'border-red-500'} bg-gray-800`}
+                style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto' }}
+              />
+              <div className="flex flex-row justify-center items-center text-lg font-bold">
+                <span className="text-gray-300">{entry.kills}</span>
+                <span className="text-gray-500"> / </span>
+                <span className="text-red-800">{entry.deaths}</span>
+                <span className="text-gray-500"> / </span>
+                <span className="text-gray-300">{entry.assists}</span>
+              </div>
+              <div className="text-sm text-gray-400 mt-1 whitespace-nowrap flex flex-row items-center justify-center">
+                {entry.total_minions_killed} CS - {entry.kill_participation_percent}% Kills P.
+              </div>
+              <div className="text-xs text-gray-400 mt-1">
+                {(() => {
+                  const now = new Date();
+                  const matchDate = new Date(entry.match_date);
+                  const diffMs = now.getTime() - matchDate.getTime();
+                  const diffMins = Math.floor(diffMs / 60000);
+                  const diffHours = Math.floor(diffMins / 60);
+                  const diffDays = Math.floor(diffHours / 24);
+                  if (diffDays >= 1) {
+                    return `${diffDays}d ago`;
+                  } else if (diffHours >= 1) {
+                    return `${diffHours}h ${diffMins % 60}m ago`;
+                  } else {
+                    return `${diffMins}m ago`;
+                  }
+                })()}
+              </div>
+            </div>
+          ))}
+      </>
+    )
+  }
+
+
   return (
     <>
       {/* Summoner info row, left-aligned */}
@@ -88,19 +161,20 @@ const MemberInfoPageContent = ({
                 </div>
               )}
             </div>
-            {/* Recent Ranked History (Solo/Duo) */}
+            {/* Recent match history*/}
             <div className="w-full flex flex-col items-center md:items-start justify-center md:mt-0 md:self-start px-6 ">
-              <div className="relative w-full flex items-center justify-center mb-2">
-                <h2 className="text-base font-bold text-gray-400 border-b-2 border-purple-400 w-full text-center pb-2">Recent {historyType === 'ranked' ? 'Ranked History (Solo/Duo)' : 'Normal (Draft Pick) History'}</h2>
-                <div className="absolute right-0 top-0">
+              <div className="w-full flex flex-col sm:flex-row sm:items-center sm:justify-center mb-2 relative">
+                {/* Dropdown above title on mobile, right of title on sm+ */}
+                <div className="flex justify-center sm:absolute sm:right-0 sm:top-0 mb-2 sm:mb-0 z-10">
                   <div className="relative">
                     <select
                       className="bg-gray-900 text-gray-400 rounded px-2 py-1 pr-7 focus:outline-none appearance-none"
                       style={{ border: 'none', WebkitAppearance: 'none', MozAppearance: 'none', appearance: 'none' }}
                       value={historyType}
-                      onChange={e => setHistoryType(e.target.value as 'ranked' | 'normal')}
+                      onChange={e => setHistoryType(e.target.value as 'soloq' | 'flex' | 'normal')}
                     >
-                      <option value="ranked">Ranked Solo/Duo</option>
+                      <option value="soloq">Ranked Solo/Duo</option>
+                      <option value="flex">Ranked Flex</option>
                       <option value="normal">Normal (Draft Pick)</option>
                     </select>
                     <span className="pointer-events-none absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400">
@@ -108,51 +182,10 @@ const MemberInfoPageContent = ({
                     </span>
                   </div>
                 </div>
+                <h2 className="text-base font-bold text-gray-400 border-b-2 border-purple-400 w-full text-center pb-2 sm:mb-0">{getHistoryTitle(historyType)}</h2>
               </div>
               <div className="flex flex-row flex-wrap justify-center gap-12 p-4 w-full">
-                {(historyType === 'ranked' ? recentRankedHistory : recentNormalHistory)
-                  .slice()
-                  .sort((a: any, b: any) => new Date(a.match_date).getTime() - new Date(b.match_date).getTime())
-                  .map((entry: any, idx: number) => (
-                    <div
-                      key={idx}
-                      className="flex flex-col items-center w-20"
-                    >
-                      <img
-                        src={getChampionIconUrl(entry.champion_name)}
-                        alt={entry.champion_name}
-                        className={`w-18 h-18 rounded mb-1 border-2 ${entry.win ? 'border-green-500' : 'border-red-500'} bg-gray-800`}
-                        style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto' }}
-                      />
-                      <div className="flex flex-row justify-center items-center text-lg font-bold">
-                        <span className="text-gray-300">{entry.kills}</span>
-                        <span className="text-gray-500"> / </span>
-                        <span className="text-red-800">{entry.deaths}</span>
-                        <span className="text-gray-500"> / </span>
-                        <span className="text-gray-300">{entry.assists}</span>
-                      </div>
-                      <div className="text-sm text-gray-400 mt-1 whitespace-nowrap flex flex-row items-center justify-center">
-                        {entry.total_minions_killed} CS - {entry.kill_participation_percent}% Kills P.
-                      </div>
-                      <div className="text-xs text-gray-400 mt-1">
-                        {(() => {
-                          const now = new Date();
-                          const matchDate = new Date(entry.match_date);
-                          const diffMs = now.getTime() - matchDate.getTime();
-                          const diffMins = Math.floor(diffMs / 60000);
-                          const diffHours = Math.floor(diffMins / 60);
-                          const diffDays = Math.floor(diffHours / 24);
-                          if (diffDays >= 1) {
-                            return `${diffDays}d ago`;
-                          } else if (diffHours >= 1) {
-                            return `${diffHours}h ${diffMins % 60}m ago`;
-                          } else {
-                            return `${diffMins}m ago`;
-                          }
-                        })()}
-                      </div>
-                    </div>
-                  ))}
+                {getMatchHistory(historyType)}
               </div>
             </div>
           </div>
