@@ -109,7 +109,7 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
   };
 
   const getChampionIconUrl = (championName: string) => {
-    return `https://ddragon.leagueoflegends.com/cdn/15.13.1/img/champion/${championName}.png`;
+    return `https://ddragon.leagueoflegends.com/cdn/15.14.1/img/champion/${championName}.png`;
   };
 
 
