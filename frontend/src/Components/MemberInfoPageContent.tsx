@@ -44,53 +44,57 @@ const MemberInfoPageContent = ({
       historyArray = recentNormalHistory
     }
 
-    return (
-      <>
-        {historyArray
-          .slice()
-          .sort((a: any, b: any) => new Date(a.match_date).getTime() - new Date(b.match_date).getTime())
-          .map((entry: any, idx: number) => (
-            <div
-              key={idx}
-              className="flex flex-col items-center w-20"
-            >
-              <img
-                src={getChampionIconUrl(entry.champion_name)}
-                alt={entry.champion_name}
-                className={`w-18 h-18 rounded mb-1 border-2 ${entry.win ? 'border-green-500' : 'border-red-500'} bg-gray-800`}
-                style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto' }}
-              />
-              <div className="flex flex-row justify-center items-center text-lg font-bold">
-                <span className="text-gray-300">{entry.kills}</span>
-                <span className="text-gray-500"> / </span>
-                <span className="text-red-800">{entry.deaths}</span>
-                <span className="text-gray-500"> / </span>
-                <span className="text-gray-300">{entry.assists}</span>
+    if(historyArray.length === 0){
+      return <div className='text-lg font-bold text-gray-400 w-full text-center pb-2 sm:mb-0'>No data</div>
+    } else {
+      return (
+        <>
+          {historyArray
+            .slice()
+            .sort((a: any, b: any) => new Date(a.match_date).getTime() - new Date(b.match_date).getTime())
+            .map((entry: any, idx: number) => (
+              <div
+                key={idx}
+                className="flex flex-col items-center w-20"
+              >
+                <img
+                  src={getChampionIconUrl(entry.champion_name)}
+                  alt={entry.champion_name}
+                  className={`w-18 h-18 rounded mb-1 border-2 ${entry.win ? 'border-green-500' : 'border-red-500'} bg-gray-800`}
+                  style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto' }}
+                />
+                <div className="flex flex-row justify-center items-center text-lg font-bold">
+                  <span className="text-gray-300">{entry.kills}</span>
+                  <span className="text-gray-500"> / </span>
+                  <span className="text-red-800">{entry.deaths}</span>
+                  <span className="text-gray-500"> / </span>
+                  <span className="text-gray-300">{entry.assists}</span>
+                </div>
+                <div className="text-sm text-gray-400 mt-1 whitespace-nowrap flex flex-row items-center justify-center">
+                  {entry.total_minions_killed} CS - {entry.kill_participation_percent}% Kills P.
+                </div>
+                <div className="text-xs text-gray-400 mt-1">
+                  {(() => {
+                    const now = new Date();
+                    const matchDate = new Date(entry.match_date);
+                    const diffMs = now.getTime() - matchDate.getTime();
+                    const diffMins = Math.floor(diffMs / 60000);
+                    const diffHours = Math.floor(diffMins / 60);
+                    const diffDays = Math.floor(diffHours / 24);
+                    if (diffDays >= 1) {
+                      return `${diffDays}d ago`;
+                    } else if (diffHours >= 1) {
+                      return `${diffHours}h ${diffMins % 60}m ago`;
+                    } else {
+                      return `${diffMins}m ago`;
+                    }
+                  })()}
+                </div>
               </div>
-              <div className="text-sm text-gray-400 mt-1 whitespace-nowrap flex flex-row items-center justify-center">
-                {entry.total_minions_killed} CS - {entry.kill_participation_percent}% Kills P.
-              </div>
-              <div className="text-xs text-gray-400 mt-1">
-                {(() => {
-                  const now = new Date();
-                  const matchDate = new Date(entry.match_date);
-                  const diffMs = now.getTime() - matchDate.getTime();
-                  const diffMins = Math.floor(diffMs / 60000);
-                  const diffHours = Math.floor(diffMins / 60);
-                  const diffDays = Math.floor(diffHours / 24);
-                  if (diffDays >= 1) {
-                    return `${diffDays}d ago`;
-                  } else if (diffHours >= 1) {
-                    return `${diffHours}h ${diffMins % 60}m ago`;
-                  } else {
-                    return `${diffMins}m ago`;
-                  }
-                })()}
-              </div>
-            </div>
-          ))}
-      </>
-    )
+            ))}
+        </>
+      )
+    }
   }
 
 
