@@ -67,4 +67,23 @@ router.post('/login', async (req, res) => {
     }
 });
 
+// This is for checking that the user corresponding to the token still exists and role is up to date
+// this if used for other app which uses the same authentication
+router.post('/verify-token', async (req, res) => {
+    const token = req.headers.authorization?.split(' ')[1];
+
+    try{
+        console.log('My JWT token is: ', JWT_SECRET);
+        const decodedToken = jwt.verify(token!, JWT_SECRET) as JwtToken;
+        const account = await AccountService.getById(decodedToken.accountId);
+        if (!account) return res.status(401).json({ error: 'Unauthorized', message: 'Account not found' });
+        if (account.is_admin !== decodedToken.isAdmin) {
+            return res.status(403).json({ error: 'Forbidden', message: 'Account role is not up to date' });
+        }
+        res.status(200).json({ message: 'Token verified', decodedToken});
+    } catch (error) {
+        res.status(401).json({ error: 'Unauthorized', message: 'Token is invalid or expired' });
+    }
+});
+
 export default router;
