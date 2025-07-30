@@ -180,6 +180,12 @@ const Navbar = () => {
               {section}
             </Link>
           ))}
+          <a
+            href="/gallery"
+            className="cursor-pointer hover:text-purple-400 capitalize transition"
+          >
+            gallery
+          </a>
           {getLoginOrLogout()}
         </div>
         
@@ -226,6 +232,13 @@ const Navbar = () => {
               {section}
             </Link>
           ))}
+          <a
+            href="/gallery"
+            className="block cursor-pointer text-purple-400 capitalize transition py-2"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Gallery
+          </a>
           {getLoginOrLogoutMobile()}
         </div>
       </div>
