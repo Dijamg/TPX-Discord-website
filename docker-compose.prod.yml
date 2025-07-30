@@ -1,5 +1,6 @@
 version: '3.8'
 name: "tpx-app"
+
 services:
   nginx:
     image: nginx:latest
@@ -13,8 +14,11 @@ services:
     depends_on:
       - frontend
       - backend
+      - media_frontend
+      - media_backend
     networks:
       - tpx-net
+
   redis:
     image: redis:latest
     command: redis-server /usr/local/etc/redis/redis.conf
@@ -24,6 +28,7 @@ services:
       - 6379
     networks:
       - tpx-net
+
   db:
     image: postgres:14.1
     container_name: tpx_db_prod_cont
@@ -40,6 +45,7 @@ services:
       start_period: 5s
     networks:
       - tpx-net
+
   flyway:
     image: flyway/flyway:9.11.0-alpine
     depends_on:
@@ -52,24 +58,26 @@ services:
       - project.env
     networks:
       - tpx-net
+
   frontend:
     build:
-     context: ./frontend
-     dockerfile: Dockerfile.prod
+      context: ./frontend
+      dockerfile: Dockerfile.prod
     image: frontend
     container_name: tpx_frontend_prod_cont
     expose:
       - 3000
     networks:
       - tpx-net
+
   backend:
     build:
-     context: ./backend
-     dockerfile: Dockerfile.prod
+      context: ./backend
+      dockerfile: Dockerfile.prod
     image: backend
     container_name: tpx_backend_prod_cont
     ports:
-        - 8080
+      - 8080
     depends_on:
       redis:
         condition: service_started
@@ -77,15 +85,74 @@ services:
         condition: service_healthy
       flyway:
         condition: service_completed_successfully
-
     env_file:
       - project.env
       - ./backend/.env
     networks:
       - tpx-net
 
+  # --- Media App Services Below ---
+
+  media_frontend:
+    build:
+      context: ../media-app/frontend
+      dockerfile: Dockerfile.prod
+    image: media-frontend
+    container_name: media_frontend_prod_cont
+    expose:
+      - 3000
+    networks:
+      - tpx-net
+
+  media_backend:
+    build:
+      context: ../media-app/backend
+      dockerfile: Dockerfile.prod
+    image: media-backend
+    container_name: media_backend_prod_cont
+    expose:
+      - 8080
+    volumes:
+      - ../media-app/uploads:/app/uploads
+    env_file:
+      - ../media-app/project.env
+    depends_on:
+      - media_db
+      - media_flyway
+    networks:
+      - tpx-net
+
+  media_db:
+    image: postgres:15
+    container_name: media_db_prod_cont
+    volumes:
+      - ../media-db-data:/var/lib/postgresql/data
+    env_file:
+      - ../media-app/project.env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U username -d database"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+    networks:
+      - tpx-net
+
+  media_flyway:
+    image: flyway/flyway:9.11.0-alpine
+    command: -connectRetries=60 -baselineOnMigrate=true migrate
+    volumes:
+      - ../media-app/flyway/sql:/flyway/sql
+    env_file:
+      - ../media-app/project.env
+    depends_on:
+      media_db:
+        condition: service_healthy
+    networks:
+      - tpx-net
+
 volumes:
   db_data:
+  media-db-data:
 
 networks:
   tpx-net:
