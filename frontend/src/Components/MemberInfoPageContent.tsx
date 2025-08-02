@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { LolMatchHistory } from '../types'
 
 const MemberInfoPageContent = ({
@@ -17,7 +17,36 @@ const MemberInfoPageContent = ({
   getCurrentSeasonRankInfo,
 }: any) => {
   const [historyType, setHistoryType] = useState<'soloq' | 'normal' | 'flex' | 'aram'>('soloq');
+  const [isLoadingHistory, setIsLoadingHistory] = useState(false);
+  const isFirstRender = useRef(true);
   const summonerName = lolAccounts[activeAccountIdx]?.riot_game_name + "#" + lolAccounts[activeAccountIdx]?.riot_tag_line;
+
+  // Reset the first render flag when account changes
+  useEffect(() => {
+    isFirstRender.current = true;
+  }, [activeAccountIdx]);
+
+  // Handle loading delay when history type changes (but not on first render)
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
+    setIsLoadingHistory(true);
+    const timer = setTimeout(() => {
+      setIsLoadingHistory(false);
+    }, 500); // Half second delay
+
+    return () => clearTimeout(timer);
+  }, [historyType]);
+
+  // Loading spinner component
+  const LoadingSpinner = () => (
+    <div className="flex justify-center items-center py-8">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-400"></div>
+    </div>
+  );
 
   const getHistoryTitle = (history: string) => {
     if(history == 'soloq'){
@@ -194,7 +223,7 @@ const MemberInfoPageContent = ({
                 <h2 className="text-base font-bold text-gray-400 border-b-2 border-purple-400 w-full text-center pb-2 sm:mb-0">{getHistoryTitle(historyType)}</h2>
               </div>
               <div className="flex flex-row flex-wrap justify-center gap-12 p-4 w-full">
-                {getMatchHistory(historyType)}
+                {isLoadingHistory ? <LoadingSpinner /> : getMatchHistory(historyType)}
               </div>
             </div>
           </div>

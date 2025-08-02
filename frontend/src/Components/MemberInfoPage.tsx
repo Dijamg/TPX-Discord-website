@@ -16,6 +16,7 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
 
   const [notFound, setNotFound] = useState(false);
   const [activeAccountIdx, setActiveAccountIdx] = useState(0);
+  const [isLoadingAccount, setIsLoadingAccount] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -48,6 +49,25 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
       return () => clearTimeout(timer);
     }
   }, [member]);
+
+  // Handle loading delay when account index changes
+  useEffect(() => {
+    if (lolAccounts.length > 0) {
+      setIsLoadingAccount(true);
+      const timer = setTimeout(() => {
+        setIsLoadingAccount(false);
+      }, 500); // Half second delay
+
+      return () => clearTimeout(timer);
+    }
+  }, [activeAccountIdx, lolAccounts.length]);
+
+  // Loading spinner component for account switching
+  const AccountLoadingSpinner = () => (
+    <div className="flex justify-center items-center min-h-screen">
+      <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-purple-400"></div>
+    </div>
+  );
 
   if (!member) {
     return (
@@ -256,23 +276,27 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
           </div>
         ) : null}
 
-        {/* If there are accounts, render MemberInfoPageContent */}
+        {/* If there are accounts, render MemberInfoPageContent or loading spinner */}
         {lolAccounts.length > 0 && (
-          <MemberInfoPageContent
-            lolAccounts={lolAccounts}
-            activeAccountIdx={activeAccountIdx}
-            basicLolInfo={basicLolInfo}
-            masteryInfo={masteryInfo}
-            recentSoloqHistory={recentSoloqHistory}
-            recentNormalHistory={recentNormalHistory}
-            recentFlexHistory={recentFlexHistory}
-            recentAramHistory={recentAramHistory}
-            getOpggRegionFromPlatform={getOpggRegionFromPlatform}
-            summonerIconUrl={summonerIconUrl}
-            opggUrl={opggUrl}
-            peakRankIconUrl={peakRankIconUrl}
-            getCurrentSeasonRankInfo={getCurrentSeasonRankInfo}
-          />
+          isLoadingAccount ? (
+            <AccountLoadingSpinner />
+          ) : (
+            <MemberInfoPageContent
+              lolAccounts={lolAccounts}
+              activeAccountIdx={activeAccountIdx}
+              basicLolInfo={basicLolInfo}
+              masteryInfo={masteryInfo}
+              recentSoloqHistory={recentSoloqHistory}
+              recentNormalHistory={recentNormalHistory}
+              recentFlexHistory={recentFlexHistory}
+              recentAramHistory={recentAramHistory}
+              getOpggRegionFromPlatform={getOpggRegionFromPlatform}
+              summonerIconUrl={summonerIconUrl}
+              opggUrl={opggUrl}
+              peakRankIconUrl={peakRankIconUrl}
+              getCurrentSeasonRankInfo={getCurrentSeasonRankInfo}
+            />
+          )
         )}
         
       </div>
