@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { BasicSummonerInfo, CurrentSeasonInfo, MasteryInfo, RiotAccountResponse, UpcomingClashTournament, LolMatchHistory, LolMatchDto, LolParticipantDto } from '../types';
-import { getChampionIdToNameMap } from '../utils/championUtils';
+import { getChampionIconUrl, getChampionIdToNameMap } from '../utils/championUtils';
 import { getMatchRegionFromPlatform } from '../utils/regionUtils';
 
 const ACCOUNT_V1_URL = "https://europe.api.riotgames.com/riot/account/v1/accounts/by-riot-id/"
@@ -83,7 +83,8 @@ export const getMasteryInfo = async (riotPuuid: string, riot_region: string): Pr
     
     return data.map((mastery) => ({
         ...mastery,
-        championName: championIdToNameMap[mastery.championId]
+        championName: championIdToNameMap[mastery.championId],
+        championIconUrl: getChampionIconUrl(championIdToNameMap[mastery.championId])
     }));
 }
 
@@ -146,7 +147,8 @@ export const getMatchDetails = async (matchIds: string[], puuid: string, riot_re
                 totalMinionsKilled: findWantedPlayer.totalMinionsKilled + findWantedPlayer.neutralMinionsKilled,
                 csPerMinute: csPerMinute,
                 matchDuration: matchDetails.info.gameDuration,
-                matchDate: new Date(matchDetails.info.gameEndTimestamp)
+                matchDate: new Date(matchDetails.info.gameEndTimestamp),
+                championIconUrl: getChampionIconUrl(championIdToNameMap[findWantedPlayer.championId])
             });
         }
     }

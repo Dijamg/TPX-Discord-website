@@ -2,6 +2,10 @@ import axios from 'axios';
 
 let cachedChampionMap: Record<string, string> | null = null;
 
+export const getChampionIconUrl = (championName: string) => {
+  return `https://ddragon.leagueoflegends.com/cdn/15.14.1/img/champion/${championName}.png`;
+}
+
 export const getChampionIdToNameMap = async (): Promise<Record<string, string>> => {
   if (cachedChampionMap) return cachedChampionMap;
 

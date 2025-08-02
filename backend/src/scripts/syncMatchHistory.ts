@@ -22,7 +22,7 @@ export const syncMatchHistory = async () => {
                 
                 // add new match history to database
                 for (const match of newMatchHistory) {
-                    await LolMatchHistoryService.addLolMatchHistoryByPuuid(accountInfo.riot_puuid!, match.matchId, match.queue, match.championName, match.win, match.kills, match.deaths, match.assists, match.totalMinionsKilled, match.matchDuration, match.matchDate, match.killParticipationPercent, match.csPerMinute);
+                    await LolMatchHistoryService.addLolMatchHistoryByPuuid(accountInfo.riot_puuid!, match.matchId, match.queue, match.championName, match.win, match.kills, match.deaths, match.assists, match.totalMinionsKilled, match.matchDuration, match.matchDate, match.killParticipationPercent, match.csPerMinute, match.championIconUrl);
                 }
 
                 //Delete the matches currently in the database, which dont belong to latest 5 soloq and normal draft. Do this only if there are new matches.

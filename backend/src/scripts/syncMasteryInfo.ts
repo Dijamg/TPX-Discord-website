@@ -20,7 +20,7 @@ export const syncMasteryInfo = async () => {
                 }
 
                 for (const mastery of masteryInfo) {
-                    await LolMasteryInfoService.addLolMasteryInfoByPuuid(accountInfo.riot_puuid!, mastery.championName, mastery.championLevel, mastery.championPoints);
+                    await LolMasteryInfoService.addLolMasteryInfoByPuuid(accountInfo.riot_puuid!, mastery.championName, mastery.championLevel, mastery.championPoints, mastery.championIconUrl);
                 }
             } catch (error) {
                 console.error(`Error syncing account info ${accountInfo.id}:`, error);

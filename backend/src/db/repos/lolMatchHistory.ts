@@ -35,8 +35,8 @@ import { LolBasicInfo, LolCurrentSeasonInfo, LolMasteryInfo, LolMatchHistory } f
     }
 
     // Add lol match history by puuid
-    add(puuid: string, match_id: string, queue: number,  champion_name: string, win: boolean, kills: number, deaths: number, assists: number, total_minions_killed: number, match_duration: number, match_date: Date, kill_participation_percent: number, cs_per_minute: number): Promise<LolMatchHistory> {
-        return this.db.one("INSERT INTO lol_match_history (riot_puuid, match_id, champion_name, win, kills, deaths, assists, total_minions_killed, match_duration, match_date, kill_participation_percent, cs_per_minute, queue) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *", [puuid, match_id, champion_name, win, kills, deaths, assists, total_minions_killed, match_duration, match_date, kill_participation_percent, cs_per_minute, queue]);
+    add(puuid: string, match_id: string, queue: number,  champion_name: string, win: boolean, kills: number, deaths: number, assists: number, total_minions_killed: number, match_duration: number, match_date: Date, kill_participation_percent: number, cs_per_minute: number, champion_icon_url: string): Promise<LolMatchHistory> {
+        return this.db.one("INSERT INTO lol_match_history (riot_puuid, match_id, champion_name, win, kills, deaths, assists, total_minions_killed, match_duration, match_date, kill_participation_percent, cs_per_minute, queue, champion_icon_url) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING *", [puuid, match_id, champion_name, win, kills, deaths, assists, total_minions_killed, match_duration, match_date, kill_participation_percent, cs_per_minute, queue, champion_icon_url]);
     }
 
     // Delete lol match history by puuid

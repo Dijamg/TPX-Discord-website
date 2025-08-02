@@ -73,7 +73,6 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
     );
   }
 
-  const summonerName = lolAccounts[activeAccountIdx]?.riot_game_name + "#" + lolAccounts[activeAccountIdx]?.riot_tag_line;
   const basicLolInfo = allProps.basicLolInfo.find(b => b.riot_puuid === lolAccounts[activeAccountIdx]?.riot_puuid);
   const currentSeasonLolInfo = allProps.currentSeasonLolInfo.find(c => c.riot_puuid === lolAccounts[activeAccountIdx]?.riot_puuid);
   const masteryInfo = allProps.masteryInfo.filter(m => m.riot_puuid === lolAccounts[activeAccountIdx]?.riot_puuid);
@@ -98,20 +97,6 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
       OC1: "oce",
     };
     return opggMap[platform?.toUpperCase() as keyof typeof opggMap] || null;
-  };
-
-  // Helper: romanToNumber
-  const romanToNumber = (roman: string | undefined) => {
-    if (!roman) return 0;
-    if (roman === "I") return 1;
-    if (roman === "II") return 2;
-    if (roman === "III") return 3;
-    if (roman === "IV") return 4;
-    return 0;
-  };
-
-  const getChampionIconUrl = (championName: string) => {
-    return `https://ddragon.leagueoflegends.com/cdn/15.14.1/img/champion/${championName}.png`;
   };
 
 
@@ -287,7 +272,6 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
             opggUrl={opggUrl}
             peakRankIconUrl={peakRankIconUrl}
             getCurrentSeasonRankInfo={getCurrentSeasonRankInfo}
-            getChampionIconUrl={getChampionIconUrl}
           />
         )}
         

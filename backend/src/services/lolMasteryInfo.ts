@@ -16,8 +16,8 @@ export const getLolMasteryInfoById = async (id: number): Promise<LolMasteryInfo 
 };
 
 // Add lol basic info by puuid
-export const addLolMasteryInfoByPuuid = async (puuid: string, champion_name: string, champion_level: number, champion_points: number): Promise<LolMasteryInfo> => {
-  return await db.lolMasteryInfo.add(puuid, champion_name, champion_level, champion_points);
+export const addLolMasteryInfoByPuuid = async (puuid: string, champion_name: string, champion_level: number, champion_points: number, champion_icon_url: string): Promise<LolMasteryInfo> => {
+  return await db.lolMasteryInfo.add(puuid, champion_name, champion_level, champion_points, champion_icon_url);
 };
 
 // delete all mastery info by puuid

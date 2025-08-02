@@ -28,6 +28,7 @@ export type MasteryInfo = {
   championLevel: number;
   championPoints: number;
   championName: string;
+  championIconUrl: string;
 }
 
 export type UpcomingClashTournament = {
@@ -88,6 +89,7 @@ export type LolMatchHistory = {
   csPerMinute: number;
   matchDuration: number;
   matchDate: Date;
+  championIconUrl: string;
 }
 
 export type Credentials = {

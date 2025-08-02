@@ -46,6 +46,7 @@ export interface LolMasteryInfo {
     champion_name: string;
     champion_level: number;
     champion_points: number;
+    champion_icon_url: string;
     revision_date: Date;
 }
 
@@ -82,6 +83,7 @@ export interface LolMatchHistory {
     cs_per_minute: number;
     match_duration: number;
     match_date: Date;
+    champion_icon_url: string;
     revision_date: Date;
 }
 

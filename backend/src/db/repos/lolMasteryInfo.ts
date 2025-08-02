@@ -40,8 +40,8 @@ import { LolBasicInfo, LolCurrentSeasonInfo, LolMasteryInfo } from "../models";
     }
 
     // Add lol mastery info by puuid
-    add(puuid: string, champion_name: string, champion_level: number, champion_points: number): Promise<LolMasteryInfo> {
-        return this.db.one("INSERT INTO lol_mastery_info (riot_puuid, champion_name, champion_level, champion_points) VALUES ($1, $2, $3, $4) RETURNING *", [puuid, champion_name, champion_level, champion_points]);
+    add(puuid: string, champion_name: string, champion_level: number, champion_points: number, champion_icon_url: string): Promise<LolMasteryInfo> {
+        return this.db.one("INSERT INTO lol_mastery_info (riot_puuid, champion_name, champion_level, champion_points, champion_icon_url) VALUES ($1, $2, $3, $4, $5) RETURNING *", [puuid, champion_name, champion_level, champion_points, champion_icon_url]);
     }
 
     // Delete lol mastery infos by puuid

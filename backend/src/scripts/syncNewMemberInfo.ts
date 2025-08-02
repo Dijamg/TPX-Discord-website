@@ -31,7 +31,7 @@ export const syncNewMemberInfo = async (accountInfo: LolAccountInfo, riotPuuid: 
         //Sync mastery info
         const masteryInfo = await RiotService.getMasteryInfo(riotPuuid, accountInfo.riot_region!);
         for (const mastery of masteryInfo) {
-            await LolMasteryInfoService.addLolMasteryInfoByPuuid(riotPuuid, mastery.championName, mastery.championLevel, mastery.championPoints);
+            await LolMasteryInfoService.addLolMasteryInfoByPuuid(riotPuuid, mastery.championName, mastery.championLevel, mastery.championPoints, mastery.championIconUrl);
         }
 
         //Sync match history
@@ -41,7 +41,7 @@ export const syncNewMemberInfo = async (accountInfo: LolAccountInfo, riotPuuid: 
 
 
         for (const match of matchHistory) {
-            await LolMatchHistoryService.addLolMatchHistoryByPuuid(riotPuuid, match.matchId, match.queue, match.championName, match.win, match.kills, match.deaths, match.assists, match.totalMinionsKilled, match.matchDuration, match.matchDate, match.killParticipationPercent, match.csPerMinute);
+            await LolMatchHistoryService.addLolMatchHistoryByPuuid(riotPuuid, match.matchId, match.queue, match.championName, match.win, match.kills, match.deaths, match.assists, match.totalMinionsKilled, match.matchDuration, match.matchDate, match.killParticipationPercent, match.csPerMinute, match.championIconUrl);
         }   
     } catch (error) {
         console.error(`Error syncing member ${accountInfo.riot_game_name}:`, error);

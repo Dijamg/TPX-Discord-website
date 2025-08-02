@@ -15,7 +15,6 @@ const MemberInfoPageContent = ({
   opggUrl,
   peakRankIconUrl,
   getCurrentSeasonRankInfo,
-  getChampionIconUrl
 }: any) => {
   const [historyType, setHistoryType] = useState<'soloq' | 'normal' | 'flex' | 'aram'>('soloq');
   const summonerName = lolAccounts[activeAccountIdx]?.riot_game_name + "#" + lolAccounts[activeAccountIdx]?.riot_tag_line;
@@ -58,7 +57,7 @@ const MemberInfoPageContent = ({
                 className="flex flex-col items-center w-20"
               >
                 <img
-                  src={getChampionIconUrl(entry.champion_name)}
+                  src={entry.champion_icon_url}
                   alt={entry.champion_name}
                   className={`w-18 h-18 rounded mb-1 border-2 ${entry.win ? 'border-green-500' : 'border-red-500'} bg-gray-800`}
                   style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto' }}
@@ -153,7 +152,7 @@ const MemberInfoPageContent = ({
                 {masteryInfo.slice(0, 5).map((mastery: any, idx: number) => (
                   <div key={idx} className="flex flex-col items-center w-20">
                     <img
-                      src={getChampionIconUrl(mastery.champion_name)}
+                      src={mastery.champion_icon_url}
                       alt={mastery.champion_name}
                       className="w-18 h-18 rounded mb-1 border-2 border-purple-400 bg-gray-800"
                     />
