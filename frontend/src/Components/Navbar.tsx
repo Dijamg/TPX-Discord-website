@@ -207,8 +207,8 @@ const Navbar = () => {
       </div>
       
       {/* Mobile: Dropdown Menu */}
-      <div className={`md:hidden bg-gray-900 transition-all duration-300 ${isMenuOpen ? 'max-h-60 opacity-100 pointer-events-auto' : 'max-h-0 opacity-0 pointer-events-none overflow-hidden'}`}>
-        <div className="px-4 py-2 space-y-2">
+      <div className={`md:hidden bg-gray-900 transition-all duration-300 ${isMenuOpen ? 'max-h-96 opacity-100 pointer-events-auto' : 'max-h-0 opacity-0 pointer-events-none overflow-hidden'}`}>
+        <div className="px-4 py-2 pb-4 space-y-2">
           <Link
             to="home-page"
             smooth={true}
