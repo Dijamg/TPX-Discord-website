@@ -20,12 +20,12 @@ export class TournamentRepository {
 
     // Returns all upcoming clash tournaments
     GetAllUpcomingClashTournaments(): Promise<UpcomingClashTournament[]> {
-        return this.db.any("SELECT * FROM upcoming_clash_tournaments");
+        return this.db.any("SELECT * FROM upcoming_clash_tournaments ORDER BY start_date");
     }
 
     // Returns all tournaments
     GetAllTournaments(): Promise<Tournament[]> {
-        return this.db.any("SELECT * FROM tournaments");
+        return this.db.any("SELECT * FROM tournaments ORDER BY start_date");
     }
 
     // Returns a tournament by id
