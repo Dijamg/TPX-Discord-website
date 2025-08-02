@@ -9,8 +9,29 @@ const Tournaments = ({ tournaments, upcomingClashTournaments }: { tournaments: T
     const { isAdmin } = useContext(AuthContext)
     const navigate = useNavigate()
 
+    const sortedActiveTournaments = [...upcomingClashTournaments, ...tournaments.filter((tournament) => tournament.active)].sort((a, b) => new Date(a.start_date).getTime() - new Date(b.start_date).getTime())
+    const sortedInactiveTournaments = tournaments.filter((tournament) => !tournament.active).sort((a, b) => new Date(a.start_date).getTime() - new Date(b.start_date).getTime())
+
     const handleAddTournament = () => {
         navigate('/add-tournament')
+    }
+
+    const OutputTournaments = () => {
+        let keyIndex = 0
+        return(
+            <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+                {sortedActiveTournaments.map((tournament) => {
+                    if('theme_id' in tournament) {
+                        return <ClashTournamentCard key={keyIndex++} tournament={tournament as UpcomingClashTournament} />
+                    } else {
+                        return <TournamentCard key={keyIndex++} tournament={tournament as Tournament} />
+                    }
+                })}
+                {sortedInactiveTournaments.map((tournament) => (
+                    <TournamentCard key={keyIndex++} tournament={tournament} />
+                ))}
+            </div>
+        )
     }
 
     return (
@@ -33,14 +54,9 @@ const Tournaments = ({ tournaments, upcomingClashTournaments }: { tournaments: T
                 <div className="w-40 md:w-62 h-1 bg-purple-400 rounded mb-4"></div>
             </div>
             
-            <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-                {upcomingClashTournaments.map((tournament) => (
-                    <ClashTournamentCard key={tournament.id} tournament={tournament} />
-                ))}
-                {tournaments.map((tournament) => (
-                    <TournamentCard key={tournament.id} tournament={tournament} />
-                ))}
-            </div>
+          
+                <OutputTournaments />
+
         </div>
     )
 }
