@@ -44,7 +44,7 @@ const MemberInfoPageContent = ({
   // Loading spinner component
   const LoadingSpinner = () => (
     <div className="flex justify-center items-center py-8">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-400"></div>
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500"></div>
     </div>
   );
 
@@ -130,7 +130,7 @@ const MemberInfoPageContent = ({
     <>
       {/* Summoner info row, left-aligned */}
       <div className="w-2/3 mx-auto mt-8">
-        <div className="flex flex-col items-center text-center sm:flex-row sm:items-center sm:text-left bg-gray-900 bg-opacity-60 rounded px-4 py-2 border-b-2 border-purple-400">
+        <div className="flex flex-col items-center text-center sm:flex-row sm:items-center sm:text-left bg-[#0A192F] bg-opacity-60 rounded px-4 py-2 border-b-2 border-purple-500">
           <img
             src={summonerIconUrl}
             alt="Summoner Icon"
@@ -146,7 +146,7 @@ const MemberInfoPageContent = ({
                 href={opggUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="ml-4 text-blue-500 hover:text-purple-400 text-lg font-semibold transition-colors"
+                className="ml-4 text-blue-500 hover:text-purple-500 text-lg font-semibold transition-colors"
               >
                 OP.GG
               </a>
@@ -156,7 +156,7 @@ const MemberInfoPageContent = ({
         </div>
       </div>
       {/* Rank row: only left column with two stacked boxes */}
-      <div className="w-2/3 mx-auto mt-8 bg-gray-900 ">
+      <div className="w-2/3 mx-auto mt-8 bg-[#0A192F] ">
         <div className="flex flex-col md:flex-row ">
           {/* Left column: stacked boxes */}
           <div className="w-full md:w-1/3 ">
@@ -164,7 +164,7 @@ const MemberInfoPageContent = ({
             {getCurrentSeasonRankInfo()}
             {/* Peak Rank box (smaller) */}
             <div className="shadow p-4 flex flex-col items-center">
-              <h2 className="text-base font-bold text-gray-400 mb-2 border-b-2 border-purple-400 w-full text-center pb-2">End of Season peak rank</h2>
+              <h2 className="text-base font-bold text-gray-400 mb-2 border-b-2 border-purple-500 w-full text-center pb-2">End of Season peak rank</h2>
               <div className="w-full flex flex-col items-center py-2">
                 {basicLolInfo?.peak_rank && (
                   <img src={peakRankIconUrl} alt={basicLolInfo.peak_rank} className="w-12 h-12 my-2" />
@@ -176,14 +176,14 @@ const MemberInfoPageContent = ({
           {/* Right column: 2/3 - Champion Masteries */}
           <div className="w-full md:w-2/3">
             <div className="w-full flex flex-col items-center md:items-start justify-center md:mt-0 md:self-start px-6 pt-6 ">
-              <h2 className="text-lg font-bold text-gray-400 mb-2 border-b-2 border-purple-400 w-full text-center pb-2">Top Champion Masteries</h2>
+              <h2 className="text-lg font-bold text-gray-400 mb-2 border-b-2 border-purple-500 w-full text-center pb-2">Top Champion Masteries</h2>
               <div className="flex flex-row flex-wrap justify-center md:justify-center gap-6 p-4 w-full">
                 {masteryInfo.slice(0, 5).map((mastery: any, idx: number) => (
                   <div key={idx} className="flex flex-col items-center w-20">
                     <img
                       src={mastery.champion_icon_url}
                       alt={mastery.champion_name}
-                      className="w-18 h-18 rounded mb-1 border-2 border-purple-400 bg-gray-800"
+                      className="w-18 h-18 rounded mb-1 border-2 border-purple-500 bg-gray-800"
                     />
                     <span className="text-sm font-semibold text-gray-300">Lvl {mastery.champion_level}</span>
                     <span className="text-xs text-gray-400">{mastery.champion_points.toLocaleString()} pts</span>
@@ -205,7 +205,7 @@ const MemberInfoPageContent = ({
                 <div className="flex justify-center sm:absolute sm:right-0 sm:top-0 mb-2 sm:mb-0 z-10">
                   <div className="relative">
                     <select
-                      className="bg-gray-900 text-gray-400 rounded px-2 py-1 pr-7 focus:outline-none appearance-none text-center"
+                      className="bg-[#0A192F] text-gray-400 rounded px-2 py-1 pr-7 focus:outline-none appearance-none text-center"
                       style={{ border: 'none', WebkitAppearance: 'none', MozAppearance: 'none', appearance: 'none' }}
                       value={historyType}
                       onChange={e => setHistoryType(e.target.value as 'soloq' | 'flex' | 'normal' | 'aram')}
@@ -220,7 +220,7 @@ const MemberInfoPageContent = ({
                     </span>
                   </div>
                 </div>
-                <h2 className="text-base font-bold text-gray-400 border-b-2 border-purple-400 w-full text-center pb-2 sm:mb-0">{getHistoryTitle(historyType)}</h2>
+                <h2 className="text-base font-bold text-gray-400 border-b-2 border-purple-500 w-full text-center pb-2 sm:mb-0">{getHistoryTitle(historyType)}</h2>
               </div>
               <div className="flex flex-row flex-wrap justify-center gap-12 p-4 w-full">
                 {isLoadingHistory ? <LoadingSpinner /> : getMatchHistory(historyType)}

@@ -2,12 +2,12 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-white py-12 w-full mt-auto" >
+    <footer className="bg-[#0A192F] text-white py-12 w-full mt-auto" >
       <div className="flex flex-col items-center">
         <div className="flex space-x-8 mb-8">
           {/* Discord Icon */}
           <span
-            className="transition-colors duration-200 text-white hover:text-purple-400 cursor-pointer"
+            className="transition-colors duration-200 text-purple-500 hover:text-purple-400 cursor-pointer"
             aria-label="Discord"
           >
             <svg width="36" height="36" fill="currentColor" viewBox="0 0 24 24">
@@ -19,7 +19,7 @@ const Footer = () => {
             href="https://github.com/Dijamg/TPX-Discord-website" 
             target="_blank"
             rel="noopener noreferrer"
-            className="transition-colors duration-200 text-white hover:text-purple-400"
+            className="transition-colors duration-200 text-purple-500 hover:text-purple-400"
             aria-label="GitHub"
           >
             <svg width="36" height="36" fill="currentColor" viewBox="0 0 24 24">
@@ -27,7 +27,7 @@ const Footer = () => {
             </svg>
           </a>
         </div>
-        <div className="text-center text-sm text-white">
+        <div className="text-center text-sm text-gray-400">
           © 2025 Phantom Phoenix Organization. All rights reserved.
         </div>
       </div>

@@ -10,7 +10,7 @@ const Frontpage = ({ allProps, refreshKey }: { allProps: AllProps, refreshKey: n
     <div>
         <Navbar/>
         <Heropage/>
-        <div className="w-full h-3 bg-purple-400" />
+        <div className="w-full h-3 bg-purple-500" />
         <AboutPage/>
         <MembersPage members={allProps.members}/>
         <TournamentsPage tournaments={allProps.tournaments} upcomingClashTournaments={allProps.upcomingClashTournaments}/>

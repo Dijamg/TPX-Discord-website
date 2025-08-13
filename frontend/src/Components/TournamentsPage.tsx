@@ -35,14 +35,14 @@ const Tournaments = ({ tournaments, upcomingClashTournaments }: { tournaments: T
     }
 
     return (
-        <div className='tournaments-page bg-gray-900 text-white py-8 px-4' id='tournaments-page'>
+        <div className='tournaments-page bg-[#0A192F] text-white py-8 px-4' id='tournaments-page'>
             <div className="flex flex-col items-center">
                 <div className="relative w-full max-w-6xl">
-                    <h1 className="text-3xl font-bold mb-2 text-center">Tournaments</h1>
+                    <h1 className="text-3xl font-bold mb-2 text-center text-gray-200">Tournaments</h1>
                     {isAdmin && (
                         <button
                             onClick={handleAddTournament}
-                            className="absolute right-0 top-0 text-purple-400 hover:text-purple-300 hover:cursor-pointer font-bold text-6xl transition-colors duration-200 m-0 p-0"
+                            className="absolute right-0 top-0 text-purple-500 hover:text-purple-400 hover:cursor-pointer font-bold text-6xl transition-colors duration-200 m-0 p-0"
                             title="Add new tournament"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-12 h-12">
@@ -51,7 +51,7 @@ const Tournaments = ({ tournaments, upcomingClashTournaments }: { tournaments: T
                         </button>
                     )}
                 </div>
-                <div className="w-40 md:w-62 h-1 bg-purple-400 rounded mb-4"></div>
+                <div className="w-40 md:w-62 h-1 bg-purple-500 rounded mb-4"></div>
             </div>
             
           

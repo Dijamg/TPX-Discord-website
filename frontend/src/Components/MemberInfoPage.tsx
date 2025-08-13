@@ -64,15 +64,15 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
 
   // Loading spinner component for account switching
   const AccountLoadingSpinner = () => (
-    <div className="flex justify-center items-center min-h-screen">
-      <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-purple-400"></div>
+    <div className="fixed inset-0 flex justify-center items-center bg-[#0A192F] z-40">
+      <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-purple-500"></div>
     </div>
   );
 
   if (!member) {
     return (
-      <div className="bg-gray-900 text-white min-h-screen">
-        <nav className="top-0 w-full bg-gray-900 shadow-md z-50" style={{ position: 'fixed', height: '4.5rem' }}>
+      <div className="bg-[#0A192F] text-white min-h-screen">
+        <nav className="top-0 w-full bg-[#0A192F] shadow-md z-50" style={{ position: 'fixed', height: '4.5rem' }}>
           <div className="h-18 flex items-center">
             <img
               src="/assets/navbar_banner.PNG"
@@ -130,7 +130,7 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
     if (currentSeasonLolInfo) {
       return (
         <div className="shadow p-6 flex flex-col items-centers ">
-          <h2 className="text-lg font-bold text-gray-400 mb-2 border-b-2 border-purple-400 w-full text-center pb-2">Current Rank</h2>
+          <h2 className="text-lg font-bold text-gray-400 mb-2 border-b-2 border-purple-500 w-full text-center pb-2">Current Rank</h2>
           <div className="w-full flex flex-col items-center pt-4">
             <img src={currentRankIconUrl} alt={currentSeasonLolInfo?.tier} className="w-28 h-28 mb-2" />
             <div className="flex flex-row w-full justify-between mt-2">
@@ -151,7 +151,7 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
     } else {
       return (
         <div className="shadow p-6 flex flex-col items-centers">
-          <h2 className="text-lg font-bold text-gray-400 mb-2 border-b-2  border-purple-400 w-full text-center pb-2">Current Rank</h2>
+          <h2 className="text-lg font-bold text-gray-400 mb-2 border-b-2  border-purple-500 w-full text-center pb-2">Current Rank</h2>
           <div className="w-full flex flex-col items-center pt-4">
             <img src={unrankedIconUrl} alt="Unranked" className="w-28 h-28 mb-2" />
             <span className="text-3xl  text-gray-400 mb-1">Unranked</span>
@@ -164,9 +164,9 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
 
 
   return (
-    <div className="bg-gray-900 text-white min-h-screen">
+    <div className="bg-[#0A192F] text-white min-h-screen">
       {/* Simple navbar bar - same styling as main navbar but no content */}
-      <nav className="top-0 w-full bg-gray-900 shadow-md z-50" style={{ position: 'fixed', height: '4.5rem' }}>
+      <nav className="top-0 w-full bg-[#0A192F] shadow-md z-50" style={{ position: 'fixed', height: '4.5rem' }}>
         <div className="h-18 flex items-center">
           <img
             src="/assets/navbar_banner.PNG"
@@ -176,27 +176,27 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
           />
         </div>
       </nav>
-      <div className="pt-24 bg-gray-900">
+      <div className="pt-24 bg-[#0A192F]">
         <ul className="ml-4 mr-4 flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-700 dark:border-gray-700 dark:text-gray-400">
           {/* Mobile: Single centered tab with arrows */}
           <div className="w-full flex justify-center items-center md:hidden py-2">
             {lolAccounts.length > 1 && (
               <button
                 onClick={() => setActiveAccountIdx((prev) => (prev > 0 ? prev - 1 : lolAccounts.length - 1))}
-                className="px-2 text-2xl text-purple-400 focus:outline-none"
+                className="px-2 text-2xl text-purple-500 focus:outline-none"
                 aria-label="Previous Account"
                 disabled={lolAccounts.length === 0}
               >
                 <span style={{fontSize: '2rem', fontWeight: 'bold', display: 'inline-block', verticalAlign: 'middle'}}>&#x25C0;</span>
               </button>
             )}
-            <span className="mx-4 font-bold text-lg text-purple-400">
+            <span className="mx-4 font-bold text-lg text-purple-500">
               {lolAccounts.length > 0 ? `Account ${activeAccountIdx + 1}/${lolAccounts.length}` : 'No Accounts'}
             </span>
             {lolAccounts.length > 1 && (
               <button
                 onClick={() => setActiveAccountIdx((prev) => (prev < lolAccounts.length - 1 ? prev + 1 : 0))}
-                className="px-2 text-2xl text-purple-400 focus:outline-none"
+                className="px-2 text-2xl text-purple-500 focus:outline-none"
                 aria-label="Next Account"
                 disabled={lolAccounts.length === 0}
               >
@@ -215,7 +215,7 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
             {isAdmin && (
               <button
                 onClick={() => navigate(`/members/${member.id}/add-lol-account`)}
-                className="ml-4 w-12 inline-block px-3 py-1.5 font-bold text-2xl text-center border-b text-purple-400 bg-gray-900 hover:bg-gray-800 border-transparent cursor-pointer"
+                className="ml-4 w-12 inline-block px-3 py-1.5 font-bold text-2xl text-center border-b text-purple-500 bg-[#0A192F] hover:bg-[#122F50] border-transparent cursor-pointer"
                 style={{ lineHeight: '1.2' }}
               >
                 +
@@ -229,7 +229,7 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
                 <button
                   onClick={() => setActiveAccountIdx(idx)}
                   aria-current={activeAccountIdx === idx}
-                  className={`w-36 inline-block px-3 py-1.5 font-bold text-lg text-center border-b ${activeAccountIdx === idx ? 'text-purple-400 bg-gray-900 active border-purple-400' : 'text-gray-400 bg-gray-900 hover:bg-gray-800 border-transparent'}`}
+                  className={`w-36 inline-block px-3 py-1.5 font-bold text-lg text-center border-b ${activeAccountIdx === idx ? 'text-purple-500 bg-[#0A192F] active border-' : 'text-gray-400 bg-[#0A192F] hover:bg-[#122F50] border-transparent'}`}
                   style={{ position: 'relative', paddingRight: isAdmin && activeAccountIdx === idx ? '1.5rem' : undefined }}
                 >
                   {`Account ${idx + 1}`}
@@ -251,7 +251,7 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
               <li className="me-2">
                 <button
                   onClick={() => navigate(`/members/${member.id}/add-lol-account`)}
-                  className="w-12 inline-block px-3 py-1.5 font-bold text-2xl text-center border-b text-purple-400 bg-gray-900 hover:bg-gray-800 border-transparent cursor-pointer"
+                  className="w-12 inline-block px-3 py-1.5 font-bold text-2xl text-center border-b text-purple-500 bg-[#0A192F] hover:bg-[#122F50] border-transparent cursor-pointer"
                   style={{ lineHeight: '1.2' }}
                 >
                   +

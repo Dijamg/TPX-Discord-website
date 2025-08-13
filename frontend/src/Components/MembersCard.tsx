@@ -60,7 +60,7 @@ const MembersCard = ({ member }: { member: Member }) => {
         <img className="w-full h-full object-cover" src={member.img_url} alt="profile-picture" />
       </div>
       <div className="p-4 text-center relative">
-        <h4 className="mb-1 text-xl font-semibold text-purple-400">
+        <h4 className="mb-1 text-xl font-semibold text-purple-500">
           {member.name}
         </h4>
         <p className="text-sm font-semibold text-gray-400 uppercase">

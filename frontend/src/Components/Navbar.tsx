@@ -32,7 +32,7 @@ const Navbar = () => {
           aria-label="Login"
         >
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} className="w-6 h-6 transition-colors duration-200" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6A2.25 2.25 0 005.25 5.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M18 15l3-3m0 0l-3-3m3 3H9" className="stroke-white group-hover:stroke-purple-400" />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6A2.25 2.25 0 005.25 5.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M18 15l3-3m0 0l-3-3m3 3H9" className="stroke-white group-hover:stroke-purple-500" />
           </svg>
         </button>
       );
@@ -53,14 +53,14 @@ const Navbar = () => {
           {/* Dropdown on click */}
           {dropdownOpen && (
             <div
-              className="fixed bg-gray-900  shadow-lg z-50 py-2 text-white"
+              className="fixed bg-[#0A192F]/80  shadow-lg z-50 py-2 text-white"
               style={{
                 top: '4.5rem',
                 right: 0,
                 width: '16rem',
               }}
             >
-              <div className="px-4 py-2 w-75% border-b border-purple-400 text-sm font-medium">
+              <div className="px-4 py-2 w-75% border-b border-purple-500 text-sm font-medium">
                 Logged in as <span className="font-bold">{username}</span>
               </div>
               <button
@@ -68,7 +68,7 @@ const Navbar = () => {
                   logout();
                   setTimeout(() => window.location.reload(), 100);
                 }}
-                className="w-full text-left px-4 py-2 text-red-800 hover:text-purple-400 transition"
+                className="w-full text-left px-4 py-2 text-red-800 hover:text-purple-500 transition"
               >
                 Logout
               </button>
@@ -84,7 +84,7 @@ const Navbar = () => {
       return (
         <button
           onClick={() => navigate('/login')}
-          className="block cursor-pointer text-purple-400 capitalize transition"
+          className="block cursor-pointer text-purple-500 capitalize transition"
           aria-label="Login"
         >
           Login
@@ -99,7 +99,7 @@ const Navbar = () => {
             logout();
             window.location.reload();
           }}
-          className="block cursor-pointer text-purple-400 capitalize transition"
+          className="block cursor-pointer text-purple-500 capitalize transition"
           aria-label="Logout"
         >
           Logout from {username}
@@ -147,7 +147,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`top-0 w-full bg-gray-900 shadow-md z-50 transition-transform duration-300 ${
+      className={`top-0 w-full bg-[#0A192F]/80 shadow-md z-50 transition-transform duration-300 ${
         show ? 'translate-y-0' : '-translate-y-full'
       }`}
       style={{ position: 'fixed' }}
@@ -175,14 +175,14 @@ const Navbar = () => {
               smooth={true}
               duration={500}
               offset={0}
-              className="cursor-pointer hover:text-purple-400 capitalize transition"
+              className="cursor-pointer hover:text-purple-500 capitalize transition"
             >
               {section}
             </Link>
           ))}
           <a
             href="/gallery"
-            className="cursor-pointer hover:text-purple-400 capitalize transition"
+            className="cursor-pointer hover:text-purple-500 capitalize transition"
           >
             gallery
           </a>
@@ -193,7 +193,7 @@ const Navbar = () => {
         <div className="md:hidden h-full">
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="bg-purple-400 text-white hover:bg-purple-500 transition-colors h-full px-4 flex items-center"
+            className=" text-purple-500 transition-colors h-full px-4 flex items-center"
           >
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               {isMenuOpen ? (
@@ -207,14 +207,14 @@ const Navbar = () => {
       </div>
       
       {/* Mobile: Dropdown Menu */}
-      <div className={`md:hidden bg-gray-900 transition-all duration-300 ${isMenuOpen ? 'max-h-96 opacity-100 pointer-events-auto' : 'max-h-0 opacity-0 pointer-events-none overflow-hidden'}`}>
+      <div className={`md:hidden bg-[#0A192F]/80 transition-all duration-300 ${isMenuOpen ? 'max-h-96 opacity-100 pointer-events-auto' : 'max-h-0 opacity-0 pointer-events-none overflow-hidden'}`}>
         <div className="px-4 py-2 pb-4 space-y-2">
           <Link
             to="home-page"
             smooth={true}
             duration={500}
             offset={0}
-            className="block cursor-pointer text-purple-400 capitalize transition py-2"
+            className="block cursor-pointer text-purple-500 capitalize transition py-2"
             onClick={() => setIsMenuOpen(false)}
           >
             Home
@@ -226,7 +226,7 @@ const Navbar = () => {
               smooth={true}
               duration={500}
               offset={0}
-              className="block cursor-pointer text-purple-400 capitalize transition py-2"
+              className="block cursor-pointer text-purple-500 capitalize transition py-2"
               onClick={() => setIsMenuOpen(false)}
             >
               {section}
@@ -234,7 +234,7 @@ const Navbar = () => {
           ))}
           <a
             href="/gallery"
-            className="block cursor-pointer text-purple-400 capitalize transition py-2"
+            className="block cursor-pointer text-purple-500 capitalize transition py-2"
             onClick={() => setIsMenuOpen(false)}
           >
             Gallery

@@ -79,7 +79,7 @@ const TournamentCard = ({ tournament }: { tournament: Tournament }) => {
           />
         </div>
         <div className="p-4 text-center relative">
-          <h4 className="mb-1 text-xl font-semibold text-purple-400 truncate inline-block">
+          <h4 className="mb-1 text-xl font-semibold text-purple-500 truncate inline-block">
             {tournament.theme}
           </h4>
           {tournament.start_date && (

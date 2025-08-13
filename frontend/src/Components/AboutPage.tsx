@@ -1,15 +1,15 @@
 import React from 'react'
 
 const AboutPage = () => (
-  <div className="about-page bg-gray-900 text-white py-8 px-4" id="about-page">
+  <div className="about-page bg-[#0A192F] text-white py-8 px-4" id="about-page">
     <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-stretch gap-8">
       {/* Left column: Image */}
       <div className="w-full md:w-1/2 flex flex-col justify-center">
-        <img src="/assets/tpx_logo.webp" alt="TPX Logo" className="w-full max-w-full h-auto max-h-96 object-contain border-l-8 border-purple-400" />
+        <img src="/assets/tpx_logo.webp" alt="TPX Logo" className="w-full max-w-full h-auto max-h-96 object-contain border-l-8 border-purple-500" />
       </div>
       {/* Right column: Text */}
       <div className="w-full md:w-1/2 flex flex-col justify-center">
-        <h1 className="text-4xl font-bold mb-4">About us</h1>
+        <h1 className="text-4xl font-bold mb-4 text-gray-200">About us</h1>
         <p className="max-w-2xl mb-4 text-gray-400 text-xl">
           The Phantom Phoenix Organization, also known as TPX, is a Discord community which focuses on video games. This Discord was founded by a few members but it has grown rapidly over the last year and now there's close to 100 of us.
         </p>
@@ -22,7 +22,7 @@ const AboutPage = () => (
     <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-stretch gap-8 py-8">
       {/* Left column: Games list */}
       <div className="w-full md:w-1/2 flex flex-col ">
-        <h2 className="text-3xl font-bold mb-4">What do we do together?</h2>
+        <h2 className="text-3xl font-bold mb-4 text-gray-200">What do we do together?</h2>
         <ul className="list-disc list-inside text-gray-400 text-xl space-y-2">
           <li>Play League of Legends (flex queue/clash weekends)</li>
           <li>Attend different events, such as tournaments held by Aalto Gamers</li>
@@ -36,7 +36,7 @@ const AboutPage = () => (
           Interested? Join{' '}
           <a
             href="#"
-            className="text-white text-xl hover:text-purple-400 transition"
+            className="text-purple-500 text-xl hover:text-purple-400 transition"
             style={{ textDecoration: 'none' }}
             onClick={e => e.preventDefault()}
           >
@@ -50,7 +50,7 @@ const AboutPage = () => (
         <img
           src="/assets/tpxvsgg.png"
           alt="TPX vs GG"
-          className="w-full max-w-full max-h-96 h-auto object-contain rounded-lg shadow-lg border-r-8 border-purple-400"
+          className="w-full max-w-full max-h-96 h-auto object-contain rounded-lg shadow-lg border-r-8 border-purple-500"
         />
         <figcaption className="mt-2 text-gray-400 text-base text-center">
           Post game lobby after we won Aalto University Pre-Season tournament in 2020.

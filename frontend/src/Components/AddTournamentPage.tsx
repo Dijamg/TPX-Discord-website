@@ -42,7 +42,7 @@ const AddTournamentPage = ({fetchData}: {fetchData: () => void}) => {
     e.preventDefault();
     setErrorMsg(null);
     if(!fileSelected) return;
-    setIsSubmitting(true);
+    setIsSubmitting(true);  
     const formData = new FormData();
     formData.append("file", fileSelected);
     formData.append("upload_preset", uploadPreset);
@@ -86,10 +86,10 @@ const AddTournamentPage = ({fetchData}: {fetchData: () => void}) => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center bg-gray-900">
+    <div className="min-h-screen flex flex-col items-center bg-[#0A192F]">
       {/* Simple navbar bar - same styling as AddMemberPage navbar but no content */}
       <nav
-        className="top-0 w-full bg-gray-900 shadow-md z-50"
+        className="top-0 w-full bg-[#0A192F] shadow-md z-50"
         style={{ position: 'fixed', height: '4.5rem' }}
       >
         <div className="h-18 flex items-center">
@@ -104,7 +104,7 @@ const AddTournamentPage = ({fetchData}: {fetchData: () => void}) => {
       <div className="pt-32 w-full flex justify-center">
         <h2 className="text-3xl font-bold text-white">Add a tournament</h2>
       </div>
-      <form className="mt-8 w-full max-w-lg bg-gray-800 p-8 rounded-lg shadow-md flex flex-col gap-6 " onSubmit={handleSubmit}>
+      <form className="mt-8 w-full max-w-lg bg-[#122F50] p-8 rounded-lg shadow-md flex flex-col gap-6 " onSubmit={handleSubmit}>
         {/* Error message */}
         {errorMsg && (
           <div className="mb-4 text-center text-red-400 font-semibold">{errorMsg}</div>
@@ -112,22 +112,22 @@ const AddTournamentPage = ({fetchData}: {fetchData: () => void}) => {
         {/* Name */}
         <div>
           <label className="block text-white mb-1" htmlFor="name">Name</label>
-          <input id="name" value={name} onChange={e => setName(e.target.value)} className="w-full px-3 py-2 rounded bg-gray-700 text-white focus:outline-none" required />
+          <input id="name" value={name} onChange={e => setName(e.target.value)} className="w-full px-3 py-2 rounded bg-[#1E3A56] text-white focus:outline-none" required />
         </div>
         {/* Image */}
         <div>
           <label className="block text-white mb-1" htmlFor="image">Image</label>
-          <input id="image" type="file" accept="image/*" className="w-full px-3 py-2 rounded bg-gray-700 text-white focus:outline-none" required onChange={e => _fileSelectedHandler(e.target.files)} />
+          <input id="image" type="file" accept="image/*" className="w-full px-3 py-2 rounded bg-[#1E3A56] text-white focus:outline-none" required onChange={e => _fileSelectedHandler(e.target.files)} />
         </div>
         {/* Start Date, Time, and Timezone */}
         <div className="flex gap-4">
           <div className="flex-1">
             <label className="block text-white mb-1" htmlFor="startDate">Start Date</label>
-            <input id="startDate" type="date" value={startDate} onChange={e => setStartDate(e.target.value)} className="w-full px-3 py-2 rounded bg-gray-700 text-white focus:outline-none" required min={today} />
+            <input id="startDate" type="date" value={startDate} onChange={e => setStartDate(e.target.value)} className="w-full px-3 py-2 rounded bg-[#1E3A56] text-white focus:outline-none" required min={today} />
           </div>
           <div className="flex-1">
             <label className="block text-white mb-1" htmlFor="startTime">Start Time</label>
-            <input id="startTime" type="time" value={startTime} onChange={e => setStartTime(e.target.value)} className="w-full px-3 py-2 rounded bg-gray-700 text-white focus:outline-none" required />
+            <input id="startTime" type="time" value={startTime} onChange={e => setStartTime(e.target.value)} className="w-full px-3 py-2 rounded bg-[#1E3A56] text-white focus:outline-none" required />
           </div>
           <div className="flex-1">
             <label className="block text-white mb-1" htmlFor="timezone">Timezone</label>
@@ -135,7 +135,7 @@ const AddTournamentPage = ({fetchData}: {fetchData: () => void}) => {
               id="timezone"
               value={timezone}
               onChange={e => setTimezone(e.target.value)}
-              className="w-full px-3 py-2 rounded bg-gray-700 text-white focus:outline-none"
+              className="w-full px-3 py-2 rounded bg-[#1E3A56] text-white focus:outline-none"
               required
             >
               {TIMEZONES.map(tz => (
@@ -147,7 +147,7 @@ const AddTournamentPage = ({fetchData}: {fetchData: () => void}) => {
         {/* Submit Button */}
         <button
           type="submit"
-          className={`mt-4 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-400 hover:bg-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-400 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
+          className={`mt-4 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-500 hover:bg-purple-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-400 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
           onClick={handleSubmit}
           disabled={isSubmitting}
         >
