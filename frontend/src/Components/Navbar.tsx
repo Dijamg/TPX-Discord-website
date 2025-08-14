@@ -31,7 +31,7 @@ const Navbar = () => {
           style={{ textDecoration: 'none' }}
           aria-label="Login"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} className="w-6 h-6 transition-colors duration-200" stroke="currentColor">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} className="w-6 h-6 transition-colors duration-200 cursor-pointer" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6A2.25 2.25 0 005.25 5.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M18 15l3-3m0 0l-3-3m3 3H9" className="stroke-white group-hover:stroke-purple-500" />
           </svg>
         </button>
@@ -46,7 +46,7 @@ const Navbar = () => {
             aria-label="Logout menu"
             onClick={() => setDropdownOpen((open) => !open)}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} className="w-6 h-6 stroke-red-800 group-hover:stroke-red-500 hover:cursor-pointer" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} className="w-6 h-6 stroke-red-800 group-hover:stroke-red-500 cursor-pointer" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6A2.25 2.25 0 005.25 5.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M18 15h-6m0 0l3-3m-3 3l3 3 " />
             </svg>
           </button>

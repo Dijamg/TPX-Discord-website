@@ -31,9 +31,22 @@ const MembersCard = ({ member }: { member: Member }) => {
 
   return (
     <div
-      className="flex flex-col bg-gray-800 shadow-sm border border-gray-700 rounded-lg my-4 w-full cursor-pointer transition-transform duration-200 hover:scale-105 hover:shadow-xl relative"
-      onClick={handleClick}
-    >
+  onClick={handleClick}
+  className="
+    /* gradient fill + gradient border */
+    [background:linear-gradient(theme(colors.slate.900),theme(colors.slate.900))_padding-box,
+    linear-gradient(45deg,theme(colors.slate.800),theme(colors.slate.600/.8),theme(colors.slate.800))_border-box]
+    relative overflow-hidden rounded-2xl border-2 border-slate-600/50
+
+    /* noise overlay */
+    before:content-[''] before:absolute before:inset-0 before:pointer-events-none
+    before:bg-[url('/assets/noise.png')] before:bg-[length:352px_382px] before:opacity-40 before:rounded-[inherit]
+
+    /* your existing card behavior */
+    flex flex-col my-4 w-full cursor-pointer transition-transform duration-200
+     hover:shadow-xl hover:border-purple-500/70
+  "
+>
       {/* Delete button in top right corner for admins */}
       {isAdmin && (
         <button
@@ -56,16 +69,26 @@ const MembersCard = ({ member }: { member: Member }) => {
           </svg>
         </button>
       )}
-      <div className="m-2 overflow-hidden rounded-md h-80 flex justify-center items-center">
-        <img className="w-full h-full object-cover" src={member.img_url} alt="profile-picture" />
-      </div>
-      <div className="p-4 text-center relative">
+      
+      {/* Name and role above the image, aligned left */}
+      <div className="p-4 text-left relative">
         <h4 className="mb-1 text-xl font-semibold text-purple-500">
           {member.name}
         </h4>
         <p className="text-sm font-semibold text-gray-400 uppercase">
           {member.role}
         </p>
+      </div>
+      
+      <div className="m-3 overflow-hidden rounded-md h-72 flex justify-center items-center">
+        <div className="relative w-full h-full">
+          <img
+            className="w-full h-full object-cover"
+            src={member.img_url}
+            alt="profile-picture"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-purple-900/70 via-purple-900/30 to-transparent" />
+        </div>
       </div>
     </div>
   )

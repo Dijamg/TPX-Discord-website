@@ -229,7 +229,7 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
                 <button
                   onClick={() => setActiveAccountIdx(idx)}
                   aria-current={activeAccountIdx === idx}
-                  className={`w-36 inline-block px-3 py-1.5 font-bold text-lg text-center border-b ${activeAccountIdx === idx ? 'text-purple-500 bg-[#0A192F] active border-' : 'text-gray-400 bg-[#0A192F] hover:bg-[#122F50] border-transparent'}`}
+                  className={`cursor-pointer w-36 inline-block px-3 py-1.5 font-bold text-lg text-center border-b ${activeAccountIdx === idx ? 'text-purple-500 bg-[#0A192F] active border-' : 'text-gray-400 bg-[#0A192F] hover:bg-[#122F50] border-transparent'}`}
                   style={{ position: 'relative', paddingRight: isAdmin && activeAccountIdx === idx ? '1.5rem' : undefined }}
                 >
                   {`Account ${idx + 1}`}

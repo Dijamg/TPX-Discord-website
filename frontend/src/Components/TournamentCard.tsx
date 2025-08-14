@@ -39,8 +39,26 @@ const TournamentCard = ({ tournament }: { tournament: Tournament }) => {
   };
 
   return (
-    <div className="relative w-full my-4">
-      {/* Delete button is outside of the opacity container */}
+    <div
+      className={`
+        /* gradient fill + gradient border */
+        [background:linear-gradient(theme(colors.slate.900),theme(colors.slate.900))_padding-box,
+        linear-gradient(45deg,theme(colors.slate.800),theme(colors.slate.600/.8),theme(colors.slate.800))_border-box]
+        relative overflow-hidden rounded-2xl border-2 border-slate-600/50
+
+        /* noise overlay */
+        before:content-[''] before:absolute before:inset-0 before:pointer-events-none
+        before:bg-[url('/assets/noise.png')] before:bg-[length:352px_382px] before:opacity-40 before:rounded-[inherit]
+
+        /* card behavior */
+        flex flex-col my-4 w-full transition-all duration-200
+        ${isInactive
+          ? 'opacity-50 grayscale cursor-default'
+          : 'hover:shadow-xl hover:border-purple-500/70'
+        }
+      `}
+    >
+      {/* Delete button in top right corner for admins */}
       {isAdmin && (
         <button
           onClick={handleDelete}
@@ -62,31 +80,28 @@ const TournamentCard = ({ tournament }: { tournament: Tournament }) => {
           </svg>
         </button>
       )}
-  
-      {/* Tournament card content */}
-      <div
-        className={`flex flex-col bg-gray-800 shadow-sm border border-gray-700 rounded-lg w-full hover:shadow-xl ${
-          isInactive
-            ? 'opacity-50 grayscale cursor-default'
-            : 'cursor-pointer transition-transform duration-200 hover:scale-105 hover:shadow-xl'
-        }`}
-      >
-        <div className="m-2 overflow-hidden rounded-md h-48 flex justify-center items-center bg-gray-900 relative">
+
+      {/* Tournament name and date above the image, aligned left */}
+      <div className="p-4 text-left relative">
+        <h4 className="mb-1 text-xl font-semibold text-purple-500 truncate">
+          {tournament.theme}
+        </h4>
+        {tournament.start_date && (
+          <h2 className="text-sm font-semibold text-gray-400 uppercase">
+            {getHelsinkiDate(new Date(tournament.start_date).toISOString())}
+          </h2>
+        )}
+      </div>
+
+      {/* Tournament image with gradient overlay */}
+      <div className="m-3 overflow-hidden rounded-md h-48 flex justify-center items-center">
+        <div className="relative w-full h-full">
           <img
             src={tournament.img_url || '/assets/trophy.png'}
             alt={tournament.theme}
             className="w-full h-full object-cover"
           />
-        </div>
-        <div className="p-4 text-center relative">
-          <h4 className="mb-1 text-xl font-semibold text-purple-500 truncate inline-block">
-            {tournament.theme}
-          </h4>
-          {tournament.start_date && (
-            <h2 className="text-gray-400 truncate">
-              {getHelsinkiDate(new Date(tournament.start_date).toISOString())}
-            </h2>
-          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-purple-900/70 via-purple-900/30 to-transparent" />
         </div>
       </div>
     </div>

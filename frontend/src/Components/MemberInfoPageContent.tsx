@@ -205,7 +205,7 @@ const MemberInfoPageContent = ({
                 <div className="flex justify-center sm:absolute sm:right-0 sm:top-0 mb-2 sm:mb-0 z-10">
                   <div className="relative">
                     <select
-                      className="bg-[#0A192F] text-gray-400 rounded px-2 py-1 pr-7 focus:outline-none appearance-none text-center"
+                      className="bg-[#0A192F] cursor-pointer text-gray-400 rounded px-2 py-1 pr-7 focus:outline-none appearance-none text-center"
                       style={{ border: 'none', WebkitAppearance: 'none', MozAppearance: 'none', appearance: 'none' }}
                       value={historyType}
                       onChange={e => setHistoryType(e.target.value as 'soloq' | 'flex' | 'normal' | 'aram')}
