@@ -51,20 +51,10 @@ const MembersCard = ({ member }: { member: Member }) => {
       {isAdmin && (
         <button
           onClick={handleDelete}
-          className="absolute right-0 text-red-500 hover:text-red-400 cursor-pointer font-bold text-6xl p-0 z-10 -mt-4 -mr-6"
-          style={{
-            top: '-1.25rem', // -20px, even higher than top-0
-            lineHeight: '1',
-            padding: 0,
-            filter: 'none',
-            opacity: 1,
-            pointerEvents: 'auto',
-            background: 'none',
-            border: 'none',
-          }}
+          className="absolute top-2 right-2 text-red-500 hover:text-red-400 cursor-pointer font-bold z-10"
           title="Delete member"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-24 h-24">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-8 h-8">
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>

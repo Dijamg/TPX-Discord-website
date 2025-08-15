@@ -52,13 +52,16 @@ const LoginPage = () => {
         className="top-0 w-full bg-[#0A192F] shadow-md z-50"
         style={{ position: 'fixed', height: '4.5rem' }}
       >
-        <div className="h-18 flex items-center">
-          <img
-            src="/assets/navbar_banner.PNG"
-            alt="TPX Banner"
-            className="h-full w-auto m-0 p-0 cursor-pointer"
+        <div className="h-18 flex items-center px-4">
+          <button
             onClick={handleBackClick}
-          />
+            className="flex items-center justify-center w-12 h-12 text-purple-500 hover:text-purple-400 hover:scale-110 transition-all duration-200 cursor-pointer"
+            aria-label="Go back"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-9 h-9">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+            </svg>
+          </button>
         </div>
       </nav>
       <img src={'../assets/tpx_logo.webp'} alt="Logo" className="w-16 h-16 mb-8" />
