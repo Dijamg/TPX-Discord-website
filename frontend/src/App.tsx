@@ -20,6 +20,7 @@ import AddTournamentPage from './Components/AddTournamentPage'
 import Footer from './Components/Footer';
 import LolAccountService from './Services/lolAccount'
 import AddLolAccountPage from './Components/AddLolAccountForm'
+import SideNav from './Components/SideNav'
 
 const App = () => {
   const [members, setMembers] = useState<Member[]>([])
@@ -88,6 +89,7 @@ const props: AllProps = {
     <div className="flex flex-col min-h-screen">
       <AuthProvider>
         <Router>
+          <SideNav/>
           <Routes>
             <Route path="/" element={<Frontpage allProps={props} refreshKey={refreshKey}/>} />
             <Route path="/members/:id" element={<MemberInfoPage allProps={props} />} />
