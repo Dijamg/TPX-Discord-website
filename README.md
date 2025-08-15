@@ -43,11 +43,11 @@ This website presents various League of Legends statistics for accounts of diffe
      ```
    - For backend:
      ```bash
-     cd ../backend
+     cd /backend
      npm install
      ```
 3. **Configure environment variables:**
-   - Copy `.env.example` to `.env` in both frontend and backend folders and fill in the required values (API keys, database URLs, etc).
+   - Copy `project.env.example` to `project.env` in root and `.env.example` to `.env` in backend folder and fill in the required values (API keys, database URLs, etc).
 4. **Run the app:**
    - Using Docker Compose (recommended):
      ```bash
