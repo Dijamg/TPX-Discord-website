@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
-import { Tournament, UpcomingClashTournament } from '../types'
-import TournamentCard from './TournamentCard'
-import ClashTournamentCard from './ClashTournamentCard'
-import { AuthContext } from '../context/authContext'
+import { Tournament, UpcomingClashTournament } from '../../types'
+import TournamentCard from '../TournamentCard'
+import ClashTournamentCard from '../ClashTournamentCard'
+import { AuthContext } from '../../context/authContext'
 import { useNavigate } from 'react-router-dom'
 
 const Tournaments = ({ tournaments, upcomingClashTournaments }: { tournaments: Tournament[], upcomingClashTournaments: UpcomingClashTournament[] }) => {

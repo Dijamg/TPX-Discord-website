@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Member } from '../types'
-import MembersCard from './MembersCard'
-import { AuthContext } from '../context/authContext'
+import { Member } from '../../types'
+import MembersCard from '../MembersCard'
+import { AuthContext } from '../../context/authContext'
 
 const Members = ({ members }: { members: Member[] }) => {
     const { isAdmin } = useContext(AuthContext)

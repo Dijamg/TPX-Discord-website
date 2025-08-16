@@ -1,26 +1,27 @@
 import React, {useState, useEffect} from 'react'
 import './index.css'
-import Frontpage from './Components/Frontpage'
+import Frontpage from './Components/Pages/Frontpage'
 import MemberService from './Services/member'
 import BasicLolInfoService from './Services/basicLolInfo'
 import { AllProps, BasicLolInfo, CurrentSeasonLolInfo, LolAccountInfo, LolMatchHistory, MasteryInfo, Member, Tournament, UpcomingClashTournament } from './types'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import MemberInfoPage from './Components/MemberInfoPage'
+import MemberInfoPage from './Components/Pages/MemberInfoPage'
 import CurrentSeasonLolInfoService from './Services/currentSeasonLolInfo'
 import MasteryInfoService from './Services/masteryInfo'
 import TournamentService from './Services/tournament'
 import MatchHistoryService from './Services/matchHistory'
-import LoginPage from './Components/LoginPage'
-import RegisterPage from './Components/RegisterPage'
-import AddMemberPage from './Components/AddMemberPage'
+import LoginPage from './Components/Pages/LoginPage'
+import RegisterPage from './Components/Pages/RegisterPage'
+import AddMemberPage from './Components/Pages/AddMemberPage'
 import PublicRoute from './Components/PublicRoute'
 import AdminRoute from './Components/AdminRoute'
 import AuthProvider from './context/authProvider'
-import AddTournamentPage from './Components/AddTournamentPage'
-import Footer from './Components/Footer';
+import AddTournamentPage from './Components/Pages/AddTournamentPage'
 import LolAccountService from './Services/lolAccount'
 import AddLolAccountPage from './Components/AddLolAccountForm'
 import SideNav from './Components/SideNav'
+import Footer from './Components/Footer'
+import ScrollToTop from './Components/ScrollToTop'
 
 const App = () => {
   const [members, setMembers] = useState<Member[]>([])
@@ -90,6 +91,7 @@ const props: AllProps = {
       <AuthProvider>
         <Router>
           <SideNav/>
+          <ScrollToTop />
           <Routes>
             <Route path="/" element={<Frontpage allProps={props} refreshKey={refreshKey}/>} />
             <Route path="/members/:id" element={<MemberInfoPage allProps={props} />} />
@@ -101,9 +103,9 @@ const props: AllProps = {
             <Route path="/add-tournament" element={<AdminRoute><AddTournamentPage fetchData={fetchData}/></AdminRoute>}/>
             <Route path="/members/:id/add-lol-account" element={<AdminRoute><AddLolAccountPage allProps={props} fetchData={fetchData}/></AdminRoute>}/>
           </Routes>
-          <Footer />
         </Router>
       </AuthProvider>
+      <Footer />
     </div>
   );
 }

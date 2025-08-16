@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth';
-import { FormData } from '../types';
+import { useAuth } from '../../hooks/useAuth';
+import { FormData } from '../../types';
 
 const LoginPage = () => {
   const navigate = useNavigate();

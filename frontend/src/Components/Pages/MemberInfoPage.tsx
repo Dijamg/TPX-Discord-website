@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Member, AllProps } from '../types'
+import { Member, AllProps } from '../../types'
 import { useContext } from 'react'
-import { AuthContext } from '../context/authContext'
-import LolAccountInfoService from '../Services/lolAccount'
-import MemberInfoPageContent from './MemberInfoPageContent';
+import { AuthContext } from '../../context/authContext'
+import LolAccountInfoService from '../../Services/lolAccount'
+import MemberInfoPageContent from '../MemberInfoPageContent';
 
 
 const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
@@ -17,10 +17,6 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
   const [notFound, setNotFound] = useState(false);
   const [activeAccountIdx, setActiveAccountIdx] = useState(0);
   const [isLoadingAccount, setIsLoadingAccount] = useState(false);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   const handleBackClick = () => {
     navigate('/');

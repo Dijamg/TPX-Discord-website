@@ -1,10 +1,10 @@
 import React from 'react'
-import Heropage from '../Components/Heropage'
-import AboutPage from '../Components/AboutPage'
-import MembersPage from '../Components/MembersPage'
-import TournamentsPage from '../Components/TournamentsPage'
-import { AllProps, Member } from '../types'
-import Navbar from './Navbar'
+import Heropage from './Heropage'
+import AboutPage from './AboutPage'
+import MembersPage from './MembersPage'
+import TournamentsPage from './TournamentsPage'
+import { AllProps, Member } from '../../types'
+import Navbar from '../Navbar'
 
 const Frontpage = ({ allProps, refreshKey }: { allProps: AllProps, refreshKey: number }) => (
     <div>
