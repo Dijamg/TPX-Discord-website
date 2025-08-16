@@ -147,7 +147,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`top-0 w-full bg-[#0A192F]/80 shadow-md z-50 transition-transform duration-300 ${
+      className={`top-0 w-full bg-[#0A192F] md:bg-[#0A192F]/80 shadow-md z-50 transition-transform duration-300 ${
         show ? 'translate-y-0' : '-translate-y-full'
       }`}
       style={{ position: 'fixed' }}
@@ -207,7 +207,7 @@ const Navbar = () => {
       </div>
       
       {/* Mobile: Dropdown Menu */}
-      <div className={`md:hidden bg-[#0A192F]/80 transition-all duration-300 ${isMenuOpen ? 'max-h-96 opacity-100 pointer-events-auto' : 'max-h-0 opacity-0 pointer-events-none overflow-hidden'}`}>
+      <div className={`md:hidden bg-[#0A192F] transition-all duration-300 ${isMenuOpen ? 'max-h-96 opacity-100 pointer-events-auto' : 'max-h-0 opacity-0 pointer-events-none overflow-hidden'}`}>
         <div className="px-4 py-2 pb-4 space-y-2">
           <Link
             to="home-page"

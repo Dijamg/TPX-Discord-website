@@ -72,7 +72,6 @@ const AddMemberPage = ({fetchData}: {fetchData: () => void}) => {
     } catch (err: any) {
       setErrorMsg("Error adding member: " + err.response?.data);
       console.error("Upload Error:", err.response?.data);
-      //remove image from cloudinary to be implemented later
       setIsSubmitting(false);
       return;
     }
