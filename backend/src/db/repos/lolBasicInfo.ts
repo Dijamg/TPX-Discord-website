@@ -35,12 +35,12 @@ import { LolBasicInfo } from "../models";
     }
 
     // Add lol basic info by puuid
-    add(puuid: string, summonerLevel: number, summonerIconId: number, peakRank: string | null, totalMasteryPoints: number): Promise<LolBasicInfo> {
-        return this.db.one("INSERT INTO lol_basic_info (riot_puuid, summoner_level, summoner_icon_id, peak_rank, total_mastery_points) VALUES ($1, $2, $3, $4, $5) RETURNING *", [puuid, summonerLevel, summonerIconId, peakRank, totalMasteryPoints]);
+    add(puuid: string, summonerLevel: number, summonerIconUrl: string, peakRank: string | null, totalMasteryPoints: number): Promise<LolBasicInfo> {
+        return this.db.one("INSERT INTO lol_basic_info (riot_puuid, summoner_level, summoner_icon_url, peak_rank, total_mastery_points) VALUES ($1, $2, $3, $4, $5) RETURNING *", [puuid, summonerLevel, summonerIconUrl, peakRank, totalMasteryPoints]);
     }
 
     // update lol basic info by puuid
-    update(puuid: string, summonerLevel: number, summonerIconId: number, peakRank: string | null, totalMasteryPoints: number): Promise<LolBasicInfo> {
-        return this.db.one("UPDATE lol_basic_info SET summoner_level = $1, summoner_icon_id = $2, peak_rank = $3, total_mastery_points = $4, revision_date = CURRENT_TIMESTAMP WHERE riot_puuid = $5 RETURNING *", [summonerLevel, summonerIconId, peakRank, totalMasteryPoints, puuid]);
+    update(puuid: string, summonerLevel: number, summonerIconUrl: string, peakRank: string | null, totalMasteryPoints: number): Promise<LolBasicInfo> {
+        return this.db.one("UPDATE lol_basic_info SET summoner_level = $1, summoner_icon_url = $2, peak_rank = $3, total_mastery_points = $4, revision_date = CURRENT_TIMESTAMP WHERE riot_puuid = $5 RETURNING *", [summonerLevel, summonerIconUrl, peakRank, totalMasteryPoints, puuid]);
     }
 }

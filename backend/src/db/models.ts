@@ -22,7 +22,7 @@ export interface LolBasicInfo {
     id: number;
     riot_puuid: string;
     summoner_level: number;
-    summoner_icon_id: number;
+    summoner_icon_url: string;
     peak_rank: string;
     total_mastery_points: number;
     revision_date: Date;

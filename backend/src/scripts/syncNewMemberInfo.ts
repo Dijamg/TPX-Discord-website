@@ -18,7 +18,7 @@ export const syncNewMemberInfo = async (accountInfo: LolAccountInfo, riotPuuid: 
         const totalMasteryPoints = await RiotService.getTotalMasteryScore(riotPuuid, accountInfo.riot_region!);
 
         //Sync basic info
-        await LolBasicInfoService.addLolBasicInfoByPuuid(riotPuuid, basicInfo.summonerLevel, basicInfo.profileIconId, peakRank, totalMasteryPoints);
+        await LolBasicInfoService.addLolBasicInfoByPuuid(riotPuuid, basicInfo.summonerLevel, basicInfo.profileIconUrl, peakRank, totalMasteryPoints);
 
         //Sync current season info
         const allCurrentSeasonInfo = await RiotService.getCurrentSeasonInfo(riotPuuid, accountInfo.riot_region!);  

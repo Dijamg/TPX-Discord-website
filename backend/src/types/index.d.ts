@@ -1,8 +1,12 @@
-export type BasicSummonerInfo = {
+export type BasicSummonerInfoResponse = {
   puuid: string;
   profileIconId: number;
   revisionDate: number;
   summonerLevel: number;
+}
+
+export type BasicSummonerInfo = Omit<BasicSummonerInfoResponse, 'profileIconId'> & {
+  profileIconUrl: string;
 }
 
 export type CurrentSeasonInfo = {

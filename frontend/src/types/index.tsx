@@ -19,7 +19,7 @@ export type LolAccountInfo = {
 export type BasicLolInfo = {
     id: number,
     riot_puuid: string,
-    summoner_icon_id: number,
+    summoner_icon_url: string,
     summoner_level: number,
     peak_rank: string,
     total_mastery_points: number,

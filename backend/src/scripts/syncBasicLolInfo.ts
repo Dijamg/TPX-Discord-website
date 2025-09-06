@@ -25,9 +25,9 @@ export const syncBasicLolInfo = async () => {
                 const totalMasteryPoints = await RiotService.getTotalMasteryScore(accountInfo.riot_puuid!, accountInfo.riot_region!);
 
                 if (currentBasicInfo) {
-                    await LolBasicInfoService.updateLolBasicInfoByPuuid(accountInfo.riot_puuid!, basicInfo!.summonerLevel, basicInfo!.profileIconId, peakRank, totalMasteryPoints);
+                    await LolBasicInfoService.updateLolBasicInfoByPuuid(accountInfo.riot_puuid!, basicInfo!.summonerLevel, basicInfo!.profileIconUrl, peakRank, totalMasteryPoints);
                 } else {
-                    await LolBasicInfoService.addLolBasicInfoByPuuid(accountInfo.riot_puuid!, basicInfo!.summonerLevel, basicInfo!.profileIconId, peakRank, totalMasteryPoints);
+                    await LolBasicInfoService.addLolBasicInfoByPuuid(accountInfo.riot_puuid!, basicInfo!.summonerLevel, basicInfo!.profileIconUrl, peakRank, totalMasteryPoints);
                 }
             } catch (error) {
                 console.error(`Error syncing account info ${accountInfo.id}:`, error);

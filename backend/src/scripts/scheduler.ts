@@ -7,6 +7,7 @@ import { syncMasteryInfo } from "./syncMasteryInfo";
 import { syncUpcomingClashes } from "./syncUpcomingClashes";
 import { syncMatchHistory } from "./syncMatchHistory";
 import { syncTournamentsActiveStatus } from './syncTournamentsActiveStatus';
+import { updateDdragonVersions } from './updateDdragonVersions';
 
 const jobLocks: Record<string, boolean> = {};
 
@@ -15,6 +16,7 @@ let isInitialSyncComplete = false;
 const runSyncs = async () => {
   try {
     console.log('Starting initial syncs...');
+    await updateDdragonVersions();
     await syncRiotPuuid();
     await syncBasicLolInfo();
     await syncCurrentSeasonLolInfo();
@@ -74,6 +76,9 @@ export const initScheduler = async () => {
   // Every 30 minutes
   cron.schedule('*/30 * * * *', gated(syncCurrentSeasonLolInfo, 'syncCurrentSeasonLolInfo'));
   cron.schedule('*/30 * * * *', gated(syncMatchHistory, 'syncMatchHistory'));
+
+  // Every 1 week
+  cron.schedule('0 0 * * 0', gated(updateDdragonVersions, 'updateDdragonVersions'));  
 
   console.log('✅ Cron jobs scheduled');
 }

@@ -119,7 +119,7 @@ const MemberInfoPage = ({ allProps }: { allProps: AllProps }) => {
   };
 
 
-  const summonerIconUrl = `https://ddragon.leagueoflegends.com/cdn/15.13.1/img/profileicon/${basicLolInfo?.summoner_icon_id}.png`;
+  const summonerIconUrl = basicLolInfo?.summoner_icon_url;
   const opggUrl = `https://op.gg/lol/summoners/${getOpggRegionFromPlatform(lolAccounts[activeAccountIdx]?.riot_region || '')}/${lolAccounts[activeAccountIdx]?.riot_game_name + "-" + lolAccounts[activeAccountIdx]?.riot_tag_line}`;
   const peakRankIconUrl = `https://opgg-static.akamaized.net/images/medals_mini/${basicLolInfo?.peak_rank}.png`;
   const unrankedIconUrl = `https://opgg-static.akamaized.net/images/medals/default.png`;

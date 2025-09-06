@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { BasicSummonerInfo, CurrentSeasonInfo, MasteryInfo, RiotAccountResponse, UpcomingClashTournament, LolMatchHistory, LolMatchDto, LolParticipantDto } from '../types';
-import { getChampionIconUrl, getChampionIdToNameMap } from '../utils/championUtils';
+import { BasicSummonerInfo, CurrentSeasonInfo, MasteryInfo, RiotAccountResponse, UpcomingClashTournament, LolMatchHistory, LolMatchDto, LolParticipantDto, BasicSummonerInfoResponse } from '../types';
+import { getChampionIconUrl, getChampionIdToNameMap, getProfileIconUrl } from '../utils/championUtils';
 import { getMatchRegionFromPlatform } from '../utils/regionUtils';
 
 const ACCOUNT_V1_URL = "https://europe.api.riotgames.com/riot/account/v1/accounts/by-riot-id/"
@@ -46,12 +46,19 @@ export const getRiotAccountV1 = async (riotGameName: string, riotTagLine: string
 
 export const getBasicSummonerInfo = async (riotPuuid: string, riot_region: string): Promise<BasicSummonerInfo | null> => {
     try {
-        const response = await axios.get<BasicSummonerInfo>(`${getSummonerV4Url(riot_region)}${riotPuuid}`, {
+        const response = await axios.get<BasicSummonerInfoResponse>(`${getSummonerV4Url(riot_region)}${riotPuuid}`, {
             headers: {
                 'X-Riot-Token': process.env.RIOT_API_KEY!
             }
             });
-            return response.data;
+
+            const { profileIconId, ...restData } = response.data;
+            const basicSummonerInfo = {
+                ...restData,
+                profileIconUrl: getProfileIconUrl(profileIconId)
+            }
+            
+            return basicSummonerInfo;
     } catch (error) {
         console.error(`Error getting basic summoner info for ${riotPuuid} in ${riot_region}:`, error);
         return null;
